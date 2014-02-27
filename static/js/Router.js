@@ -2,13 +2,16 @@ define(function(require) {
     'use strict';
 
     var HomeView  = require('views/HomeView'),
-        StartView = require('views/StartView');
+        StartView = require('views/StartView'),
+        IntroView = require('views/IntroView'),
+        User      = require('models/User');
 
     return Backbone.Router.extend({
         routes: {
             'start' : 'start',
             'home'  : 'home',            
-            'intro' : 'intro'
+            'intro' : 'intro',
+            'new'   : 'newGame'
         },
 
         initialize: function() {
@@ -35,7 +38,13 @@ define(function(require) {
         },
 
         intro: function() {
-
+            this.swapViews(IntroView);
+        },
+        
+        newGame: function() {
+            var newU = new User({name: 'HelloWorld'});            
+            newU.save();
+            this.navigate('intro', {trigger: true});
         }
     });
 });
