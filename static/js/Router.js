@@ -11,7 +11,6 @@ define(function(require) {
             'start' : 'start',
             'home'  : 'home',            
             'intro' : 'intro',
-            'new'   : 'newGame'
         },
 
         initialize: function() {
@@ -19,14 +18,25 @@ define(function(require) {
         },
 
         swapViews: function(View) {
-            if (this.currentView) {
-                this.currentView.remove();
-            }
-
             var view = new View();
-            $('body').html(view.render().el);
-            this.currentView = view;
-            this.trigger('changeView');
+            view.router = this;
+
+            var swap = _.bind(function() {
+                $('body').html(view.render().el);
+                this.currentView = view;
+                this.trigger('changeView');
+
+                $('body').fadeIn(1000);
+            }, this);
+
+            if (this.currentView) {
+                $('body').fadeOut(1000, _.bind(function() {
+                    this.currentView.remove();
+                    swap();
+                }, this));
+            } else {
+                swap();
+            }
         },
 
         start: function() {
@@ -39,12 +49,6 @@ define(function(require) {
 
         intro: function() {
             this.swapViews(IntroView);
-        },
-        
-        newGame: function() {
-            var newU = new User({name: 'HelloWorld'});            
-            newU.save();
-            this.navigate('intro', {trigger: true});
         }
     });
 });

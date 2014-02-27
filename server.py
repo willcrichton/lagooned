@@ -54,5 +54,10 @@ api.add_resource(UserRest, '/api/user')
 def index():
     return render_template('index.jinja2', logged_in=json.dumps('id' in session))
 
+@app.route('/logout')
+def logout():
+    session.pop('id', None)
+    return redirect('/')
+
 if __name__ == '__main__':
     app.run(debug=True)

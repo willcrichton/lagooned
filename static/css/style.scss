@@ -1,3 +1,6 @@
+$fonts: 'Droid Serif', 'Helvetica', 'Arial', sans-serif;
+$font-size: 20px;
+
 body {
     padding: 10px;
     background: #3A63B5;
@@ -15,7 +18,7 @@ body {
 
 #login {
     font-family: 'Cabin Condensed', sans-serif;
-        
+    
     h1 {
         text-transform:uppercase;
         font-weight:bold;
@@ -40,69 +43,73 @@ body {
         opacity: 1;
     }
 
-    #links {
+    #center {
         position: absolute;
         top: 250px;
         left: 0;
         right: 0;
         bottom: 0;
         text-align: center;
+        color: white;
 
-        a {
-            color: white;
-            font-size: 36px;
-            padding: 0 20px;
-            -webkit-transition: 0.2s all;
-            opacity: 0.8;
+        #links {
+            a {
+                color: white;
+                font-size: 36px;
+                padding: 0 20px;
+                -webkit-transition: 0.2s all;
+                opacity: 0.8;
+            }
+
+            a:hover {
+                text-decoration: none;
+                opacity: 1;
+            }
         }
 
-        a:hover {
-            text-decoration: none;
-            opacity: 1;
+        #input {
+            display: none;
+            font: $font-size $fonts;
         }
     }
 }
 
-#game {
-    #intro {
-        display: none;
-        color: white;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        margin: auto;
-        width: 600px;
-        height: 150px;
-        font: 20px 'Droid Serif', 'Times New Roman', serif;
-        line-height: 1.5em;
-        font-style: italic;
+#intro {
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 600px;
+    height: 150px;
+    font: $font-size $fonts;
+    line-height: 1.5em;
+    font-style: italic;
 
-        small {
-            font-style: normal;
+    small {
+        font-style: normal;
+    }
+}
+
+#content {
+    background: white;
+    padding: 5px 30px;
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    #actions {
+        li {
+            margin-bottom: 5px;
         }
     }
 
-    #content {
-        background: white;
-        padding: 5px 30px;
-        //display: none;
-
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        #actions {
-            li {
-                margin-bottom: 5px;
-            }
-        }
-
-        #log {
-            
-        }
+    #log {
+        
     }
 }
 

@@ -5,6 +5,10 @@ define(function(require) {
 
     return Backbone.View.extend({
         render: function() {
+            setTimeout(_.bind(function() {
+                this.router.navigate('home', {trigger: true});
+            }, this), 7000);
+
             this.$el.html(template);
             return this;
         }
