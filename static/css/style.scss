@@ -1,9 +1,17 @@
 $fonts: 'Droid Serif', 'Helvetica', 'Arial', sans-serif;
 $font-size: 20px;
 
+* { padding: 0; margin: 0; outline: none; }
+
 body {
     padding: 10px;
     background: #3A63B5;
+    font: $font-size $fonts;
+}
+
+body.home {
+    background: url("http://upload.wikimedia.org/wikipedia/commons/9/99/Cox's_Bazar_empty_beach.jpg") no-repeat center top;
+    background-size: cover;
 }
 
 // taken from http://codepen.io/lbebber/pen/xrwja
@@ -84,7 +92,6 @@ body {
     margin: auto;
     width: 600px;
     height: 150px;
-    font: $font-size $fonts;
     line-height: 1.5em;
     font-style: italic;
 
@@ -93,23 +100,45 @@ body {
     }
 }
 
-#content {
-    background: white;
-    padding: 5px 30px;
+#home {
+    position: relative;
 
     ul {
         list-style: none;
         padding-left: 0;
     }
 
-    #actions {
-        li {
-            margin-bottom: 5px;
+    .box {
+        border: 1px solid grey;
+        
+        h1 {
+            background: #aaa;
+            color: white;
+            font-size: 24px;
+            padding: 5px 10px;
+        }
+
+        .content {
+            background: white;
+            padding: 15px;
         }
     }
 
+    #actions {
+        width: 300px;
+        position: absolute;
+        top: 200px;
+        left: 0;
+    }
+
     #log {
-        
+        width: 800px;
+        height: 120px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .content { height: 120px - 38px; }
     }
 }
 

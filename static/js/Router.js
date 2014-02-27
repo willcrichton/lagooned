@@ -22,7 +22,8 @@ define(function(require) {
             view.router = this;
 
             var swap = _.bind(function() {
-                $('body').html(view.render().el);
+                $('body').html(view.el);
+                view.render();
                 this.currentView = view;
                 this.trigger('changeView');
 
@@ -41,14 +42,17 @@ define(function(require) {
 
         start: function() {
             this.swapViews(StartView);
+            $('body').attr('class', 'start');
         },
 
         home: function() {
             this.swapViews(HomeView);
+            $('body').attr('class', 'home');
         },
 
         intro: function() {
             this.swapViews(IntroView);
+            $('body').attr('class', 'intro');
         }
     });
 });
