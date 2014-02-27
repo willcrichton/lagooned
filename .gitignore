@@ -2,3 +2,4 @@ game.db
 static/bower_components
 *.pyc
 static/css/.sass-cache
+static/css/style.css
