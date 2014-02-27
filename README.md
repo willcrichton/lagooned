@@ -14,7 +14,7 @@ Setup
 
 Styling
 ------
-To make changes to the stylesheet, you need to edit the style.scss file and convert it to a .css file by running `sass style.scss > style.css` inside of the `static/css/` directory.
+To make changes to the stylesheet, you need to edit the style.scss file and convert it to a .css file by running `make` inside of the `static/css/` directory.
 
 Code Goals
 ------
