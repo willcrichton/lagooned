@@ -17,11 +17,14 @@ define(function(require) {
             this.currentView = null;
         },
 
+        // swap views will replace the top-level view with a new one
         swapViews: function(View) {
             var view = new View();
             view.router = this;
 
             var swap = _.bind(function() {
+                
+                // note: we have to add view.el to the DOM _before_ calling render
                 $('body').html(view.el);
                 view.render();
                 this.currentView = view;
@@ -30,6 +33,7 @@ define(function(require) {
                 $('body').fadeIn(1000);
             }, this);
 
+            // only take the time to fade out if there's an existing view
             if (this.currentView) {
                 $('body').fadeOut(1000, _.bind(function() {
                     this.currentView.remove();

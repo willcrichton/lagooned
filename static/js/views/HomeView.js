@@ -9,6 +9,8 @@ define(function(require) {
     return Backbone.View.extend({
         render: function() {
             this.$el.html(template);
+
+            // load subviews
             this.actionsView = new ActionsView().render();
             this.logView = new LogView().render();
 

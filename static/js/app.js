@@ -13,11 +13,12 @@ define(function(require){
     var me = new User();
     me.fetch().complete(function() {
 
-        // create router/views
+        // set up router and let it take over
         var appRouter = new Router();
         
         Backbone.history.start();
 
+        // if (!me.id) then they're not logged in
         if (!me.id) {
             appRouter.navigate('start', {trigger: true});
         } else {

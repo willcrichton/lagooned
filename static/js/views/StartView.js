@@ -13,6 +13,8 @@ define(function(require) {
         
         start: function(e) {
             e.preventDefault();
+
+            // show new user form when they click "start"
             this.$('#links').fadeOut(function() {
                 $('#input').fadeIn();
             });
