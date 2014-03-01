@@ -9,7 +9,7 @@ Setup
 2. Clone this repository: `git clone git@github.com:willcrichton/lagooned.git`
 3. Run `cd lagooned`
 4. Run `bower install` and `pip install -r requirements.txt`.
-5. Run `python server.py`
+5. Run `./run.sh`
 6. In your browser, go to [localhost:5000](http://localhost:5000).
 
 Styling
