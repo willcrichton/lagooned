@@ -3,3 +3,4 @@ flask-restful
 flask-sqlalchemy
 flask-sockets
 gunicorn
+pyjwt

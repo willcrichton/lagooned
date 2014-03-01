@@ -2,7 +2,13 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask.ext.restful import Api, Resource, reqparse
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
+import jwt
 import json
+
+# User: health/hunger, items, actions taken, island resources, explored parts
+# Actions: time, callback (includes randomness), name, can_run, category
+# Events: text, userID
+# Item: name
 
 class Action():
     name = ''
@@ -70,19 +76,41 @@ sockets = Sockets(app)
 
 @sockets.route('/socket')
 def socket(ws):
+    def GET(data):
+        if (data['className'] == 'User'):
+            try:
+                uid = jwt.decode(data['token'], app.secret_key)['id']
+            except:
+                return {}
+
+            if (uid == ''): return {}
+
+            user = User.query.filter_by(id=data['uid']).first()
+            return {
+                'id'   : user.id,
+                'name' : user.name
+            }
+
     while True:
         message = ws.receive()
-        print message
-        ws.send(message)
 
-@app.route('/api/action')
-def action():
-    print request.args
-    return ''
+        try:
+            data = json.loads(message)
+        except:
+            continue
+        
+        if data['method'] == 'read':
+            to_send = GET(data)
+
+        to_send = {'id': data['id'],
+                   'model': to_send}
+        ws.send(json.dumps(to_send))
+
 
 @app.route('/')
 def index():
-    return render_template('index.jinja2', logged_in=json.dumps('id' in session))
+    uid = session['id'] if 'id' in session else ''
+    return render_template('index.jinja2', token=jwt.encode({'id': uid}, app.secret_key))
 
 @app.route('/logout')
 def logout():
@@ -91,4 +119,3 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    #WSGIServer(('', 5000), app, handler_class=WebSocketHandler).serve_forever()

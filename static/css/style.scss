@@ -6,11 +6,17 @@ body {
     padding: 10px;
     background: #3A63B5;
     font: $font;
+    /*background: black url("/static/bg.jpg") no-repeat center top;
+    background-size: cover;*/
 }
 
 body.home {
     background: url("http://upload.wikimedia.org/wikipedia/commons/9/99/Cox's_Bazar_empty_beach.jpg") no-repeat center top;
     background-size: cover;
+}
+
+a {
+    text-decoration: none;
 }
 
 // taken from http://codepen.io/lbebber/pen/xrwja
