@@ -10,11 +10,15 @@ define(function(require){
     var Router = require('Router'),
         User   = require('models/User');
 
+    var GLOBALS = {};
+
     // have our models sync up over websockets instead of using $.ajax
     Backbone.sync = function(method, model, options) {
         if (typeof options == 'function') {
             options = { success: options, error: error };
         }
+
+        console.log(method, model);
 
         var ws = new WebSocket("ws://" + document.domain + ":5000/socket");
 
@@ -31,30 +35,36 @@ define(function(require){
 
         var $promise = $.Deferred();
         ws.onmessage = function(event) {
-            options.success(JSON.parse(event.data));
+            var data = JSON.parse(event.data);
+            if (data['token']) {
+                TOKEN = data['token'];
+            }
+
+            options.success(data);
             $promise.resolve();
         }
 
         return $promise;
     }
 
-    var mainSocket = new WebSocket("ws://" + document.domain + ":5000/socket");
-    mainSocket.onmessage = function(event) {
+    GLOBALS.mainSocket = new WebSocket("ws://" + document.domain + ":5000/socket");
+    GLOBALS.mainSocket.onmessage = function(event) {
         var data = JSON.parse(event.data);
         console.log(data);
     }
     
     // load in user data
-    var me = new User();
-    me.fetch().done(function() {
-            
+    GLOBALS.me = new User();
+    GLOBALS.me.fetch().done(function() {
+
         // set up router and let it take over
         var appRouter = new Router();
+        appRouter.GLOBALS = GLOBALS;
         
         Backbone.history.start();
         
         // if (!me.id) then they're not logged in
-        if (!me.id) {
+        if (!GLOBALS.me.id) {
             appRouter.navigate('start', {trigger: true});
         } else {
             appRouter.navigate('home', {trigger: true});

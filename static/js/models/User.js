@@ -4,7 +4,8 @@ define(function(require) {
     return Backbone.Model.extend({
         className: 'User',
         defaults: {
-            name: ''
+            name: '',
+            login: true
         }
     });
 });
