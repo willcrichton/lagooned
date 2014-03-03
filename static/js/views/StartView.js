@@ -38,7 +38,7 @@ define(function(require) {
             if (e.type != 'click' && e.which != 13) return;
 
             if (this.newUser) {
-                this.GLOBALS.me.set({
+                GAME.me.set({
                     name: this.$('#name').val(),
                     password: this.$('#password').val(),
                     login: !this.newUser
@@ -46,12 +46,12 @@ define(function(require) {
                     this.router.navigate('intro', {trigger: true});
                 }, this));
             } else {
-                this.GLOBALS.me.set({
+                GAME.me.set({
                     name: this.$('#name').val(),
                     password: this.$('#password').val(),
                     login: !this.newUser
                 }).fetch().done(_.bind(function() {
-                    if (!this.GLOBALS.me.id) {
+                    if (!GAME.me.id) {
                         alert('Login fail');
                     } else {
                         this.router.navigate('home', {trigger: true});

@@ -1,7 +1,9 @@
 <h1>Actions</h1>
 <div class="content">
+  Hunger: {{user.hunger}}
   <ul>
-    <li><button class="btn btn-sm btn-primary">Scavenge for food (10)</button></li>
-    <li><button class="btn btn-sm btn-primary">Explore (5)</button></li>
+    {{#each actions}}
+    <li><button class="btn btn-sm btn-primary action" data-action="{{name}}">{{name}} ({{duration}})</button></li>
+    {{/each}}
   </ul>
 </div>

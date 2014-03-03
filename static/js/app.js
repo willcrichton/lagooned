@@ -1,3 +1,5 @@
+var GAME = {};
+
 define(function(require){
     'use strict';
 
@@ -7,18 +9,20 @@ define(function(require){
         urlArgs: "bust=" + (new Date()).getTime()
     });
 
-    var Router = require('Router'),
-        User   = require('models/User');
+    var Router  = require('Router'),
+        User    = require('models/User'),
+        Actions = require('collections/Actions');
 
-    var GLOBALS = {};
+    // load cookie from storage
+    if (localStorage.TOKEN) {
+        TOKEN = localStorage.TOKEN;
+    }
 
     // have our models sync up over websockets instead of using $.ajax
     Backbone.sync = function(method, model, options) {
         if (typeof options == 'function') {
             options = { success: options, error: error };
         }
-
-        console.log(method, model);
 
         var ws = new WebSocket("ws://" + document.domain + ":5000/socket");
 
@@ -36,8 +40,11 @@ define(function(require){
         var $promise = $.Deferred();
         ws.onmessage = function(event) {
             var data = JSON.parse(event.data);
+            console.log(data);
+
             if (data['token']) {
                 TOKEN = data['token'];
+                localStorage.TOKEN = TOKEN;
             }
 
             options.success(data);
@@ -47,26 +54,37 @@ define(function(require){
         return $promise;
     }
 
-    GLOBALS.mainSocket = new WebSocket("ws://" + document.domain + ":5000/socket");
-    GLOBALS.mainSocket.onmessage = function(event) {
+    GAME.socket = new WebSocket("ws://" + document.domain + ":5000/socket");
+    GAME.socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        console.log(data);
+        GAME.me.set(data);
     }
-    
+
+    GAME.actions = new Actions();
+    GAME.actions.fetch();
+
+    GAME.doAction = function(action) {
+        GAME.socket.send(JSON.stringify({
+            action: action,
+            method: 'action',
+            token: TOKEN
+        }));
+    };
+
     // load in user data
-    GLOBALS.me = new User();
-    GLOBALS.me.fetch().done(function() {
+    GAME.me = new User();
+    GAME.me.fetch().done(function() {
 
         // set up router and let it take over
         var appRouter = new Router();
-        appRouter.GLOBALS = GLOBALS;
         
         Backbone.history.start();
         
         // if (!me.id) then they're not logged in
-        if (!GLOBALS.me.id) {
+        if (!GAME.me.id) {
             appRouter.navigate('start', {trigger: true});
         } else {
+            GAME.actions.fetch();
             appRouter.navigate('home', {trigger: true});
         }
     });

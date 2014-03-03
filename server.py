@@ -2,28 +2,16 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
 from geventwebsocket import WebSocketError
+from actions import ACTIONS, sanitize_action
 import hashlib, uuid
 import jwt
 import json
+import threading
 
 # User: health/hunger, items, actions taken, island resources, explored parts
 # Actions: time, callback (includes randomness), name, can_run, category
 # Events: text, userID
 # Item: name
-
-class Action():
-    name = ''
-    dependencies = []
-    time = 0
-
-    def __init__(self, n, d, t):
-        name = n
-        dependencies = d
-        time = t
-    
-ACTIONS = [
-    Action('Scavenge', [], 10)
-]
 
 # Flask/SQLAlchemy/Restful configuration options
 app = Flask(__name__)
@@ -31,43 +19,54 @@ app.secret_key = 'trololololololololololol' # ultra secure
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///game.db'
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True)
-    password = db.Column(db.String(80))
-    hunger = db.Column(db.Integer, default=10)
-
 def phash(pwd):
     return hashlib.sha512(pwd + app.secret_key).hexdigest()
 
 def tokenize(token):
     return jwt.encode({'id': token}, app.secret_key)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    password = db.Column(db.String(80))
+    hunger = db.Column(db.Integer, default=10)
+
+    def json(self):
+        return {
+            'id'    : self.id,
+            'name'  : self.name,
+            'hunger': self.hunger,
+            'token' : tokenize(self.id)
+        }
+            
 sockets = Sockets(app)
 
 @sockets.route('/socket')
 def socket(ws):
     def GET(data, uid):
         if (data['className'] == 'User'):
+            
+            # if they're trying to login: validate
             if (data['model']['login']):
                 try:
                     password = phash(data['model']['password'])
                     user = User.query.filter_by(name=data['model']['name'], password=password).first()
-                    return {
-                        'id'   : user.id,
-                        'name' : user.name,
-                        'token': tokenize(user.id)
-                    }
+                    return user.json()
                 except:
                     return {}
+
+            # if they're already logged in: go by user id from token
             else:
                 user = User.query.filter_by(id=uid).first()
-                return {
-                    'id'   : user.id,
-                    'name' : user.name,
-                    'token': tokenize(user.id)
-                }
+                return user.json()
 
+        elif (data['className'] == 'Action'):
+            user = User.query.filter_by(id=uid).first()
+            possible = filter(lambda action: action['verify'](user), ACTIONS)
+
+            return map(sanitize_action, possible)
+
+        
     def POST(data, uid):
         if (data['className'] == 'User'):
 
@@ -77,12 +76,26 @@ def socket(ws):
             user.password = phash(data['model']['password'])
             db.session.add(user)
             db.session.commit()
-        
-            return {
-                'id'   : user.id,
-                'name' : user.name,
-                'token': tokenize(user.id)
-            }
+
+            return user.json()
+
+    def ACTION(data, uid):            
+        user = User.query.filter_by(id=uid).first()
+        action = next(a for a in ACTIONS if a['name'] == data['action'])
+        if (not action['verify'](user)): return {}
+
+        def callback():
+            action['callback'](user)
+
+            # save user model to database
+            db.session.merge(user)
+            db.session.commit()
+
+            # send new user state to front-end
+            ws.send(json.dumps(user.json()))
+
+        threading.Timer(action['duration'], callback).start()
+        return {'success': True}
             
     while True:
         try:
@@ -90,17 +103,18 @@ def socket(ws):
             data = json.loads(message)
             uid = jwt.decode(data['token'], app.secret_key)['id']
         except WebSocketError:
-            break;
+            return
         except:
             continue
 
-        if data['method'] == 'read':
-            to_send = GET(data, uid)
-        elif data['method'] == 'create':
-            to_send = POST(data, uid)
+        funcs = {
+            'read': GET,
+            'create': POST,
+            'action': ACTION
+        }
 
+        to_send = funcs[data['method']](data, uid)
         ws.send(json.dumps(to_send))
-
 
 @app.route('/')
 def index():

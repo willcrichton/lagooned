@@ -20,7 +20,6 @@ define(function(require) {
         // swap views will replace the top-level view with a new one
         swapViews: function(View) {
             var view = new View();
-            view.GLOBALS = this.GLOBALS;
             view.router = this;
 
             var swap = _.bind(function() {
