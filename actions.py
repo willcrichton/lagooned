@@ -24,6 +24,8 @@ def scavenge_callback(user):
     else:
         user.add_to_log('You failed to scavenge.')
 
+    return chance
+
 def scavenge_verify(user):
     return True
 
@@ -32,6 +34,8 @@ register_action('Scavenge', 2, scavenge_callback, scavenge_verify)
 def cook_callback(user):
     user.hunger += 5
     user.add_to_log('You cooked some food.')
+
+    return True
 
 def cook_verify(user):
     return user.done_action('Scavenge')

@@ -105,19 +105,20 @@ def socket(ws):
         if (not action['verify'](user)): return {}
 
         def callback():
-            action['callback'](user)
+            success = action['callback'](user)
 
-            completed_actions = json.loads(user.actions)
-            if not action['name'] in completed_actions:
-                completed_actions.append(action['name'])
+            if success:
+                completed_actions = json.loads(user.actions)
+                if not action['name'] in completed_actions:
+                    completed_actions.append(action['name'])
 
-            user.actions = json.dumps(completed_actions)
+                user.actions = json.dumps(completed_actions)
 
             # save user model to database
             db.session.merge(user)
             db.session.commit()
 
-            # send new user state to front-end
+            # send new user state to frontend
             ws.send(json.dumps({
                 'user': user.json(),
                 'actions': map(sanitize_action, user.valid_actions())
