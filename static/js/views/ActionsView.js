@@ -25,6 +25,7 @@ define(function(require) {
                 actions: GAME.actions.toJSON(),
                 user: GAME.me.toJSON()
             }));
+
             return this;
         }
     });

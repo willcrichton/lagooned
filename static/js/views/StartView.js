@@ -43,7 +43,9 @@ define(function(require) {
                     password: this.$('#password').val(),
                     login: !this.newUser
                 }).save().done(_.bind(function() {
-                    this.router.navigate('intro', {trigger: true});
+                    GAME.actions.fetch().done(_.bind(function() {
+                        this.router.navigate('intro', {trigger: true});
+                    }, this));
                 }, this));
             } else {
                 GAME.me.set({

@@ -123,11 +123,6 @@ a {
 #home {
     position: relative;
 
-    ul {
-        list-style: none;
-        padding-left: 0;
-    }
-
     // each widget in the home screen is a .box
     .box {
         border: 1px solid grey;
@@ -150,6 +145,11 @@ a {
         position: absolute;
         top: 200px;
         left: 0;
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
     }
 
     #log {
@@ -160,6 +160,17 @@ a {
         top: 0;
         left: 0;
 
-        .content { height: $height - 38px; }
+        .content { 
+            height: $height - 38px; 
+            overflow: auto;
+        }
+
+        ul { 
+            list-style-position: inside; 
+
+            li {
+                font-size: 16px;
+            }
+        }
     }
 }

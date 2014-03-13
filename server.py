@@ -31,6 +31,7 @@ class User(db.Model):
     password = db.Column(db.String(80))
     hunger = db.Column(db.Integer, default=10)
     actions = db.Column(db.Text, default=json.dumps([]))
+    log = db.Column(db.Text, default=json.dumps([]))
 
     def json(self):
         return {
@@ -38,7 +39,8 @@ class User(db.Model):
             'name'    : self.name,
             'hunger'  : self.hunger,
             'token'   : tokenize(self.id),
-            'actions' : json.loads(self.actions)
+            'actions' : json.loads(self.actions),
+            'log'     : json.loads(self.log)
         }
 
     def valid_actions(self):
@@ -47,6 +49,10 @@ class User(db.Model):
     def done_action(self, action):
         return action in json.loads(self.actions)
 
+    def add_to_log(self, message):
+        log = json.loads(self.log) if self.log is not None else []
+        log.append(message)
+        self.log = json.dumps(log)
 
 sockets = Sockets(app)
 
@@ -84,6 +90,8 @@ def socket(ws):
             user = User()
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
+            user.add_to_log("Testing start message")
+
             db.session.add(user)
             db.session.commit()
 
@@ -114,7 +122,7 @@ def socket(ws):
                 'user': user.json(),
                 'actions': map(sanitize_action, user.valid_actions())
             }))
-
+            
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
             

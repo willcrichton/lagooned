@@ -6,7 +6,8 @@ define(function(require) {
         defaults: {
             name: '',
             login: false,
-            hunger: 0
+            hunger: 0,
+            log: []
         }
     });
 });
