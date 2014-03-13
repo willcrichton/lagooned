@@ -57,7 +57,12 @@ define(function(require){
     GAME.socket = new WebSocket("ws://" + document.domain + ":5000/socket");
     GAME.socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
-        GAME.me.set(data);
+        if (data.success) {
+            console.log('Action valid');
+        } else {
+            GAME.me.set(data.user);
+            GAME.actions.set(data.actions);
+        }
     }
 
     GAME.actions = new Actions();

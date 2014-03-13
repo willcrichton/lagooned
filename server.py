@@ -30,15 +30,24 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
     hunger = db.Column(db.Integer, default=10)
+    actions = db.Column(db.Text, default=json.dumps([]))
 
     def json(self):
         return {
-            'id'    : self.id,
-            'name'  : self.name,
-            'hunger': self.hunger,
-            'token' : tokenize(self.id)
+            'id'      : self.id,
+            'name'    : self.name,
+            'hunger'  : self.hunger,
+            'token'   : tokenize(self.id),
+            'actions' : json.loads(self.actions)
         }
-            
+
+    def valid_actions(self):
+        return [a for a in ACTIONS if a['verify'](self)]
+        
+    def done_action(self, action):
+        return action in json.loads(self.actions)
+
+
 sockets = Sockets(app)
 
 @sockets.route('/socket')
@@ -58,13 +67,14 @@ def socket(ws):
             # if they're already logged in: go by user id from token
             else:
                 user = User.query.filter_by(id=uid).first()
+                if user is None: return {}
                 return user.json()
 
         elif (data['className'] == 'Action'):
             user = User.query.filter_by(id=uid).first()
-            possible = filter(lambda action: action['verify'](user), ACTIONS)
+            if user is None: return []
 
-            return map(sanitize_action, possible)
+            return map(sanitize_action, user.valid_actions())
 
         
     def POST(data, uid):
@@ -81,18 +91,29 @@ def socket(ws):
 
     def ACTION(data, uid):            
         user = User.query.filter_by(id=uid).first()
+        if user is None: return {}
+
         action = next(a for a in ACTIONS if a['name'] == data['action'])
         if (not action['verify'](user)): return {}
 
         def callback():
             action['callback'](user)
 
+            completed_actions = json.loads(user.actions)
+            if not action['name'] in completed_actions:
+                completed_actions.append(action['name'])
+
+            user.actions = json.dumps(completed_actions)
+
             # save user model to database
             db.session.merge(user)
             db.session.commit()
 
             # send new user state to front-end
-            ws.send(json.dumps(user.json()))
+            ws.send(json.dumps({
+                'user': user.json(),
+                'actions': map(sanitize_action, user.valid_actions())
+            }))
 
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
