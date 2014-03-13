@@ -7,6 +7,7 @@ import hashlib, uuid
 import jwt
 import json
 import threading
+import time
 
 # User: health/hunger, items, actions taken, island resources, explored parts
 # Actions: time, callback (includes randomness), name, can_run, category
@@ -31,6 +32,7 @@ class User(db.Model):
     password = db.Column(db.String(80))
     hunger = db.Column(db.Integer, default=10)
     actions = db.Column(db.Text, default=json.dumps([]))
+    current_action = db.Column(db.Text, default=json.dumps({}))
     log = db.Column(db.Text, default=json.dumps([]))
 
     def json(self):
@@ -40,7 +42,8 @@ class User(db.Model):
             'hunger'  : self.hunger,
             'token'   : tokenize(self.id),
             'actions' : json.loads(self.actions),
-            'log'     : json.loads(self.log)
+            'log'     : json.loads(self.log),
+            'current_action' : self.get_current_action()
         }
 
     def valid_actions(self):
@@ -53,6 +56,19 @@ class User(db.Model):
         log = json.loads(self.log) if self.log is not None else []
         log.append(message)
         self.log = json.dumps(log)
+
+    def set_current_action(self, action):
+        current_action = sanitize_action(action)
+        current_action['start'] = time.time()
+        self.current_action = json.dumps(current_action)
+
+    def get_current_action(self):
+        return json.loads(self.current_action)
+
+    def can_act(self):
+        current_action = self.get_current_action()
+        if not 'start' in current_action: return True
+        return time.time() - current_action['start'] >= current_action['duration']
 
 sockets = Sockets(app)
 
@@ -102,7 +118,7 @@ def socket(ws):
         if user is None: return {}
 
         action = next(a for a in ACTIONS if a['name'] == data['action'])
-        if (not action['verify'](user)): return {}
+        if (not action['verify'](user) or not user.can_act()): return {'success': False}
 
         def callback():
             success = action['callback'](user)
@@ -123,7 +139,11 @@ def socket(ws):
                 'user': user.json(),
                 'actions': map(sanitize_action, user.valid_actions())
             }))
-            
+
+        user.set_current_action(action)
+        db.session.merge(user)
+        db.session.commit()
+
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
             
