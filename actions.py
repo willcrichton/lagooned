@@ -1,5 +1,7 @@
 import random
+from messages import M
 
+### Action framework ###
 ACTIONS = []
 
 def sanitize_action(action):
@@ -16,13 +18,14 @@ def register_action(name, duration, callback, verify):
         'verify': verify
     })
 
+### Individual actions ###
 def scavenge_callback(user):
     chance = random.random() > 0.4
     if chance:
         user.hunger += 1
-        user.add_to_log('You scavenged for food.')
+        user.add_to_log(M['SCAVENGE_SUCCESS'])
     else:
-        user.add_to_log('You failed to scavenge.')
+        user.add_to_log(M['SCAVENGE_FAIL'])
 
     return chance
 
@@ -33,7 +36,7 @@ register_action('Scavenge', 2, scavenge_callback, scavenge_verify)
 
 def cook_callback(user):
     user.hunger += 5
-    user.add_to_log('You cooked some food.')
+    user.add_to_log(M['COOK_SUCCESS'])
 
     return True
 

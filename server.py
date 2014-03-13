@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
 from geventwebsocket import WebSocketError
 from actions import ACTIONS, sanitize_action
+from messages import M
 import hashlib, uuid
 import jwt
 import json
@@ -20,9 +21,11 @@ app.secret_key = 'trololololololololololol' # ultra secure
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///game.db'
 db = SQLAlchemy(app)
 
+# password hashing function
 def phash(pwd):
     return hashlib.sha512(pwd + app.secret_key).hexdigest()
 
+# encode input as JSON web token
 def tokenize(token):
     return jwt.encode({'id': token}, app.secret_key)
 
@@ -31,7 +34,7 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
     hunger = db.Column(db.Integer, default=10)
-    actions = db.Column(db.Text, default=json.dumps([]))
+    completed = db.Column(db.Text, default=json.dumps([]))
     current_action = db.Column(db.Text, default=json.dumps({}))
     log = db.Column(db.Text, default=json.dumps([]))
 
@@ -41,7 +44,7 @@ class User(db.Model):
             'name'    : self.name,
             'hunger'  : self.hunger,
             'token'   : tokenize(self.id),
-            'actions' : json.loads(self.actions),
+            'completed' : json.loads(self.completed),
             'log'     : json.loads(self.log),
             'current_action' : self.get_current_action()
         }
@@ -50,7 +53,7 @@ class User(db.Model):
         return [a for a in ACTIONS if a['verify'](self)]
         
     def done_action(self, action):
-        return action in json.loads(self.actions)
+        return action in json.loads(self.completed)
 
     def add_to_log(self, message):
         log = json.loads(self.log) if self.log is not None else []
@@ -106,7 +109,7 @@ def socket(ws):
             user = User()
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
-            user.add_to_log("Testing start message")
+            user.add_to_log(M['GAME_START'])
 
             db.session.add(user)
             db.session.commit()
@@ -124,11 +127,11 @@ def socket(ws):
             success = action['callback'](user)
 
             if success:
-                completed_actions = json.loads(user.actions)
+                completed_actions = json.loads(user.completed)
                 if not action['name'] in completed_actions:
                     completed_actions.append(action['name'])
 
-                user.actions = json.dumps(completed_actions)
+                user.completed = json.dumps(completed_actions)
 
             # save user model to database
             db.session.merge(user)
