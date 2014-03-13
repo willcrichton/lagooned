@@ -34,32 +34,41 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
     hunger = db.Column(db.Integer, default=10)
-    completed = db.Column(db.Text, default=json.dumps([]))
-    current_action = db.Column(db.Text, default=json.dumps({}))
-    log = db.Column(db.Text, default=json.dumps([]))
+    completed = db.Column(db.Text, default="[]")
+    current_action = db.Column(db.Text, default="{}")
+    log = db.Column(db.Text, default="[]")
+    items = db.Column(db.Text, default="{}")
 
     def json(self):
         return {
-            'id'      : self.id,
-            'name'    : self.name,
-            'hunger'  : self.hunger,
-            'token'   : tokenize(self.id),
+            'id'        : self.id,
+            'name'      : self.name,
+            'hunger'    : self.hunger,
+            'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
-            'log'     : json.loads(self.log),
-            'current_action' : self.get_current_action()
+            'log'       : [M[v] for v in json.loads(self.log)],
+            'current_action' : self.get_current_action(),
+            'items'     : {M[k]: v for k,v in self.get_items().items()}
         }
 
+    # Potential actions
     def valid_actions(self):
         return [a for a in ACTIONS if a['verify'](self)]
-        
-    def done_action(self, action):
-        return action in json.loads(self.completed)
+    
+    # Completed actions
+    def done_actions(self, actions):
+        completed = json.loads(self.completed)
+        for action in actions:
+            if not action in completed: return False
+        return True
 
+    # Event log
     def add_to_log(self, message):
         log = json.loads(self.log) if self.log is not None else []
         log.append(message)
         self.log = json.dumps(log)
 
+    # Current actions
     def set_current_action(self, action):
         current_action = sanitize_action(action)
         current_action['start'] = time.time()
@@ -72,6 +81,26 @@ class User(db.Model):
         current_action = self.get_current_action()
         if not 'start' in current_action: return True
         return time.time() - current_action['start'] >= current_action['duration']
+
+    # Inventory
+    def get_items(self):
+        return json.loads(self.items)
+
+    def has_item(self, item, qty=1):
+        items = self.get_items()
+        if not item in items: return False
+        return items[item] >= qty
+
+    def add_item(self, item):
+        items = self.get_items()
+        if not item in items: items[item] = 0
+        items[item] += 1
+        self.items = json.dumps(items)
+
+    def remove_item(self, item, qty=1):
+        items = self.get_items()
+        items[item] -= qty
+        self.items = json.dumps(items)
 
 sockets = Sockets(app)
 
@@ -109,7 +138,7 @@ def socket(ws):
             user = User()
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
-            user.add_to_log(M['GAME_START'])
+            user.add_to_log('GAME_START')
 
             db.session.add(user)
             db.session.commit()

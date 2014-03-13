@@ -7,7 +7,8 @@ define(function(require) {
             name: '',
             login: false,
             hunger: 0,
-            log: []
+            log: [],
+            items: {}
         }
     });
 });

@@ -4,6 +4,7 @@ define(function(require) {
     return Backbone.Model.extend({
         defaults: {
             name: '',
+            label: '',
             duration: 0
         }
     });

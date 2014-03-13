@@ -137,6 +137,7 @@ a {
         .content {
             background: white;
             padding: 15px;
+            overflow: auto;
         }
     }
 
@@ -144,6 +145,7 @@ a {
         width: 300px;
         position: absolute;
         top: 200px;
+        height: 250px;
         left: 0;
 
         ul {
@@ -174,7 +176,6 @@ a {
 
         .content { 
             height: $height - 38px; 
-            overflow: auto;
         }
 
         ul { 
@@ -183,6 +184,19 @@ a {
             li {
                 font-size: 16px;
             }
+        }
+    }
+
+    #items {
+        width: 300px;
+        height: 175px;
+        position: absolute;
+        top: 475px;
+        left: 0;   
+
+        ul {
+            list-style-position: inside;
+            li { font-size: 16px; }
         }
     }
 }
