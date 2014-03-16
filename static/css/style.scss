@@ -126,6 +126,7 @@ a {
     // each widget in the home screen is a .box
     .box {
         border: 1px solid grey;
+        position: absolute;
         
         h1 {
             background: #aaa;
@@ -143,7 +144,6 @@ a {
 
     #actions {
         width: 300px;
-        position: absolute;
         top: 200px;
         height: 250px;
         left: 0;
@@ -167,15 +167,14 @@ a {
     }
 
     #log {
-        $height: 120px;
+        $height: 150px;
         width: 800px;
         height: $height;
-        position: absolute;
         top: 0;
         left: 0;
 
         .content { 
-            height: $height - 38px; 
+            height: $height - 68px; 
         }
 
         ul { 
@@ -190,12 +189,23 @@ a {
     #items {
         width: 300px;
         height: 175px;
-        position: absolute;
         top: 475px;
         left: 0;   
 
         ul {
             list-style-position: inside;
+            li { font-size: 16px; }
+        }
+    }
+
+    #stats {
+        width: 200px;
+        height: 100px;
+        left: 825px;
+        top: 0;
+
+        ul {
+            list-style: none;
             li { font-size: 16px; }
         }
     }

@@ -52,8 +52,7 @@ define(function(require) {
 
         render: function() {
             this.$el.html(template({
-                actions: GAME.actions.toJSON(),
-                user: GAME.me.toJSON()
+                actions: GAME.actions.toJSON()
             }));
 
             return this;
