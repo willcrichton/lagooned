@@ -30,15 +30,15 @@ def tokenize(token):
 # it uses SQLAlchemy to save all these fields to the SQLite db
 # and we store literally everything on the User table (woo fat tables)
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True)
+    id = db.Column(db.Integer, primary_key=True)                # unique identifier for each user
+    name = db.Column(db.String(80), unique=True)                # handle that other players see
     password = db.Column(db.String(80))
-    food = db.Column(db.Integer, default=0)
-    completed = db.Column(db.Text, default='[]')
-    current_action = db.Column(db.Text, default='{}')
-    log = db.Column(db.Text, default='[]')
-    items = db.Column(db.Text, default='{}')
-    location = db.Column(db.String, default='LOCATION_START')
+    food = db.Column(db.Integer, default=0)                     # amount of food a player has
+    completed = db.Column(db.Text, default='[]')                # list of completed actions
+    current_action = db.Column(db.Text, default='{}')           # name/duration of current action
+    log = db.Column(db.Text, default='[]')                      # list of all messages sent to user
+    items = db.Column(db.Text, default='{}')                    # list of all items user has (name/qty)
+    location = db.Column(db.String, default='LOCATION_START')   # current location of player
 
     def json(self):
         return {
@@ -146,6 +146,8 @@ def socket(ws):
                 return user.json()
 
         elif (data['className'] == 'Action'):
+            
+            # They want all actions the user can take
             user = User.query.filter_by(id=uid).first()
             if user is None: return []
 
@@ -183,8 +185,6 @@ def socket(ws):
                 user.completed = json.dumps(completed_actions)
 
             on_action(user)
-
-            # save user model to database
             user.save()
 
             # send new user state to frontend
@@ -211,7 +211,7 @@ def socket(ws):
             # they quit the connection, kill the socket
             return
         except:
-            # miscellaneous errors, ignore the message
+            # miscellaneous errors (eg bad JSON), ignore the message
             continue
 
         funcs = {

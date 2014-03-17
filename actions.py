@@ -1,6 +1,3 @@
-import random
-from constants import C
-
 ''' 
 ******* ABRIDGED GUIDE TO DEVELOPING FOR LAGOONED ********
 Please take a moment to read this!
@@ -36,8 +33,17 @@ Please take a moment to read this!
   pane, or the actions panel. Each view updates whenever the User data changes. After every action, the User 
   is notified of all changes to the User model, and all views update accordingly.
 
-* More to fill in here...
+* You may notice the default html (/templates/index.jinja2) has no HTML in the body. The HTML comes from
+  the templates direction (/static/js/templates). We render these templates using a templating engine called
+  Handlebars (http://handlebarsjs.com) which allows us to do simple loops/conditionals in the HTML.
+
+* Syncing the front-end with the back-end is really easy because of Backbone. We use Backbone Models to store
+  the User data that comes in over the socket. Any time that data changes, every relevant view.
 '''
+
+import random
+from constants import C
+
 
 #### Action framework ####
 
