@@ -29,6 +29,8 @@ define(function(require) {
         onKeyup: function(key) {
             var $tab = this.$('#tabs-nav a.active');
 
+            console.log(key);
+
             // up arrow
             if (key == 38) {
                 var $newTab = $tab.prev();
@@ -41,11 +43,24 @@ define(function(require) {
                 if (!$newTab.length) { $newTab = this.$('#tabs-nav a:first-child'); }
                 this.state.set('currentTab', $newTab.data('target'));
             }
+            // left arrow
+            else if (key == 37) {
+                this.state.clear('currentTab');
+            }
+            // right arrow
+            else if (key == 39) {
+                this.state.set('currentTab', this.$('#tabs-nav a:first-child').data('target'));
+            }
         },
 
         onTabClick: function(e) {
             e.preventDefault();
-            this.state.set('currentTab', $(e.target).data('target'));
+            var $newTab = $(e.target).data('target');
+            if ($newTab == this.state.get('currentTab')) {
+                this.state.clear('currentTab');
+            } else {
+                this.state.set('currentTab', $newTab);
+            }
         },
 
         changeTab: function() {

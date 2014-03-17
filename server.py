@@ -43,8 +43,7 @@ class User(db.Model):
             'food'      : self.food,
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
-            'log'       : [C[v] for v in json.loads(self.log)],
-            'current_action' : self.get_current_action(),
+            'log'       : [C[v] for v in json.loads(self.log)][-C['LOG_MAX']:],
             'items'     : {C[k]: v for k,v in self.get_items().items()}
         }
 

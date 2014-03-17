@@ -3,6 +3,7 @@
 C = {
     # Gameplay
     'GAME_START': 'You wash up on a deserted island.',
+    'LOG_MAX': 4,
 
     # Actions
     'ACT_SCAVENGE': 'Scavenge',

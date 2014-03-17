@@ -121,6 +121,8 @@ a {
 }
 
 #home {
+    margin: 0 auto;
+    width: 1030px;
     position: relative;
 
     // each widget in the home screen is a .box
@@ -173,9 +175,10 @@ a {
 
         .tab {
             display: none;
-            width: 800px;
+            width: 875px;
             height: 400px;
             background: white;
+            border: 1px solid grey;
 
             h1 {
                 background: #aaa;
