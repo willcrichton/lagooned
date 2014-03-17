@@ -6,7 +6,7 @@ define(function(require) {
         defaults: {
             name: '',
             login: false,
-            hunger: 0,
+            food: 0,
             log: [],
             items: {}
         }

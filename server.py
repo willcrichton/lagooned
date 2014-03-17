@@ -2,8 +2,8 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
 from geventwebsocket import WebSocketError
-from actions import ACTIONS, sanitize_action
-from messages import M
+from actions import ACTIONS, CONSTRAINTS, sanitize_action
+from constants import C
 import hashlib, uuid
 import jwt
 import json
@@ -15,15 +15,12 @@ import time
 # Events: text, userID
 # Item: name
 
-# Flask/SQLAlchemy/Restful configuration options
+# Flask/SQLAlchemy/Socket configuration options
 app = Flask(__name__)
 app.secret_key = 'trololololololololololol' # ultra secure
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///game.db'
 db = SQLAlchemy(app)
-
-# password hashing function
-def phash(pwd):
-    return hashlib.sha512(pwd + app.secret_key).hexdigest()
+sockets = Sockets(app)
 
 # encode input as JSON web token
 def tokenize(token):
@@ -33,7 +30,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
-    hunger = db.Column(db.Integer, default=10)
+    food = db.Column(db.Integer, default=0)
     completed = db.Column(db.Text, default="[]")
     current_action = db.Column(db.Text, default="{}")
     log = db.Column(db.Text, default="[]")
@@ -43,17 +40,17 @@ class User(db.Model):
         return {
             'id'        : self.id,
             'name'      : self.name,
-            'hunger'    : self.hunger,
+            'food'      : self.food,
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
-            'log'       : [M[v] for v in json.loads(self.log)],
+            'log'       : [C[v] for v in json.loads(self.log)],
             'current_action' : self.get_current_action(),
-            'items'     : {M[k]: v for k,v in self.get_items().items()}
+            'items'     : {C[k]: v for k,v in self.get_items().items()}
         }
 
     # Potential actions
     def valid_actions(self):
-        return [a for a in ACTIONS if a['verify'](self)]
+        return [a for a in ACTIONS if self.can_run(a)]
     
     # Completed actions
     def done_actions(self, actions):
@@ -77,10 +74,18 @@ class User(db.Model):
     def get_current_action(self):
         return json.loads(self.current_action)
 
-    def can_act(self):
+    def is_busy(self):
         current_action = self.get_current_action()
-        if not 'start' in current_action: return True
-        return time.time() - current_action['start'] >= current_action['duration']
+        if not 'start' in current_action: return False
+        return time.time() - current_action['start'] < current_action['duration']
+
+    def can_run(self, action):
+        if not action['verify'](self): return False
+
+        for callback in CONSTRAINTS:
+            if not callback(self, action): return False
+
+        return True
 
     # Inventory
     def get_items(self):
@@ -102,10 +107,19 @@ class User(db.Model):
         items[item] -= qty
         self.items = json.dumps(items)
 
-sockets = Sockets(app)
+# for miscellaneous effects after an action is run
+def on_action(user):
+    user.food = max(user.food - 1, 0)
+
 
 @sockets.route('/socket')
 def socket(ws):
+
+    # password hashing function
+    def phash(pwd):
+        return hashlib.sha512(pwd + app.secret_key).hexdigest()
+
+    # retrieving data from a model
     def GET(data, uid):
         if (data['className'] == 'User'):
             
@@ -130,7 +144,7 @@ def socket(ws):
 
             return map(sanitize_action, user.valid_actions())
 
-        
+    # creating a new model
     def POST(data, uid):
         if (data['className'] == 'User'):
 
@@ -145,12 +159,13 @@ def socket(ws):
 
             return user.json()
 
+    # doing an action
     def ACTION(data, uid):            
         user = User.query.filter_by(id=uid).first()
         if user is None: return {}
 
         action = next(a for a in ACTIONS if a['name'] == data['action'])
-        if (not action['verify'](user) or not user.can_act()): return {'success': False}
+        if (user.is_busy() or not user.can_run(action)): return {'success': False}
 
         def callback():
             success = action['callback'](user)
@@ -161,6 +176,8 @@ def socket(ws):
                     completed_actions.append(action['name'])
 
                 user.completed = json.dumps(completed_actions)
+
+            on_action(user)
 
             # save user model to database
             db.session.merge(user)
@@ -178,15 +195,18 @@ def socket(ws):
 
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
-            
+
+    # read from the socket as long as the connection is open
     while True:
         try:
             message = ws.receive()
             data = json.loads(message)
             uid = jwt.decode(data['token'], app.secret_key)['id']
         except WebSocketError:
+            # they quit the connection, kill the socket
             return
         except:
+            # miscellaneous errors, ignore the message
             continue
 
         funcs = {

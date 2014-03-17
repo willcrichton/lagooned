@@ -1,5 +1,3 @@
-from messages import M
-
 ### Items framework ###
 ITEMS = []
 
