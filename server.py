@@ -2,7 +2,7 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
 from geventwebsocket import WebSocketError
-from actions import ACTIONS, CONSTRAINTS, sanitize_action
+from actions import ACTIONS, CONSTRAINTS, sanitize_action, on_action
 from constants import C
 import hashlib, uuid
 import jwt
@@ -26,33 +26,42 @@ sockets = Sockets(app)
 def tokenize(token):
     return jwt.encode({'id': token}, app.secret_key)
 
+# the User class is the heart of data storage on serverside
+# it uses SQLAlchemy to save all these fields to the SQLite db
+# and we store literally everything on the User table (woo fat tables)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(80))
     food = db.Column(db.Integer, default=0)
-    completed = db.Column(db.Text, default="[]")
-    current_action = db.Column(db.Text, default="{}")
-    log = db.Column(db.Text, default="[]")
-    items = db.Column(db.Text, default="{}")
+    completed = db.Column(db.Text, default='[]')
+    current_action = db.Column(db.Text, default='{}')
+    log = db.Column(db.Text, default='[]')
+    items = db.Column(db.Text, default='{}')
+    location = db.Column(db.String, default='LOCATION_START')
 
     def json(self):
         return {
             'id'        : self.id,
             'name'      : self.name,
             'food'      : self.food,
+            'location'  : C[self.location],
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
             'log'       : [C[v] for v in json.loads(self.log)][-C['LOG_MAX']:],
             'items'     : {C[k]: v for k,v in self.get_items().items()}
         }
 
-    # Potential actions
+    def save(self):
+        db.session.merge(self)
+        db.session.commit()
+
+    # List of potential actions
     def valid_actions(self):
         return [a for a in ACTIONS if self.can_run(a)]
     
-    # Completed actions
-    def done_actions(self, actions):
+    # Check if user has done all of the given list of actions
+    def has_done_actions(self, actions):
         completed = json.loads(self.completed)
         for action in actions:
             if not action in completed: return False
@@ -73,11 +82,13 @@ class User(db.Model):
     def get_current_action(self):
         return json.loads(self.current_action)
 
+    # Player is busy if they're performing an action
     def is_busy(self):
         current_action = self.get_current_action()
         if not 'start' in current_action: return False
         return time.time() - current_action['start'] < current_action['duration']
 
+    # Action is run if we can verify it AND passes all constraints
     def can_run(self, action):
         if not action['verify'](self): return False
 
@@ -86,7 +97,7 @@ class User(db.Model):
 
         return True
 
-    # Inventory
+    # Inventory helpers
     def get_items(self):
         return json.loads(self.items)
 
@@ -106,9 +117,6 @@ class User(db.Model):
         items[item] -= qty
         self.items = json.dumps(items)
 
-# for miscellaneous effects after an action is run
-def on_action(user):
-    user.food = max(user.food - 1, 0)
 
 
 @sockets.route('/socket')
@@ -152,9 +160,7 @@ def socket(ws):
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
             user.add_to_log('GAME_START')
-
-            db.session.add(user)
-            db.session.commit()
+            user.save()
 
             return user.json()
 
@@ -179,8 +185,7 @@ def socket(ws):
             on_action(user)
 
             # save user model to database
-            db.session.merge(user)
-            db.session.commit()
+            user.save()
 
             # send new user state to frontend
             ws.send(json.dumps({
@@ -189,9 +194,10 @@ def socket(ws):
             }))
 
         user.set_current_action(action)
-        db.session.merge(user)
-        db.session.commit()
+        user.save()
 
+        # spawn a thread to run the success callback after the action duration
+        # TODO: better way to do this besides threads? what about stopping early?
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
 

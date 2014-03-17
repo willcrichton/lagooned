@@ -29,7 +29,8 @@ define(function(require) {
         login: function(e) {
             e.preventDefault();
             this.$('#links').fadeOut(function() {
-                $('#input').fadeIn();
+                //$('#input').fadeIn();
+                alert('Go bug Will to implement this (or do it yourself!)');
             });
         },
 

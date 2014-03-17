@@ -8,6 +8,7 @@ define(function(require) {
             login: false,
             food: 0,
             log: [],
+            location: '',
             items: {}
         }
     });

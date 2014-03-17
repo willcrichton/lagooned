@@ -5,6 +5,10 @@ C = {
     'GAME_START': 'You wash up on a deserted island.',
     'LOG_MAX': 4,
 
+    # Locations
+    'LOCATION_START': 'empty beach',
+    'LOCATION_FOREST': 'dense rainforest',
+
     # Actions
     'ACT_SCAVENGE': 'Scavenge',
     'ACT_SCAVENGE_SUCCESS': 'You found some food lying around.',
