@@ -132,4 +132,4 @@ register_action('ACT_FIREWOOD', 3, firewood_callback, firewood_verify)
 def food_constraint(user, action):
     return user.food > 0 or action['name'] in ['ACT_SCAVENGE', 'ACT_COOK']
 
-register_constraint(food_constraint)        
+register_constraint(food_constraint)
