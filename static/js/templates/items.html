@@ -1,8 +1,6 @@
-<h1>Items</h1>
+<h1>Inventory</h1>
 <div class="content">
-  <ul>
-    {{#each items}}
-    <li>{{@key}}: {{this}}</li>
-    {{/each}}
-  </ul>
+  {{#each items}}
+  <div class="item {{@key}}" title="Here goes a thing">{{this}}</div>
+  {{/each}}
 </div>

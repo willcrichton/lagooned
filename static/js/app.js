@@ -18,6 +18,9 @@ define(function(require){
         TOKEN = localStorage.TOKEN;
     }
 
+    // set height of page to viewport size
+    $('body').css('height', window.innerHeight);
+
     // have our models sync up over websockets instead of using $.ajax
     Backbone.sync = function(method, model, options) {
         if (typeof options == 'function') {

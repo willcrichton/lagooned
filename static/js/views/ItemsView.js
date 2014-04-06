@@ -11,9 +11,23 @@ define(function(require) {
         },
 
         render: function() {
+            var items = GAME.me.get('items'); 
+            for (var k in items) {
+                items[k.toLowerCase()] = items[k];
+                delete items[k];
+            }
+
             this.$el.html(template({
-                items: GAME.me.get('items')
+                items: items
             }));
+
+            this.$('.item').qtip({
+                style: { classes: 'qtip-light' },
+                position: {
+                    my: 'top center',
+                    at: 'bottom center'
+                }
+            });
 
             return this;
         }
