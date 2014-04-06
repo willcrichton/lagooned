@@ -80,7 +80,7 @@ C = {
     'ITEM_FIREWOOD': 'Firewood',
         'ITEM_FIREWOOD_DESC': 'A hefty piece of dry wood.',
     'ITEM_DRIFTWOOD': 'Driftwood',
-        'ITEM_DRIFTWOOD_DESC': 'Lonley wood that has been on a long sea adventure.',
+        'ITEM_DRIFTWOOD_DESC': 'Lonely wood that has been on a long sea adventure.',
     'ITEM_TWIGS': 'Twigs',
         'ITEM_TWIGS_DESC': 'These are the twiggiest twigs you\'ve ever seen',
     'ITEM_MOSS': 'Dry Moss',
