@@ -20,7 +20,7 @@ body {
 }
 
 body.home {
-    background: url("/static/images/bg.jpg") no-repeat center -106px;
+    background: url("/static/images/beach.jpg") no-repeat center top;
     background-size: cover;
 }
 
@@ -205,15 +205,23 @@ a {
                 border-radius: 4px;
                 padding: 3px 5px;
                 cursor: pointer;
-                background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, transparent 0%);
+                background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0.3) 0%);
             }
         }
 
         #items {
-            ul {
-                list-style-position: inside;
-                li { font-size: 14px; }
+            .item {
+                width: 45px;
+                height: 48px;
+                padding-left: 3px;
+                float: left;
+                border: 1px solid white;
+                color: white;
+                text-shadow: 0 0 2px black;
+                cursor: pointer;
             }
+
+            .firewood { background-image: url('/static/images/branches1.png'); }
         }
     }
 

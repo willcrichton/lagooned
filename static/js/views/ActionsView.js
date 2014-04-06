@@ -40,7 +40,7 @@ define(function(require) {
             var timer = setInterval(_.bind(function() {
                 var diff = (new Date().getTime() - time) / 1000;
                 var percent = diff / this.curDuration * 100;
-                this.curTarget.css('background', 'linear-gradient(to right, rgba(0, 0, 0, 0.1) ' + percent + '%, transparent ' + percent + '%)')
+                this.curTarget.css('background', 'linear-gradient(to right, rgba(0, 0, 0, 0.1) ' + percent + '%, rgba(255, 255, 255, 0.3) ' + percent + '%)')
             }, this), 10);
 
             setTimeout(_.bind(function() {
