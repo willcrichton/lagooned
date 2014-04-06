@@ -19,6 +19,14 @@ C = {
     'ACT_SCAVENGE_SUCCESS': 'You found some food lying around.',
     'ACT_SCAVENGE_FAIL': 'You failed to find any food.',
 
+    'ACT_BUILD_FIRE': 'You start a small fire.',
+    
+    #Build tools
+    'ACT_BUILD_AXE': 'You fashion a crude axe from the material you collected previously.',
+    
+    #Build buildings
+    'ACT_BUILD_LEANTO': 'Tired of sleeping under the moon, you build a basic lean-to shelter.',
+
     'ACT_COOK': 'Cook',
     'ACT_COOK_SUCCESS': 'You cooked some food over a roaring fire.',
 
@@ -43,6 +51,13 @@ C = {
     'ACT_HUNT_SHEEP': 'Hunt sheep',
     'ACT_HUNT_SHEEP_SUCCESS': 'You gut a sheep as its dying baa rings in your ears.',
     'ACT_HUNT_SHEEP_FAIL': 'You try to tackle a sheep, but it baas and kicks off instead.',
+
+    # Actions: Gather Weapon
+    'ACT_WEAPON_GATHER': 'Look for weapon materials',
+    'ACT_WEAPON_GATHER_ROCK': 'You find badass rocks.',
+    'ACT_WEAPON_GATHER_CLAMSHELL': 'You step on some sharp clamshells and decide to take them.',
+    'ACT_WEAPON_GATHER_BRANCH': 'You picked up a formidable branch off the ground.',
+    'ACT_WEAPON_GATHER_BONES': 'You salvaged a sizable femur from a picked clean corpse.',
 
     # Random Events
     'RANDOM_WASHUP_SAIL': 'You notice a sail floating on the horizon.',
