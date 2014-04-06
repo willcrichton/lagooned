@@ -14,9 +14,9 @@ C = {
     'LOCATION_RUINS': 'scattered ruins',
 
 
-# --------------------------------------------
-#   ACTIONS
-# --------------------------------------------
+    # --------------------------------------------
+    #   ACTIONS
+    # --------------------------------------------
 
     # Move
     'ACT_MOVE_FOREST': 'You walk toward the trees and find yourself in a dense rainforest. The sound of running water flows from afar.',
@@ -78,44 +78,44 @@ C = {
     'RANDOM_TREASURE_GOLD': 'A glimmer catches your eye, and you discover an ingot of gold under a broken stone.',
 
 
-# --------------------------------------------
-#   ITEMS
-# --------------------------------------------
+    # --------------------------------------------
+    #   ITEMS
+    # --------------------------------------------
 
     'ITEM_FIREWOOD': 'Firewood',
-        'ITEM_FIREWOOD_DESC': 'A hefty piece of dry wood.',
+    'ITEM_FIREWOOD_DESC': 'A hefty piece of dry wood.',
     'ITEM_DRIFTWOOD': 'Driftwood',
-        'ITEM_DRIFTWOOD_DESC': 'Lonley wood that has been on a long sea adventure.',
+    'ITEM_DRIFTWOOD_DESC': 'Lonley wood that has been on a long sea adventure.',
     'ITEM_TWIGS': 'Twigs',
-        'ITEM_TWIGS_DESC': 'These are the twiggiest twigs you\'ve ever seen',
+    'ITEM_TWIGS_DESC': 'These are the twiggiest twigs you\'ve ever seen',
     'ITEM_MOSS': 'Dry Moss',
-        'ITEM_MOSS_DESC': 'Unlike other varieties, this moss is dry.',
+    'ITEM_MOSS_DESC': 'Unlike other varieties, this moss is dry.',
     'ITEM_BRANCHES': 'Branches',
-        'ITEM_BRANCHES_DESC': 'Branches can be useful for making tools, building fires, and more.',
+    'ITEM_BRANCHES_DESC': 'Branches can be useful for making tools, building fires, and more.',
 
     'ITEM_COCONUT': 'Coconut',
-        'ITEM_COCONUT_DESC': 'Every survival game needs these.',
+    'ITEM_COCONUT_DESC': 'Every survival game needs these.',
     'ITEM_BERRIES': 'Berries',
-        'ITEM_BERRIES_DESC': 'Delicious and sweet, these berries are great to eat.',
+    'ITEM_BERRIES_DESC': 'Delicious and sweet, these berries are great to eat.',
     'ITEM_SEA_GRASS': 'Sea Grass',
-        'ITEM_SEA_GRASS_DESC': 'Edible, but not your first choice.',
+    'ITEM_SEA_GRASS_DESC': 'Edible, but not your first choice.',
     'ITEM_FLOWERS': 'Flowers',
-        'ITEM_FLOWERS_DESC': 'Sweet smelling, but sweet tasting.',
+    'ITEM_FLOWERS_DESC': 'Sweet smelling, but sweet tasting.',
     'ITEM_CLAM': 'Clam',
-        'ITEM_CLAM_DESC': 'Clams are scrumptious, raw or cooked!',
+    'ITEM_CLAM_DESC': 'Clams are scrumptious, raw or cooked!',
 
     'ITEM_CRAB': 'Crab',
-        'ITEM_CRAB_DESC': 'A sizable chunk of crab meat and crab bits.',
+    'ITEM_CRAB_DESC': 'A sizable chunk of crab meat and crab bits.',
     'ITEM_SHEEP': 'Sheep',
-        'ITEM_SHEEP_DESC': 'Raw piece of sheep flesh.',
+    'ITEM_SHEEP_DESC': 'Raw piece of sheep flesh.',
 
     'ITEM_SAIL': 'Sail',
-        'ITEM_SAIL_DESC': 'A worn down but usable boat sail made of cotton.',
+    'ITEM_SAIL_DESC': 'A worn down but usable boat sail made of cotton.',
     'ITEM_ROPE': 'Rope',
-        'ITEM_ROPE_DESC': 'A rope woven from fibers.',
+    'ITEM_ROPE_DESC': 'A rope woven from fibers.',
     'ITEM_BOTTLE': 'Message-in-a-bottle',
-        'ITEM_BOTTLE_DESC': 'Looks like there\'s something inside...',
+    'ITEM_BOTTLE_DESC': 'Looks like there\'s something inside...',
     'ITEM_GOLD': 'Gold Nugget',
-        'ITEM_GOLD_DESC': 'Eureka! Shiny and valuable.',
+    'ITEM_GOLD_DESC': 'Eureka! Shiny and valuable.',
 
 }
