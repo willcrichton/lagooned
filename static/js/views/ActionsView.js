@@ -51,8 +51,18 @@ define(function(require) {
         },
 
         render: function() {
+            var actions = GAME.actions.toJSON();
+            var new_actions = {};
+            
+            actions.forEach(function(action) {
+                if (!new_actions[action.category]) 
+                    new_actions[action.category] = [];
+                
+                new_actions[action.category].push(action);
+            });
+
             this.$el.html(template({
-                actions: GAME.actions.toJSON()
+                actions: new_actions
             }));
 
             return this;

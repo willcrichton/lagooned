@@ -1,4 +1,3 @@
-
 # These are all the values for constants in the game, including
 # action labels, item names, success/failure responses, and so on.
 C = {
@@ -18,11 +17,14 @@ C = {
 #   ACTIONS
 # --------------------------------------------
 
+    # Categories
+    'CATEGORY_FOOD': 'Food',
+    'CATEGORY_MATERIALS': 'Materials',
+
     # Move
     'ACT_MOVE_FOREST': 'You walk toward the trees and find yourself in a dense rainforest. The sound of running water flows from afar.',
     'ACT_MOVE_RUINS': 'You find yourself in the scattered remains of an ancient building. Bricks and rotted wood lie buried in the sand.',
     'ACT_MOVE_START': 'You return to the beach and the ebbing shore.',
-
 
     # Scavenging / Foraging
     'ACT_FIREWOOD': 'Gather wood',
@@ -112,5 +114,4 @@ C = {
         'ITEM_BOTTLE_DESC': 'Looks like there\'s something inside...',
     'ITEM_GOLD': 'Gold Nugget',
         'ITEM_GOLD_DESC': 'Eureka! Shiny and valuable.',
-
 }

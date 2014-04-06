@@ -14,14 +14,16 @@ $font: 16px 'Minecraftia', 'Helvetica', 'Arial', sans-serif;
 * { padding: 0; margin: 0; outline: none; }
 
 body {
-    padding: 10px;
     background: #3A63B5;
     font: $font;
 }
 
-body.home {
-    background: url("/static/images/beach.jpg") no-repeat center top;
+#background {
+    width: 100%;
+    background: url('/static/images/beach.jpg');
     background-size: cover;
+    position: absolute;
+    z-index: -1;
 }
 
 a {
@@ -111,10 +113,10 @@ a {
 }
 
 #home {
-    //display: none;
-    margin: 0 auto;
+    margin: auto;
     width: 1030px;
     position: relative;
+    top: 30px;
 
     // each widget in the home screen is a .box
     $border: 4px solid white;
@@ -207,6 +209,16 @@ a {
                 cursor: pointer;
                 background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0.3) 0%);
             }
+
+            .section { 
+                float: left;
+                width: 200px;
+                
+                h2 { 
+                    font-size: 20px; 
+                    margin-bottom: 5px;
+                }
+            }
         }
 
         #items {
@@ -218,7 +230,7 @@ a {
                 border: 1px solid white;
                 color: white;
                 text-shadow: 0 0 2px black;
-                cursor: pointer;
+                cursor: help;
             }
 
             .firewood { background-image: url('/static/images/branches1.png'); }

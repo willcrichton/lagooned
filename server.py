@@ -49,7 +49,7 @@ class User(db.Model):
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
             'log'       : [C[v] for v in json.loads(self.log)][-C['LOG_MAX']:],
-            'items'     : {C[k]: v for k,v in self.get_items().items()}
+            'items'     : {C[k]: {'qty': v, 'desc': C['%s_DESC' % k]} for k,v in self.get_items().items()}
         }
 
     def save(self):
@@ -161,7 +161,7 @@ def socket(ws):
             user = User()
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
-            user.food = 0
+            user.food = 5
             user.completed = '[]'
             user.current_action = '{}'
             user.log = '[]'

@@ -86,6 +86,10 @@ define(function(require) {
             this.itemsView = new ItemsView().render();
             this.statsView = new StatsView().render();
 
+
+            // set height of bg to viewport size
+            this.$('#background').css('height', window.innerHeight);
+
             return this;
         }
     });

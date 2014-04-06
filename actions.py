@@ -55,6 +55,7 @@ def sanitize_action(action):
     return {
         'name': action['name'],
         'label': C[action['name']],
+        'category': C[action['category']],
         'duration': action['duration']
     }
 
@@ -92,7 +93,7 @@ def cook_callback(user):
 def cook_verify(user):
     return user.has_item('ITEM_FIREWOOD')
 
-register_action('ACT_COOK', 5, 'Cook', cook_callback, cook_verify)
+register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
 
 ## Firewood
@@ -107,9 +108,9 @@ def firewood_callback(user):
     return chance
 
 def firewood_verify(user):
-    return user.has_done_actions(['ACT_FIREWOOD'])
+    return True
 
-register_action('ACT_FIREWOOD', 3, 'Scavenge', firewood_callback, firewood_verify)
+register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
 
 

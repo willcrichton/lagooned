@@ -1,8 +1,13 @@
 <h1>Actions</h1>
 <div class="content">
-  <ul>
-    {{#each actions}}
-    <li><button class="btn btn-sm btn-primary action" data-action="{{name}}">{{label}} ({{duration}})</button></li>
-    {{/each}}
-  </ul>
+  {{#each actions}}
+  <div class="section">
+    <h2>{{@key}}</h2>
+    <ul>
+      {{#each this}}
+      <li><button class="btn btn-sm btn-primary action" data-action="{{name}}">{{label}} ({{duration}})</button></li>
+      {{/each}}
+    </ul>
+  </div>
+  {{/each}}
 </div>
