@@ -33,12 +33,12 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)                # unique identifier for each user
     name = db.Column(db.String(80), unique=True)                # handle that other players see
     password = db.Column(db.String(80))
-    food = db.Column(db.Integer, default=0)                     # amount of food a player has
-    completed = db.Column(db.Text, default='[]')                # list of completed actions
-    current_action = db.Column(db.Text, default='{}')           # name/duration of current action
-    log = db.Column(db.Text, default='[]')                      # list of all messages sent to user
-    items = db.Column(db.Text, default='{}')                    # list of all items user has (name/qty)
-    location = db.Column(db.String, default='LOCATION_START')   # current location of player
+    food = db.Column(db.Integer)                     # amount of food a player has
+    completed = db.Column(db.Text)                # list of completed actions
+    current_action = db.Column(db.Text)           # name/duration of current action
+    log = db.Column(db.Text)                      # list of all messages sent to user
+    items = db.Column(db.Text)                    # list of all items user has (name/qty)
+    location = db.Column(db.String(80))   # current location of player
 
     def json(self):
         return {
@@ -129,7 +129,7 @@ def socket(ws):
     # retrieving data from a model
     def GET(data, uid):
         if (data['className'] == 'User'):
-            
+
             # if they're trying to login: validate
             if (data['model']['login']):
                 try:
@@ -161,8 +161,16 @@ def socket(ws):
             user = User()
             user.name = data['model']['name']
             user.password = phash(data['model']['password'])
+            user.food = 0
+            user.completed = '[]'
+            user.current_action = '{}'
+            user.log = '[]'
+            user.items = '{}'
+            user.location = 'LOCATION_START'
             user.add_to_log('GAME_START')
-            user.save()
+            db.session.add(user)
+            db.session.flush()
+            db.session.commit()
 
             return user.json()
 
