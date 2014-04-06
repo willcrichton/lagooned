@@ -113,7 +113,7 @@ def firewood_callback(user):
     chance = random.random() > 0.4
     if chance:
         user.add_item('ITEM_FIREWOOD')
-        user.add_to_log('ACT_FIREWOOD_SUCCESS')
+        user.add_to_log('ACT_FIREWOOD_SUCCESS_TWIGS')
     else:
         user.add_to_log('ACT_FIREWOOD_FAIL')
 

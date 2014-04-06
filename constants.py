@@ -31,7 +31,7 @@ C = {
     'ACT_FORAGE': 'Forage for food',
     'ACT_FORAGE_SUCCESS_COCONUTS': 'You shook a tree, and a coconut fell to your feet.',
     'ACT_FORAGE_SUCCESS_BERRIES': 'You discovered some berries in a bush.',
-    'ACT_FORAGE_SUCCESS_SEA_GRASS': 'You yanked some slimy grass from the seabed.'
+    'ACT_FORAGE_SUCCESS_SEA_GRASS': 'You yanked some slimy grass from the seabed.',
     'ACT_FORAGE_SUCCESS_FLOWERS': 'You picked a bunch of sweet-smelling flowers.',
     'ACT_FORAGE_SUCCESS_CLAM': 'You found a clam lying on the seabed.',
     'ACT_FORAGE_FAIL': 'You failed to find any food.',
@@ -62,7 +62,7 @@ C = {
     'ITEM_COCONUT': 'Coconut',
     'ITEM_BERRIES': 'Berries',
     'ITEM_SEA_GRASS': 'Sea Grass',
-    'ITEM_FLOWERS': 'Flowers'
+    'ITEM_FLOWERS': 'Flowers',
     'ITEM_CLAM': 'Clam',
 
     'ITEM_CRAB': 'Crab',
