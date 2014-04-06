@@ -25,10 +25,6 @@ C = {
 
 
     # Scavenging / Foraging
-    'ACT_SCAVENGE': 'Scavenge',
-    'ACT_SCAVENGE_SUCCESS': 'You found some food lying around.',
-    'ACT_SCAVENGE_FAIL': 'You failed to find any food.',
-    
     'ACT_FIREWOOD': 'Gather wood',
     'ACT_FIREWOOD_SUCCESS_TWIGS': 'You gathered some twigs from the ground.',
     'ACT_FIREWOOD_SUCCESS_MOSS': 'You collected some dry moss growing on a trunk.',
@@ -56,14 +52,13 @@ C = {
     'ACT_WEAPON_GATHER_CLAMSHELL': 'You step on some sharp clamshells and decide to take them.',
     'ACT_WEAPON_GATHER_BRANCH': 'You picked up a formidable branch off the ground.',
     'ACT_WEAPON_GATHER_BONES': 'You salvaged a sizable femur from a picked clean corpse.',
-
-    'ACT_BUILD_FIRE': 'You start a small fire.',
     
     
     # Building / Crafting
-    'ACT_BUILD_AXE': 'You fashion a crude axe from the material you collected previously.',
-
+    'ACT_BUILD_FIRE': 'You start a small fire.',
     'ACT_BUILD_LEANTO': 'Tired of sleeping under the moon, you build a basic lean-to shelter.',
+    
+    'ACT_CRAFT_AXE': 'You fashion a crude axe from the material you collected previously.',
 
     'ACT_COOK': 'Cook',
     'ACT_COOK_SUCCESS': 'You cooked some food over a roaring fire.',

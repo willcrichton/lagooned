@@ -58,10 +58,13 @@ def sanitize_action(action):
         'duration': action['duration']
     }
 
-def register_action(name, duration, callback, verify):
+def register_action(name, duration, category, callback, verify):
     ACTIONS.append({
         'name': name,
         'duration': duration,
+        'category': category,
+            # Not shown: Success, Failure, Random_Event
+            # Shown: Travel, Forage (Food), Scavenge (Non-edible materials), Craft, Build, Cook     
         'callback': callback,
         'verify': verify
     })
@@ -77,22 +80,6 @@ def on_action(user):
 
 #### Individual actions ####
 
-## Scavenge
-def scavenge_callback(user):
-    chance = random.random() > 0.4
-    if chance:
-        user.food += 3
-        user.add_to_log('ACT_SCAVENGE_SUCCESS')
-    else:
-        user.add_to_log('ACT_SCAVENGE_FAIL')
-
-    return chance
-
-def scavenge_verify(user):
-    return True
-
-register_action('ACT_SCAVENGE', 1, scavenge_callback, scavenge_verify)
-
 
 ## Cook
 def cook_callback(user):
@@ -105,7 +92,7 @@ def cook_callback(user):
 def cook_verify(user):
     return user.has_item('ITEM_FIREWOOD')
 
-register_action('ACT_COOK', 5, cook_callback, cook_verify)
+register_action('ACT_COOK', 5, 'Cook', cook_callback, cook_verify)
 
 
 ## Firewood
@@ -120,9 +107,9 @@ def firewood_callback(user):
     return chance
 
 def firewood_verify(user):
-    return user.has_done_actions(['ACT_SCAVENGE'])
+    return user.has_done_actions(['ACT_FIREWOOD'])
 
-register_action('ACT_FIREWOOD', 3, firewood_callback, firewood_verify)
+register_action('ACT_FIREWOOD', 3, 'Scavenge', firewood_callback, firewood_verify)
 
 
 
@@ -130,6 +117,6 @@ register_action('ACT_FIREWOOD', 3, firewood_callback, firewood_verify)
 
 # User has to find/make food if they have none
 def food_constraint(user, action):
-    return user.food > 0 or action['name'] in ['ACT_SCAVENGE', 'ACT_COOK']
+    return user.food > 0 or action['name'] in ['ACT_FORAGE', 'ACT_COOK']
 
 register_constraint(food_constraint)
