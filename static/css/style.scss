@@ -20,22 +20,12 @@ body {
 }
 
 body.home {
-    background: url("/static/bg.jpg") no-repeat center -106px;
+    background: url("/static/images/bg.jpg") no-repeat center -106px;
     background-size: cover;
 }
 
 a {
     text-decoration: none;
-}
-
-// taken from http://codepen.io/lbebber/pen/xrwja
-@-webkit-keyframes wave-animation{
-    0%{background-position:0 bottom};
-    100%{background-position:200px bottom};
-}
-@-webkit-keyframes loading-animation{
-    0%{background-size:200px 0px};
-    100%{background-size:200px 200px};
 }
 
 #login {
@@ -54,13 +44,6 @@ a {
         bottom:0;
         display:block;
         color: white;
-        /*color: rgba(0, 0, 0, 0);
-          text-shadow: 0px 0px rgba(255,255,255,0.06);
-          background-image: url('/static/wave.png');
-          -webkit-background-clip: text;
-          -webkit-animation: wave-animation 1s infinite linear, loading-animation 10s infinite linear alternate;
-          background-size:200px 100px;
-          background-repeat:repeat-x;*/
         opacity: 1;
     }
 
