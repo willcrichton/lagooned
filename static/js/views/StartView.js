@@ -7,7 +7,7 @@ define(function(require) {
     return Backbone.View.extend({
         events: { 
             'click #start'  : 'start',
-            'click #login'  : 'login',
+            //'click #login'  : 'login',
             'keyup input'   : 'submit',
             'click #submit' : 'submit'
         },
@@ -17,8 +17,6 @@ define(function(require) {
         },
         
         start: function(e) {
-            e.preventDefault();
-
             // show new user form when they click "start"
             this.newUser = true;
             this.$('#links').fadeOut(function() {

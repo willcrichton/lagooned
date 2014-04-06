@@ -29,8 +29,6 @@ define(function(require) {
         onKeyup: function(key) {
             var $tab = this.$('#tabs-nav a.active');
 
-            console.log(key);
-
             // up arrow
             if (key == 38) {
                 var $newTab = $tab.prev();
