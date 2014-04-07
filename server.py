@@ -166,7 +166,7 @@ def socket(ws):
             user.current_action = '{}'
             user.log = '[]'
             user.items = '{}'
-            user.location = 'LOCATION_START'
+            user.location = 'LOCATION_BEACH'
             user.add_to_log('GAME_START')
             db.session.add(user)
             db.session.flush()

@@ -8,9 +8,9 @@ C = {
 
 
     # Locations
-    'LOCATION_START': 'empty beach',
-    'LOCATION_FOREST': 'dense rainforest',
-    'LOCATION_RUINS': 'scattered ruins',
+    'LOCATION_BEACH': 'beach',
+    'LOCATION_FOREST': 'forest',
+    'LOCATION_CAVE': 'cave',
 
 
 # --------------------------------------------
@@ -20,11 +20,15 @@ C = {
     # Categories
     'CATEGORY_FOOD': 'Food',
     'CATEGORY_MATERIALS': 'Materials',
+    'CATEGORY_MOVEMENT': 'Movement',
 
     # Move
-    'ACT_MOVE_FOREST': 'You walk toward the trees and find yourself in a dense rainforest. The sound of running water flows from afar.',
-    'ACT_MOVE_RUINS': 'You find yourself in the scattered remains of an ancient building. Bricks and rotted wood lie buried in the sand.',
-    'ACT_MOVE_START': 'You return to the beach and the ebbing shore.',
+    'ACT_MOVE_FOREST': 'Move to forest',
+    'ACT_MOVE_FOREST_SUCCESS': 'You walk toward the trees and find yourself in a dense rainforest. The sound of running water flows from afar.',
+    'ACT_MOVE_CAVE': 'Move to cave',
+    'ACT_MOVE_CAVE_SUCCESS': 'You find yourself at the opening to an enormous cave&mdash;you dare not venture further.',
+    'ACT_MOVE_BEACH': 'Move to beach',
+    'ACT_MOVE_BEACH_SUCCESS': 'You return to the beach and the ebbing shore.',
 
     # Scavenging / Foraging
     'ACT_FIREWOOD': 'Gather wood',

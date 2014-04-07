@@ -20,6 +20,9 @@ define(function(require) {
         initialize: function() {
             this.state = new HomeState();
             this.listenTo(this.state, 'change', this.changeTab);
+            this.listenTo(GAME.me, 'change', function() {
+                $('#background').attr('class', GAME.me.get('location'));
+            });
 
             $(document).keyup(_.bind(function(e) {
                 this.onKeyup(e.which);

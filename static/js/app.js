@@ -97,5 +97,7 @@ define(function(require){
             GAME.actions.fetch();
             appRouter.navigate('home', {trigger: true});
         }
+
+        $('#background').attr('class', GAME.me.get('location'));
     });
 });

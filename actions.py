@@ -82,7 +82,34 @@ def on_action(user):
 #### Individual actions ####
 
 
-## Cook
+## Food
+def forage_callback(user):
+    chance = random.random()
+    if user.location == 'LOCATION_BEACH':
+        if chance < 0.33:
+            user.add_item('ITEM_COCONUT')
+            user.add_to_log('ACT_FORAGE_SUCCESS_COCONUTS')
+        elif chance < 0.66:
+            user.add_item('ITEM_SEA_GRASS')
+            user.add_to_log('ACT_FORAGE_SUCCESS_SEA_GRASS')
+        else:
+            user.add_item('ITEM_CLAM')
+            user.add_to_log('ACT_FORAGE_SUCCESS_CLAMS')
+    else:
+        if chance < 0.5:
+            user.add_item('ITEM_BERRIES')
+            user.add_to_log('ACT_FORAGE_SUCCESS_BERRIES')
+        else:
+            user.add_item('ITEM_FLOWERS')
+            user.add_to_log('ACT_FORAGE_SUCCESS_FLOWERS')
+        
+    return True
+
+def forage_verify(user):
+    return True
+
+register_action('ACT_FORAGE', 3, 'CATEGORY_FOOD', forage_callback, forage_verify)
+
 def cook_callback(user):
     user.food += 10
     user.remove_item('ITEM_FIREWOOD')
@@ -112,6 +139,35 @@ def firewood_verify(user):
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
+
+## Movements
+def move_forest_callback(user):
+    user.location = 'LOCATION_FOREST'
+    user.add_to_log('ACT_MOVE_FOREST_SUCCESS')
+    return True
+
+def move_forest_verify(user):
+    return user.location != 'LOCATION_FOREST' and user.has_done_actions(['ACT_FORAGE'])
+
+def move_cave_callback(user):
+    user.location = 'LOCATION_CAVE'
+    user.add_to_log('ACT_MOVE_CAVE_SUCCESS')
+    return True
+
+def move_cave_verify(user):
+    return user.location != 'LOCATION_CAVE' and user.has_done_actions(['ACT_MOVE_FOREST'])
+
+def move_beach_callback(user):
+    user.location = 'LOCATION_BEACH'
+    user.add_to_log('ACT_MOVE_BEACH_SUCCESS')
+    return True
+
+def move_beach_verify(user):
+    return user.location != 'LOCATION_BEACH'
+
+register_action('ACT_MOVE_BEACH', 3, 'CATEGORY_MOVEMENT', move_beach_callback, move_beach_verify)
+register_action('ACT_MOVE_FOREST', 3, 'CATEGORY_MOVEMENT', move_forest_callback, move_forest_verify)
+register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, move_cave_verify)
 
 
 #### Action Constraints ####

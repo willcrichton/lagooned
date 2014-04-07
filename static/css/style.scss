@@ -20,11 +20,15 @@ body {
 
 #background {
     width: 100%;
-    background: url('/static/images/beach.jpg');
     background-size: cover;
     position: absolute;
     z-index: -1;
+    transition: background-image 0.7s ease-in-out;
 }
+
+#background.beach { background-image: url('/static/images/beach.jpg'); }
+#background.forest { background-image: url('/static/images/forest.jpg'); }
+#background.cave { background-image: url('/static/images/cave.jpg'); }
 
 a {
     text-decoration: none;
@@ -63,7 +67,7 @@ a {
                 color: white;
                 font-size: 36px;
                 padding: 0 20px;
-                -webkit-transition: 0.2s all;
+                transition: 0.2s all;
                 opacity: 0.8;
             }
 
@@ -134,7 +138,7 @@ a {
         }
 
         .content {
-            padding: 15px;
+            padding: 10px;
             overflow: auto;
         }
     }
@@ -231,13 +235,19 @@ a {
                 color: white;
                 text-shadow: 0 0 2px black;
                 cursor: help;
+                margin-right: 10px;
+                background-size: 40px 40px;
+                background-repeat: no-repeat;
+                background-position: center center;
             }
 
             .firewood { background-image: url('/static/images/branches1.png'); }
+            .coconut { background-image: url('http://icons.iconarchive.com/icons/fi3ur/fruitsalad/256/coconut-icon.png'); }
+            .seagrass { background-image: url('http://img2.wikia.nocookie.net/__cb20130227113414/farmville/images/4/4b/Seaweed-icon.png'); }
         }
     }
 
-    $diff: 68px;
+    $diff: 72px;
     $topHeight: 150px;
     #log {
         width: 800px;
