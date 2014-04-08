@@ -21,7 +21,10 @@ define(function(require) {
             this.state = new HomeState();
             this.listenTo(this.state, 'change', this.changeTab);
             this.listenTo(GAME.me, 'change', function() {
-                $('#background').attr('class', GAME.me.get('location'));
+                var location = GAME.me.get('location');
+                if (location == '') return;
+
+                $('#background').attr('class', location);
             });
 
             $(document).keyup(_.bind(function(e) {

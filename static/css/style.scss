@@ -241,14 +241,19 @@ a {
                 background-position: center center;
             }
 
-            .firewood { background-image: url('/static/images/branches1.png'); }
+            .twigs { background-image: url('/static/images/branches1.png'); }
+            .driftwood { background-image: url('/static/images/driftwood1.png'); }
             .coconut { background-image: url('http://icons.iconarchive.com/icons/fi3ur/fruitsalad/256/coconut-icon.png'); }
             .seagrass { background-image: url('http://img2.wikia.nocookie.net/__cb20130227113414/farmville/images/4/4b/Seaweed-icon.png'); }
+            .clam { background-image: url('/static/images/clam.png'); }
+            .flowers { background-image: url('http://img1.wikia.nocookie.net/__cb20120204044002/battlefordreamisland/images/archive/3/34/20131221032657!Flower_Icon.png'); }
+            .sheep { background-image: url('/static/images/sheepflank.png'); }
+            .berries { background-image: url('/static/images/berries.png'); }
         }
     }
 
     $diff: 72px;
-    $topHeight: 150px;
+    $topHeight: 155px;
     #log {
         width: 800px;
         height: $topHeight;

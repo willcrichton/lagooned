@@ -110,6 +110,22 @@ def forage_verify(user):
 
 register_action('ACT_FORAGE', 3, 'CATEGORY_FOOD', forage_callback, forage_verify)
 
+def hunt_callback(user):
+    chance = random.random() 
+    animal = 'CRAB' if user.location == 'LOCATION_BEACH' else 'SHEEP'
+    if chance > 0.7:
+        user.add_item('ITEM_%s' % animal)
+        user.add_to_log('ACT_HUNT_%s_SUCCESS' % animal)
+        return True
+    else:
+        user.add_to_log('ACT_HUNT_%s_FAIL' % animal)
+        return False
+
+def hunt_verify(user):
+    return True
+
+register_action('ACT_HUNT', 3, 'CATEGORY_FOOD', hunt_callback, hunt_verify)
+
 def cook_callback(user):
     user.food += 10
     user.remove_item('ITEM_FIREWOOD')
@@ -125,20 +141,52 @@ register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
 ## Firewood
 def firewood_callback(user):
-    chance = random.random() > 0.4
-    if chance:
-        user.add_item('ITEM_FIREWOOD')
-        user.add_to_log('ACT_FIREWOOD_SUCCESS_TWIGS')
-    else:
+    if user.location == 'LOCATION_CAVE':
         user.add_to_log('ACT_FIREWOOD_FAIL')
+        return False
+    elif user.location == 'LOCATION_FOREST':
+        chance = random.random()
+        if chance < 0.33:
+            user.add_item('ITEM_TWIGS')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_TWIGS')
+        elif chance < 0.66:
+            user.add_item('ITEM_MOSS')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_MOSS')
+        else:
+            user.add_item('ITEM_BRANCHES')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_BRANCHES')
+    else:
+        user.add_item('ITEM_DRIFTWOOD')
+        user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
 
-    return chance
+    return True
 
 def firewood_verify(user):
     return True
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
+
+## Shelter
+def build_leanto_callback(user):
+    items = user.get_items()
+    wood_totals = {k: user.num_of_item(k) for k in ['ITEM_TWIGS', 'ITEM_DRIFTWOOD', 'ITEM_BRANCHES']}
+    for i in range(0, 4):
+        for k in wood_totals:
+            if wood_totals[k] > 0: 
+                wood_totals[k] -= 1
+                user.remove_item(k, 1)
+                break
+    
+    # TODO: state indicating lean-to
+    user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
+    return True
+
+def build_leanto_verify(user):
+    total_wood = user.num_of_items(['ITEM_TWIGS', 'ITEM_DRIFTWOOD', 'ITEM_BRANCHES'])
+    return total_wood >= 4
+
+register_action('ACT_BUILD_LEANTO', 10, 'CATEGORY_BUILDING', build_leanto_callback, build_leanto_verify)
 
 ## Movements
 def move_forest_callback(user):
@@ -174,6 +222,8 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 
 # User has to find/make food if they have none
 def food_constraint(user, action):
-    return user.food > 0 or action['name'] in ['ACT_FORAGE', 'ACT_COOK']
+    food = ['ITEM_COCONUT', 'ITEM_BERRIES', 'ITEM_SEA_GRASS', 'ITEM_CLAM']
+    actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST']
+    return user.num_of_items(food) > 0 or action['name'] in actions
 
 register_constraint(food_constraint)

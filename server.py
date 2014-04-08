@@ -117,7 +117,12 @@ class User(db.Model):
         items[item] -= qty
         self.items = json.dumps(items)
 
+    def num_of_item(self, item):
+        items = self.get_items()
+        return items[item] if item in items else 0
 
+    def num_of_items(self, item_list):
+        return sum([self.num_of_item(item) for item in item_list])
 
 @sockets.route('/socket')
 def socket(ws):
