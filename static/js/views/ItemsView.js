@@ -13,7 +13,10 @@ define(function(require) {
         render: function() {
             var items = GAME.me.get('items'); 
             for (var k in items) {
-                items[k.toLowerCase().replace(' ', '')] = items[k];
+                if (items[k].qty > 0) {
+                    items[k.toLowerCase().replace(' ', '')] = items[k];
+                }
+
                 delete items[k];
             }
 

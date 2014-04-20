@@ -106,6 +106,14 @@ class User(db.Model):
         if not item in items: return False
         return items[item] >= qty
 
+    def has_items(self, items, qty=1):
+        my_items = self.get_items()
+        count = 0
+        for item in items:
+            if not item in my_items: continue
+            count += my_items[item]
+        return count >= qty
+    
     def add_item(self, item):
         items = self.get_items()
         if not item in items: items[item] = 0

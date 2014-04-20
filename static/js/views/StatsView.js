@@ -11,7 +11,12 @@ define(function(require) {
         },
 
         render: function() {
-            this.$el.html(template(GAME.me.toJSON()));
+            var food = GAME.me.get('food');
+            if (food == 0) food = "Starving";
+            else if (food < 5) food = "Hungry";
+            else if (food < 10) food = "Normal";
+            else food = "Satisfied";
+            this.$el.html(template({food: food}));
             return this;
         }
     });

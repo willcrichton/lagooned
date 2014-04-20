@@ -81,7 +81,6 @@ def on_action(user):
 
 #### Individual actions ####
 
-
 ## Food
 def forage_callback(user):
     chance = random.random()
@@ -126,17 +125,59 @@ def hunt_verify(user):
 
 register_action('ACT_HUNT', 3, 'CATEGORY_FOOD', hunt_callback, hunt_verify)
 
-def cook_callback(user):
-    user.food += 10
-    user.remove_item('ITEM_FIREWOOD')
-    user.add_to_log('ACT_COOK_SUCCESS')
+VEGGIES = ['ITEM_COCONUT', 'ITEM_BERRIES', 'ITEM_SEA_GRASS', 'ITEM_FLOWERS']
+def eat_veggies_callback(user):
+    for veggie in VEGGIES:
+        if user.has_item(veggie):
+            user.remove_item(veggie)
+            user.food += 3
+            user.add_to_log(veggie + '_EAT')
+            return True
 
-    return True
+    return False
+
+def eat_veggies_verify(user):
+    return user.has_items(VEGGIES)
+
+register_action('ACT_EAT_VEGGIES', 2, 'CATEGORY_FOOD', eat_veggies_callback, eat_veggies_verify)
+
+MEAT = ['ITEM_CLAM', 'ITEM_CRAB', 'ITEM_SHEEP']
+def eat_uncooked_callback(user):
+    for meat in MEAT:
+        if user.has_item(meat):
+            user.remove_item(meat)
+            user.food += 5
+            user.add_to_log(meat + '_EAT_UNCOOKED')
+            return True
+
+    return False
+
+def eat_uncooked_verify(user):
+    return user.has_items(MEAT)
+
+register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
+
+WOOD = ['ITEM_DRIFTWOOD', 'ITEM_TWIGS', 'ITEM_MOSS', 'ITEM_BRANCHES']
+def cook_callback(user):
+    for meat in MEAT:
+        if not user.has_item(meat): continue
+        user.remove_item(meat)
+        
+        for wood in WOOD:
+            if not user.has_item(wood): continue
+
+            user.remove_item(wood)
+            user.food += 15
+            user.add_to_log(meat + '_EAT_COOKED')
+            return True
+
+    return False
 
 def cook_verify(user):
-    return user.has_item('ITEM_FIREWOOD')
+    return user.has_items(WOOD) and user.has_items(MEAT)
 
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
+
 
 
 ## Firewood
@@ -175,7 +216,7 @@ def build_leanto_callback(user):
         for k in wood_totals:
             if wood_totals[k] > 0: 
                 wood_totals[k] -= 1
-                user.remove_item(k, 1)
+                user.remove_item(k)
                 break
     
     # TODO: state indicating lean-to
@@ -222,8 +263,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 
 # User has to find/make food if they have none
 def food_constraint(user, action):
-    food = ['ITEM_COCONUT', 'ITEM_BERRIES', 'ITEM_SEA_GRASS', 'ITEM_CLAM']
-    actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST']
-    return user.num_of_items(food) > 0 or action['name'] in actions
+    actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_RAW', 'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
+    return user.food > 0 or action['name'] in actions
 
 register_constraint(food_constraint)

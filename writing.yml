@@ -10,7 +10,7 @@ LOCATION_CAVE: cave
 # Categories
 CATEGORY_FOOD: Food
 CATEGORY_MATERIALS: Materials
-CATEGORY_MOVEMENT: Movement 
+CATEGORY_MOVEMENT: Travel
 CATEGORY_BUILDING: Building
 
 # --------------------------------------------
@@ -18,9 +18,9 @@ CATEGORY_BUILDING: Building
 # --------------------------------------------
 
 ACT_MOVE_FOREST: Move to forest
-ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest. The sound of running water flows from afar.
+ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest.
 ACT_MOVE_CAVE: Move to cave
-ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave&mdash;you dare not venture further.
+ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave.
 ACT_MOVE_BEACH: Move to beach
 ACT_MOVE_BEACH_SUCCESS: You return to the beach and the ebbing shore.
 
@@ -52,16 +52,16 @@ ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to tak
 ACT_WEAPON_GATHER_BRANCH: You picked up a formidable branch off the ground.
 ACT_WEAPON_GATHER_BONES: You salvaged a sizable femur from a picked clean corpse.
 
+ACT_EAT_VEGGIES: Eat vegetation
+ACT_EAT_UNCOOKED: Eat uncooked meat
+ACT_COOK: Cook meat
 
 # Building / Crafting
 ACT_BUILD_FIRE: You start a small fire.
 ACT_BUILD_LEANTO: Build a lean-to
-ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon you build a basic lean-to shelter.
+ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter.
 
 ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
-
-ACT_COOK: Cook
-ACT_COOK_SUCCESS: You cooked some food over a roaring fire.
 
 
 # Random Events
@@ -88,19 +88,29 @@ ITEM_BRANCHES_DESC: Branches can be useful for making tools building fires and m
 
 ITEM_COCONUT: Coconut
 ITEM_COCONUT_DESC: Every survival game needs these.
+ITEM_COCONUT_EAT: You ate some coconut. #todo
 ITEM_BERRIES: Berries
 ITEM_BERRIES_DESC: Delicious and sweet these berries are great to eat.
+ITEM_BERRIES_EAT: You ate some berries. #todo
 ITEM_SEA_GRASS: Sea Grass
 ITEM_SEA_GRASS_DESC: Edible but not your first choice.
+ITEM_SEA_GRASS_EAT: You ate some sea grass. #todo
 ITEM_FLOWERS: Flowers
-ITEM_FLOWERS_DESC: Sweet smelling but sweet tasting.
+ITEM_FLOWERS_DESC: Sweet smelling and sweet tasting.
+ITEM_FLOWERS_EAT: You ate some flowers. #todo
+
 ITEM_CLAM: Clam
 ITEM_CLAM_DESC: Clams are scrumptious raw or cooked!
-
+ITEM_CLAM_EAT_UNCOOKED: You ate some uncooked clams. #todo
+ITEM_CLAM_EAT_COOKED: You start a fire and cook some clams. #todo
 ITEM_CRAB: Crab
-ITEM_CRAB_DESC: A sizable chunk of crab meat and crab bits.
+ITEM_CRAB_DESC: A sizable chunk of crab meat and crab bits
+ITEM_CRAB_EAT_UNCOOKED: You ate some uncooked crabs. #todo.
+ITEM_CRAB_EAT_COOKED: You start a fire and cook some crab. #todo
 ITEM_SHEEP: Sheep
 ITEM_SHEEP_DESC: Raw piece of sheep flesh.
+ITEM_SHEEP_EAT_UNCOOKED: You ate some uncooked sheep meat. #todo.
+ITEM_SHEEP_EAT_COOKED: You start a fire and cook some sheep. #todo
 
 ITEM_SAIL: Sail
 ITEM_SAIL_DESC: A worn down but usable boat sail made of cotton.
