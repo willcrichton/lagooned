@@ -13,16 +13,12 @@ CATEGORY_MATERIALS: Materials
 CATEGORY_MOVEMENT: Travel
 CATEGORY_BUILDING: Building
 
-# Hunger
-HUNGER_HUNGRY: Your stomach grumbles.
-HUNGER_STARVING: You need to find food.
-
 # --------------------------------------------
 #   ACTIONS
 # --------------------------------------------
 
 ACT_MOVE_FOREST: Move to forest
-ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest.
+ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense forest.
 ACT_MOVE_CAVE: Move to cave
 ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave.
 ACT_MOVE_BEACH: Move to beach
@@ -53,8 +49,9 @@ ACT_HUNT_SHEEP_FAIL: You try to tackle a sheep but it baas and kicks off instead
 ACT_WEAPON_GATHER: Look for weapon materials
 ACT_WEAPON_GATHER_ROCK: You find badass rocks.
 ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to take them.
-ACT_WEAPON_GATHER_BRANCH: You picked up a formidable branch off the ground.
+ACT_WEAPON_GATHER_STICK: You picked up a formidable stick off the ground.
 ACT_WEAPON_GATHER_BONES: You salvaged a sizable femur from a picked clean corpse.
+ACT_WEAPON_GATHER_FAIL: You failed to find anything deadly.
 
 ACT_EAT_VEGGIES: Eat vegetation
 ACT_EAT_UNCOOKED: Eat uncooked meat
@@ -82,45 +79,54 @@ RANDOM_TREASURE_GOLD: A glimmer catches your eye and you discover an ingot of go
 # --------------------------------------------
 
 ITEM_DRIFTWOOD: Driftwood
-ITEM_DRIFTWOOD_DESC: Lonely wood that has been on a long sea adventure.
+ITEM_DRIFTWOOD_DESC: Driftwood: Lonely wood that has been on a long sea adventure.
 ITEM_TWIGS: Twigs
-ITEM_TWIGS_DESC: "These are the twiggiest twigs you've ever seen."
+ITEM_TWIGS_DESC: Twigs: The twiggiest twigs you've ever seen.
 ITEM_MOSS: Dry Moss
-ITEM_MOSS_DESC: Unlike other varieties this moss is dry.
+ITEM_MOSS_DESC: Dry Moss: So dry, so sad.
 ITEM_BRANCHES: Branches
-ITEM_BRANCHES_DESC: Branches can be useful for making tools building fires and more.
+ITEM_BRANCHES_DESC: Branches: Useful for making tools, building fires, and more.
 
 ITEM_COCONUT: Coconut
-ITEM_COCONUT_DESC: Every survival game needs these.
-ITEM_COCONUT_EAT: You ate some coconut. #todo
+ITEM_COCONUT_DESC: Coconut: Every survival game needs these.
+ITEM_COCONUT_EAT: You ate a coconut. #todo
 ITEM_BERRIES: Berries
-ITEM_BERRIES_DESC: Delicious and sweet these berries are great to eat.
+ITEM_BERRIES_DESC: Berries: Delicious,sweet, and great to eat.
 ITEM_BERRIES_EAT: You ate some berries. #todo
 ITEM_SEA_GRASS: Sea Grass
-ITEM_SEA_GRASS_DESC: Edible but not your first choice.
+ITEM_SEA_GRASS_DESC: Sea Grass: Edible but not your first choice.
 ITEM_SEA_GRASS_EAT: You ate some sea grass. #todo
 ITEM_FLOWERS: Flowers
-ITEM_FLOWERS_DESC: Sweet smelling and sweet tasting.
+ITEM_FLOWERS_DESC: Flowers: Sweet smelling and sweet tasting.
 ITEM_FLOWERS_EAT: You ate some flowers. #todo
 
 ITEM_CLAM: Clam
-ITEM_CLAM_DESC: Clams are scrumptious raw or cooked!
+ITEM_CLAM_DESC: Clam: Scrumptious raw or cooked!
 ITEM_CLAM_EAT_UNCOOKED: You ate some uncooked clams. #todo
 ITEM_CLAM_EAT_COOKED: You start a fire and cook some clams. #todo
 ITEM_CRAB: Crab
-ITEM_CRAB_DESC: A sizable chunk of crab meat and crab bits
+ITEM_CRAB_DESC: Crab: A sizable chunk meat and bits.
 ITEM_CRAB_EAT_UNCOOKED: You ate some uncooked crabs. #todo.
 ITEM_CRAB_EAT_COOKED: You start a fire and cook some crab. #todo
 ITEM_SHEEP: Sheep
-ITEM_SHEEP_DESC: Raw piece of sheep flesh.
+ITEM_SHEEP_DESC: Raw sheep: A perfect cube of sheep flesh.
 ITEM_SHEEP_EAT_UNCOOKED: You ate some uncooked sheep meat. #todo.
 ITEM_SHEEP_EAT_COOKED: You start a fire and cook some sheep. #todo
 
+ITEM_ROCK: Rock
+ITEM_ROCK_DESC: Rock: Looks lethal, but hard to use.
+ITEM_CLAMSHELL: Clamshell
+ITEM_CLAMSHELL_DESC: Clamshell: Sharp shards of a hard shell.
+ITEM_BONE: Bone
+ITEM_BONE_DESC: Bone: A sizable femur from a picked clean corpse.
+ITEM_STICK: Stick
+ITEM_STICK_DESC: Stick: Great handle on this thing.
+
 ITEM_SAIL: Sail
-ITEM_SAIL_DESC: A worn down but usable boat sail made of cotton.
+ITEM_SAIL_DESC: Sail: A worn down but usable boat sail made of cotton.
 ITEM_ROPE: Rope
-ITEM_ROPE_DESC: A rope woven from fibers.
+ITEM_ROPE_DESC: Rope: Woven from fibers.
 ITEM_BOTTLE: Message-in-a-bottle
-ITEM_BOTTLE_DESC: "Looks like there's something inside..."
+ITEM_BOTTLE_DESC: Message-in-a-bottle: Something is inside...
 ITEM_GOLD: Gold Nugget
-ITEM_GOLD_DESC: Eureka! Shiny and valuable.
+ITEM_GOLD_DESC: Gold Nugget: Eureka!
