@@ -1,4 +1,4 @@
-''' 
+'''
 ******* ABRIDGED GUIDE TO DEVELOPING FOR LAGOONED ********
 Please take a moment to read this!
 
@@ -6,7 +6,7 @@ Please take a moment to read this!
 * The client and server communicate through a WEBSOCKET (see: the socket function in server.py).
 
 * The server keeps track of all data in a SQLite database. We abstract this in the USER class.
-  The User class contains all relevant data about a user (and helper functions!). See the implementation 
+  The User class contains all relevant data about a user (and helper functions!). See the implementation
   inside of server.py for more details. It's as simple as: user.food += 1; user.save();
   But don't forget to save!!
 
@@ -19,7 +19,7 @@ Please take a moment to read this!
     (e.g. you eat some food after every action).
 
 * The constants.py file keeps track of game messages, item/action names, and more. If you're adding
-  to the log, for example, you add the name of the message (e.g 'ACT_COOK_SUCCESS') instead of the 
+  to the log, for example, you add the name of the message (e.g 'ACT_COOK_SUCCESS') instead of the
   name itself (e.g. 'You cooked some meat.').
 
 * The items.py file is like the actions.py file and has helper functions for the items system.
@@ -30,7 +30,7 @@ Please take a moment to read this!
 
 -- CLIENT ARCHITECTURE --
 * The interface is split up into VIEWS. Each view corresponds to an element on the page, like the statistics
-  pane, or the actions panel. Each view updates whenever the User data changes. After every action, the User 
+  pane, or the actions panel. Each view updates whenever the User data changes. After every action, the User
   is notified of all changes to the User model, and all views update accordingly.
 
 * You may notice the default html (/templates/index.jinja2) has no HTML in the body. The HTML comes from
@@ -65,7 +65,7 @@ def register_action(name, duration, category, callback, verify):
         'duration': duration,
         'category': category,
             # Not shown: Success, Failure, Random_Event
-            # Shown: Travel, Forage (Food), Scavenge (Non-edible materials), Craft, Build, Cook     
+            # Shown: Travel, Forage (Food), Scavenge (Non-edible materials), Craft, Build, Cook
         'callback': callback,
         'verify': verify
     })
@@ -101,7 +101,7 @@ def forage_callback(user):
         else:
             user.add_item('ITEM_FLOWERS')
             user.add_to_log('ACT_FORAGE_SUCCESS_FLOWERS')
-        
+
     return True
 
 def forage_verify(user):
@@ -110,7 +110,7 @@ def forage_verify(user):
 register_action('ACT_FORAGE', 3, 'CATEGORY_FOOD', forage_callback, forage_verify)
 
 def hunt_callback(user):
-    chance = random.random() 
+    chance = random.random()
     animal = 'CRAB' if user.location == 'LOCATION_BEACH' else 'SHEEP'
     if chance > 0.7:
         user.add_item('ITEM_%s' % animal)
@@ -162,7 +162,7 @@ def cook_callback(user):
     for meat in MEAT:
         if not user.has_item(meat): continue
         user.remove_item(meat)
-        
+
         for wood in WOOD:
             if not user.has_item(wood): continue
 
@@ -210,7 +210,7 @@ def weapon_gather_callback(user):
             user.add_to_log('ACT_WEAPON_GATHER_ROCK')
         else:
             user.add_to_log('ACT_WEAPON_GATHER_FAIL')
-        
+
     return True
 
 def weapon_gather_verify(user):
@@ -254,11 +254,11 @@ def build_leanto_callback(user):
     wood_totals = {k: user.num_of_item(k) for k in ['ITEM_TWIGS', 'ITEM_DRIFTWOOD', 'ITEM_BRANCHES']}
     for i in range(0, 4):
         for k in wood_totals:
-            if wood_totals[k] > 0: 
+            if wood_totals[k] > 0:
                 wood_totals[k] -= 1
                 user.remove_item(k)
                 break
-    
+
     # TODO: state indicating lean-to
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
     return True
