@@ -216,7 +216,7 @@ def weapon_gather_callback(user):
 def weapon_gather_verify(user):
     return True
 
-register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_SCAVENGE', weapon_gather_callback, weapon_gather_verify)
+register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_MATERIALS', weapon_gather_callback, weapon_gather_verify)
 
 
 

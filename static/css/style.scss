@@ -14,7 +14,7 @@ $font: 16px 'Minecraftia', 'Helvetica', 'Arial', sans-serif;
 * { padding: 0; margin: 0; outline: none; }
 
 body {
-    background: #3A63B5;
+    background: white;
     font: $font;
 }
 
@@ -48,16 +48,18 @@ a {
         position:absolute;
         left:0;
         right:0;
-        top:100px;
+        top:250px;
         bottom:0;
         display:block;
         color: white;
         opacity: 1;
+        text-shadow: 0 0 100px black;
     }
 
     #center {
+        text-shadow: 0 0 2px black;
         position: absolute;
-        top: 250px;
+        top: 400px;
         left: 0;
         right: 0;
         bottom: 0;
@@ -101,7 +103,7 @@ a {
 }
 
 #intro {
-    color: white;
+    color: #888;
     position: absolute;
     top: 0;
     left: 0;
@@ -196,7 +198,7 @@ a {
             background-position: center center;
         }
 
-        .content { min-height: 70px; }
+        .content { min-height: 48px; }
         
         .twigs { background-image: url('/static/images/branches1.png'); }
         .driftwood { background-image: url('/static/images/driftwood1.png'); }
