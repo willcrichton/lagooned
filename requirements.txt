@@ -5,3 +5,4 @@ flask-sockets
 gunicorn
 pyjwt
 pysqlite
+pyyaml

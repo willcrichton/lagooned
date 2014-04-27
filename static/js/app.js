@@ -100,4 +100,13 @@ define(function(require){
 
         $('#background').attr('class', GAME.me.get('location'));
     });
+
+    function prefetch(srcs) {
+        for (var i = 0; i < srcs.length; i++) {
+            var img = new Image();
+            img.src = '/static/images/' + srcs[i];
+        }
+    }
+
+    prefetch(['cave.jpg', 'forest.jpg', 'beach.jpg'])
 });

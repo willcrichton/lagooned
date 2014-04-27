@@ -193,7 +193,7 @@ def socket(ws):
         if user is None: return {}
 
         action = next(a for a in ACTIONS if a['name'] == data['action'])
-        if (user.is_busy() or not user.can_run(action)): return {'success': False}
+        if (not user.can_run(action)): return {'success': False}
 
         def callback():
             success = action['callback'](user)

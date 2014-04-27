@@ -6,11 +6,11 @@ A game brought to you by CMU's [Game Creation Society](http://www.gamecreation.o
 Setup
 ------
 1. Install [pip](http://www.pip-installer.org/en/latest/), [npm](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager), [bower](http://bower.io/), and [sass](http://sass-lang.com/install).
-2. Clone this repository: `git clone git@github.com:willcrichton/lagooned.git`
+2. Clone this repo: `git clone git@github.com:willcrichton/lagooned.git`
 3. Run `cd lagooned`
-4. Run `bower install` and `pip install -r requirements.txt`.
+4. Run `./setup.sh`
 5. Run `./run.sh`
-6. In your browser, go to [localhost:5000](http://localhost:5000).
+6. Visit [localhost:5000](http://localhost:5000).
 
 Styling
 ------
