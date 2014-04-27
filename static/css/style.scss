@@ -21,6 +21,8 @@ body {
 #background {
     width: 100%;
     background-size: cover;
+    left: 0;
+    top: 0;
     position: absolute;
     z-index: -1;
     transition: background-image 0.7s ease-in-out;
@@ -123,17 +125,16 @@ a {
     top: 30px;
 
     // each widget in the home screen is a .box
-    $border: 4px solid white;
+    $border: 3px solid rgba(255, 255, 255, 0.8);
     $bg: rgba(255, 255, 255, 0.4);
     $bg-highlight: rgba(255, 255, 255, 0.8);
     .box {
         border: $border;
-        position: absolute;
         background: $bg;
         
         h1 {
             border-bottom: $border;
-            font-size: 24px;
+            font-size: 20px;
             padding: 5px 10px;
         }
 
@@ -142,145 +143,96 @@ a {
             overflow: auto;
         }
     }
-    
-    #tabs-nav {
-        position: absolute;
-        left: 0;
-        top: 175px;
-        width: 125px;
-        border: $border;
+
+    #column {
+        float: left;
+    }
+
+    #actions {
+        margin-bottom: 20px;
+        ul {
+            list-style: none;
+            padding-left: 0;
+            
+            li {
+                margin-bottom: 3px;
+            }
+        }
         
-        a {
-            display: block;
-            background: $bg;
-            color: black;
-            padding: 5px 10px;
-            border-bottom: $border;
+        button {
+            font: $font;
+            font-size: 14px;
+            border: 1px solid #888;
+            border-radius: 4px;
+            padding: 3px 5px;
+            cursor: pointer;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0.3) 0%);
         }
-
-        a:last-child {
-            border-bottom: 0;
-        }
-
-        a.active {
-            background: $bg-highlight;
+        
+        .section { 
+            float: left;
+            width: 200px;
+            
+            h2 { 
+                font-size: 16px; 
+                margin-bottom: 5px;
+            }
         }
     }
-
-    #tab-container {
-        position: absolute;
-        left: 150px;
-        top: 175px;
-
-        .tab {
-            display: none;
-            width: 875px;
-            height: 400px;
-            background: $bg;
-            border: $border;
-
-            h1 {
-                border-bottom: $border;
-                font-size: 24px;
-                padding: 5px 10px;
-            }
-
-            .content {
-                padding: 10px;
-            }
+    
+    #items {
+        .item {
+            width: 45px;
+            height: 48px;
+            padding-left: 3px;
+            float: left;
+            border: 1px solid white;
+            color: white;
+            text-shadow: 0 0 2px black;
+            cursor: help;
+            margin-right: 10px;
+            background-size: 40px 40px;
+            background-repeat: no-repeat;
+            background-position: center center;
         }
-
-        .tab.active {
-            display: block;
-        }
-
-        #actions {
-            ul {
-                list-style: none;
-                padding-left: 0;
-
-                li {
-                    margin-bottom: 3px;
-                }
-            }
-
-            button {
-                font: $font;
-                font-size: 14px;
-                border: 1px solid #888;
-                border-radius: 4px;
-                padding: 3px 5px;
-                cursor: pointer;
-                background: linear-gradient(to right, rgba(0, 0, 0, 0.1) 0%, rgba(255, 255, 255, 0.3) 0%);
-            }
-
-            .section { 
-                float: left;
-                width: 200px;
-                
-                h2 { 
-                    font-size: 20px; 
-                    margin-bottom: 5px;
-                }
-            }
-        }
-
-        #items {
-            .item {
-                width: 45px;
-                height: 48px;
-                padding-left: 3px;
-                float: left;
-                border: 1px solid white;
-                color: white;
-                text-shadow: 0 0 2px black;
-                cursor: help;
-                margin-right: 10px;
-                background-size: 40px 40px;
-                background-repeat: no-repeat;
-                background-position: center center;
-            }
-
-            .twigs { background-image: url('/static/images/branches1.png'); }
-            .driftwood { background-image: url('/static/images/driftwood1.png'); }
-            .coconut { background-image: url('http://icons.iconarchive.com/icons/fi3ur/fruitsalad/256/coconut-icon.png'); }
-            .seagrass { background-image: url('http://img2.wikia.nocookie.net/__cb20130227113414/farmville/images/4/4b/Seaweed-icon.png'); }
-            .clam { background-image: url('/static/images/clam.png'); }
-            .flowers { background-image: url('http://img1.wikia.nocookie.net/__cb20120204044002/battlefordreamisland/images/archive/3/34/20131221032657!Flower_Icon.png'); }
-            .sheep { background-image: url('/static/images/sheepflank.png'); }
-            .berries { background-image: url('/static/images/berries.png'); }
-            .crab { background-image: url('/static/images/crab.png'); }
-        }
+        
+        .twigs { background-image: url('/static/images/branches1.png'); }
+        .driftwood { background-image: url('/static/images/driftwood1.png'); }
+        .coconut { background-image: url('http://icons.iconarchive.com/icons/fi3ur/fruitsalad/256/coconut-icon.png'); }
+        .seagrass { background-image: url('http://img2.wikia.nocookie.net/__cb20130227113414/farmville/images/4/4b/Seaweed-icon.png'); }
+        .clam { background-image: url('/static/images/clam.png'); }
+        .flowers { background-image: url('http://img1.wikia.nocookie.net/__cb20120204044002/battlefordreamisland/images/archive/3/34/20131221032657!Flower_Icon.png'); }
+        .sheep { background-image: url('/static/images/sheepflank.png'); }
+        .berries { background-image: url('/static/images/berries.png'); }
+        .crab { background-image: url('/static/images/crab.png'); }
     }
 
-    $diff: 72px;
-    $topHeight: 155px;
     #log {
-        width: 800px;
-        height: $topHeight;
+        float: left;
+        margin-right: 20px;
+        width: 300px;
+        height: 500px;
         top: 0;
         left: 0;
 
         .content { 
-            height: $topHeight - $diff; 
         }
 
         ul { 
-            list-style-position: inside; 
+            list-style: none;
 
             li {
                 font-size: 12px;
+                margin-bottom: 3px;
             }
         }
     }
 
     #stats {
+        display: none;
         width: 200px;
-        height: $topHeight;
         left: 825px;
         top: 0;
-
-        .content { height: $topHeight - $diff; }
 
         ul {
             list-style: none;
