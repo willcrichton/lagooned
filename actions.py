@@ -179,6 +179,46 @@ def cook_verify(user):
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
 
+## Weapons
+
+def weapon_gather_callback(user):
+    chance = random.random()
+    if user.location == 'LOCATION_BEACH':
+        if chance < 0.2:
+            user.add_item('ITEM_CLAMSHELL')
+            user.add_to_log('ACT_WEAPON_GATHER_CLAMSHELL')
+        elif chance < 0.4:
+            user.add_item('ITEM_ROCK')
+            user.add_to_log('ACT_WEAPON_GATHER_ROCK')
+        else:
+            user.add_to_log('ACT_WEAPON_GATHER_FAIL')
+    elif user.location == 'LOCATION_CAVE':
+        if chance < 0.7:
+            user.add_item('ITEM_ROCK')
+            user.add_to_log('ACT_WEAPON_GATHER_ROCK')
+        else:
+            user.add_to_log('ACT_WEAPON_GATHER_FAIL')
+    else: #location: Forest
+        if chance < 0.4:
+            user.add_item('ITEM_STICK')
+            user.add_to_log('ACT_WEAPON_GATHER_STICK')
+        elif chance < 0.6:
+            user.add_item('ITEM_BONE')
+            user.add_to_log('ACT_WEAPON_GATHER_BONE')
+        elif chance < 0.8:
+            user.add_item('ITEM_ROCK')
+            user.add_to_log('ACT_WEAPON_GATHER_ROCK')
+        else:
+            user.add_to_log('ACT_WEAPON_GATHER_FAIL')
+        
+    return True
+
+def weapon_gather_verify(user):
+    return True
+
+register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_SCAVENGE', weapon_gather_callback, weapon_gather_verify)
+
+
 
 ## Firewood
 def firewood_callback(user):
