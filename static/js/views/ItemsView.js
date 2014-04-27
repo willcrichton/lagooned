@@ -12,12 +12,23 @@ define(function(require) {
 
         render: function() {
             var items = GAME.me.get('items'); 
+
+            var has_items = false;
             for (var k in items) {
+                has_items = true;
                 if (items[k].qty > 0) {
                     items[k.toLowerCase().replace(' ', '')] = items[k];
                 }
 
                 delete items[k];
+            }
+
+            console.log(has_items);
+            if (!has_items) {
+                this.$el.hide();
+                return this;
+            } else {
+                this.$el.show();
             }
 
             this.$el.html(template({

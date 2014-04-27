@@ -15,7 +15,7 @@ CATEGORY_BUILDING: Building
 
 # Hunger
 HUNGER_HUNGRY: Your stomach grumbles.
-HUNGER_STARVING: You need to find food.
+HUNGER_STARVING: You need to eat food.
 
 # --------------------------------------------
 #   ACTIONS

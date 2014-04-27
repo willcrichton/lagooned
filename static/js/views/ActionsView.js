@@ -18,7 +18,7 @@ define(function(require) {
         },
 
         doAction: function(e) {
-            if (this.lock) return;
+            //if (this.lock) return;
 
             var action = $(e.target).data('action');
             var duration = 0;

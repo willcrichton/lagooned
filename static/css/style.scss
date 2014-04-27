@@ -126,8 +126,8 @@ a {
 
     // each widget in the home screen is a .box
     $border: 3px solid rgba(255, 255, 255, 0.8);
-    $bg: rgba(255, 255, 255, 0.4);
-    $bg-highlight: rgba(255, 255, 255, 0.8);
+    $bg: rgba(255, 255, 255, 0.6);
+    $bg-highlight: rgba(255, 255, 255, 0.9);
     .box {
         border: $border;
         background: $bg;
@@ -195,6 +195,8 @@ a {
             background-repeat: no-repeat;
             background-position: center center;
         }
+
+        .content { min-height: 70px; }
         
         .twigs { background-image: url('/static/images/branches1.png'); }
         .driftwood { background-image: url('/static/images/driftwood1.png'); }
