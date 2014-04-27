@@ -64,8 +64,8 @@ def register_action(name, duration, category, callback, verify):
         'name': name,
         'duration': duration,
         'category': category,
-            # Not shown: Success, Failure, Random_Event
-            # Shown: Travel, Forage (Food), Scavenge (Non-edible materials), Craft, Build, Cook     
+        # Not shown: Success, Failure, Random_Event
+        # Shown: Travel, Forage (Food), Scavenge (Non-edible materials), Craft, Build, Cook     
         'callback': callback,
         'verify': verify
     })
@@ -75,8 +75,13 @@ def register_constraint(callback):
 
 # for miscellaneous effects after an action is run
 def on_action(user):
-    user.food = max(user.food - 1, 0)
 
+    # handle hunger effects
+    user.food = max(user.food - 1, 0)
+    if user.food == 5:
+        user.add_to_log('HUNGER_HUNGRY')
+    elif user.food == 0:
+        user.add_to_log('HUNGER_STARVING')
 
 
 #### Individual actions ####

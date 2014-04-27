@@ -13,6 +13,10 @@ CATEGORY_MATERIALS: Materials
 CATEGORY_MOVEMENT: Travel
 CATEGORY_BUILDING: Building
 
+# Hunger
+HUNGER_HUNGRY: Your stomach grumbles.
+HUNGER_STARVING: You need to find food.
+
 # --------------------------------------------
 #   ACTIONS
 # --------------------------------------------
