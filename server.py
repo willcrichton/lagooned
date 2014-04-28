@@ -61,7 +61,7 @@ class User(db.Model):
     # List of potential actions
     def valid_actions(self):
         return [a for a in ACTIONS if self.can_run(a)]
-    
+
     # Check if user has done all of the given list of actions
     def has_done_actions(self, actions):
         completed = json.loads(self.completed)
@@ -115,7 +115,7 @@ class User(db.Model):
             if not item in my_items: continue
             count += my_items[item]
         return count >= qty
-    
+
     def add_item(self, item):
         items = self.get_items()
         if not item in items: items[item] = 0
@@ -126,6 +126,11 @@ class User(db.Model):
         items = self.get_items()
         items[item] -= qty
         self.items = json.dumps(items)
+
+    def remove_all(self, item):
+        removed = self.num_of_item(item)
+        self.remove_item(item, removed)
+        return removed
 
     def num_of_item(self, item):
         items = self.get_items()
@@ -145,7 +150,10 @@ class User(db.Model):
 
     def has_buildings(self, potential):
         buildings = self.get_buildings()
-        return len(filter(lambda b: b in buildings, potential)) == len(potential)
+        return set(potential) <= set(buildings)
+
+    def has_building(self, building):
+        return self.has_buildings([building])
 
 @sockets.route('/socket')
 def socket(ws):
@@ -174,7 +182,7 @@ def socket(ws):
                 return user.json()
 
         elif (data['className'] == 'Action'):
-            
+
             # They want all actions the user can take
             user = User.query.filter_by(id=uid).first()
             if user is None: return []
@@ -204,7 +212,7 @@ def socket(ws):
             return user.json()
 
     # doing an action
-    def ACTION(data, uid):            
+    def ACTION(data, uid):
         user = User.query.filter_by(id=uid).first()
         if user is None: return {}
 

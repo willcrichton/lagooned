@@ -12,6 +12,7 @@ CATEGORY_FOOD: Food
 CATEGORY_MATERIALS: Materials
 CATEGORY_MOVEMENT: Travel
 CATEGORY_BUILDING: Building
+CATEGORY_WEAPONS: Weapons
 
 HUNGER_HUNGRY: Your stomach grumbles.
 HUNGER_STARVING: You need to eat food.
@@ -66,7 +67,6 @@ ACT_BUILD_LEANTO: Build a lean-to
 ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter.
 
 ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
-
 
 # Random Events
 RANDOM_WASHUP_SAIL: You notice a sail floating on the horizon.
@@ -133,3 +133,7 @@ ITEM_BOTTLE: Message-in-a-bottle
 ITEM_BOTTLE_DESC: Something is inside...
 ITEM_GOLD: Gold Nugget
 ITEM_GOLD_DESC: Eureka!
+
+ITEM_AXE: Axe
+ITEM_AXE_DESC: Careful kid, you'll poke your eye out.
+

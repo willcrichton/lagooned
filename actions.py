@@ -75,7 +75,7 @@ def register_constraint(callback):
 
 # for miscellaneous effects after an action is run
 def on_action(user):
-    
+
     # handle hunger effects
     user.food = max(user.food - 1, 0)
     if user.food == 5:
@@ -164,22 +164,18 @@ register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, e
 
 FLAMMABLES = ['ITEM_DRIFTWOOD', 'ITEM_TWIGS', 'ITEM_MOSS', 'ITEM_BRANCHES']
 def cook_callback(user):
+    # TODO: is verify called before every callback? Because it should be
     for meat in MEAT:
-        if not user.has_item(meat): continue
-        user.remove_item(meat)
-
-        for wood in FLAMMABLES:
-            if not user.has_item(wood): continue
-
-            user.remove_item(wood)
+        consumed = user.remove_all(meat)
+        for i in xrange(consumed):
             user.food += 15
             user.add_to_log(meat + '_EAT_COOKED')
-            return True
-
-    return False
+            # TODO: don't cook everything at once
+            # Is this eating as well?
+    return True
 
 def cook_verify(user):
-    return user.has_items(FLAMMABLES) and user.has_items(MEAT)
+    return user.has_building('FIRE') and user.has_items(MEAT)
 
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
@@ -254,7 +250,8 @@ register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, fire
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
 
-    # TODO: state indicating lean-to
+    # TODO: display???
+    user.add_building('LEANTO')
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
     return True
 
@@ -269,15 +266,33 @@ TINDER = ['ITEM_TWIGS', 'ITEM_MOSS']
 KINDLING = ['ITEM_DRIFTWOOD', 'ITEM_BRANCHES']
 
 def build_fire_callback(user):
+    # TODO: require flint?
     user.remove_items(TINDER, 2)
     user.remove_items(KINDLING, 2)
     user.add_to_log('ACT_BUILD_FIRE')
+    user.add_building('FIRE')
     return True
 
 def build_fire_verify(user):
-    return (user.num_of_items(TINDER) >= 2) and (user.num_of_items(KINDLING) >= 2)
+    return (user.has_items(TINDER, 2) and user.has_items(KINDLING, 2)
+            and not user.has_building('FIRE'))
 
 register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_leanto_verify)
+
+BLADES = ["ITEM_CLAMSHELL", "ITEM_ROCK"]
+HANDLES = ["ITEM_STICK", "ITEM_BONE"]
+
+def build_axe_callback(user):
+    user.remove_items(BLADES)
+    user.remove_items(HANDLES)
+    user.add_item('ITEM_AXE')
+    user.add_to_log('ACT_CRAFT_AXE')
+    return True
+
+def build_axe_verify(user):
+    return user.has_items(BLADES) and user.has_items(HANDLES)
+
+register_action('ACT_CRAFT_AXE', 5, 'CATEGORY_WEAPONS', build_axe_callback, build_axe_verify)
 
 ## Movements
 def move_forest_callback(user):
@@ -313,7 +328,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 
 # User has to find/make food if they have none
 def food_constraint(user, action):
-    eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED', 
+    eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED',
                       'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
     return user.food > 0 or action['name'] in eating_actions
 
