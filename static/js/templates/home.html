@@ -1,6 +1,15 @@
 <div id="home">
-  <div id="log" class="box"></div>
-  <div id="column">
+  <div class="column left">
+    <div id="log" class="box"></div>
+    {{#if has_fire}}
+    <img src="/static/images/fire.png" class="box" />
+    {{/if}}
+
+    {{#if has_leanto}}
+    <img src="/static/images/leanto.png" class="box" />
+    {{/if}}
+  </div>
+  <div class="column right">
     <div id="actions" class="box"></div>
     <div id="items" class="box"></div>
   </div>

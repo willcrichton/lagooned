@@ -75,8 +75,13 @@ def register_constraint(callback):
 
 # for miscellaneous effects after an action is run
 def on_action(user):
+    
+    # handle hunger effects
     user.food = max(user.food - 1, 0)
-
+    if user.food == 5:
+        user.add_to_log('HUNGER_HUNGRY')
+    elif user.food == 0:
+        user.add_to_log('HUNGER_STARVING')
 
 
 #### Individual actions ####
@@ -121,7 +126,7 @@ def hunt_callback(user):
         return False
 
 def hunt_verify(user):
-    return True
+    return user.has_done_actions(['ACT_FORAGE'])
 
 register_action('ACT_HUNT', 3, 'CATEGORY_FOOD', hunt_callback, hunt_verify)
 
@@ -214,7 +219,7 @@ def weapon_gather_callback(user):
     return True
 
 def weapon_gather_verify(user):
-    return True
+    return user.has_done_actions(['ACT_BUILD_LEANTO'])
 
 register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_MATERIALS', weapon_gather_callback, weapon_gather_verify)
 
@@ -241,7 +246,7 @@ def firewood_callback(user):
     return True
 
 def firewood_verify(user):
-    return True
+    return user.has_done_actions(['ACT_HUNT', 'ACT_FORAGE'])
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
@@ -281,7 +286,7 @@ def move_forest_callback(user):
     return True
 
 def move_forest_verify(user):
-    return user.location != 'LOCATION_FOREST' and user.has_done_actions(['ACT_FORAGE'])
+    return user.location != 'LOCATION_FOREST' and user.has_done_actions(['ACT_FORAGE', 'ACT_HUNT'])
 
 def move_cave_callback(user):
     user.location = 'LOCATION_CAVE'
@@ -289,7 +294,7 @@ def move_cave_callback(user):
     return True
 
 def move_cave_verify(user):
-    return user.location != 'LOCATION_CAVE' and user.has_done_actions(['ACT_MOVE_FOREST'])
+    return user.location != 'LOCATION_CAVE' and user.has_done_actions(['ACT_MOVE_FOREST', 'ACT_BUILD_LEANTO'])
 
 def move_beach_callback(user):
     user.location = 'LOCATION_BEACH'
@@ -308,7 +313,8 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 
 # User has to find/make food if they have none
 def food_constraint(user, action):
-    actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_RAW', 'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
-    return user.food > 0 or action['name'] in actions
+    eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED', 
+                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
+    return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)

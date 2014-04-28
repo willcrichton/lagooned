@@ -9,7 +9,8 @@ define(function(require) {
             food: 0,
             log: [],
             location: '',
-            items: {}
+            items: {},
+            buildings: []
         }
     });
 });
