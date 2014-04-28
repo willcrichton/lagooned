@@ -42,6 +42,7 @@ Please take a moment to read this!
 '''
 
 import random
+
 from constants import C
 
 
@@ -75,7 +76,6 @@ def register_constraint(callback):
 
 # for miscellaneous effects after an action is run
 def on_action(user):
-
     # handle hunger effects
     user.food = max(user.food - 1, 0)
     if user.food == 5:

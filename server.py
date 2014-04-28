@@ -127,6 +127,18 @@ class User(db.Model):
         items[item] -= qty
         self.items = json.dumps(items)
 
+    def remove_items(self, item_list, qty=1):
+        assert self.has_items(item_list, qty)
+
+        for item in item_list:
+            qty_to_remove = min(qty, self.num_of_item(item))
+            self.remove_item(item, qty_to_remove)
+            qty -= qty_to_remove
+            if qty == 0:
+                return
+
+        assert qty == 0
+
     def remove_all(self, item):
         removed = self.num_of_item(item)
         self.remove_item(item, removed)
