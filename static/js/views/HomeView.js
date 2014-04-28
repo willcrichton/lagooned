@@ -83,7 +83,17 @@ define(function(require) {
         },
         
         render: function() {
-            this.$el.html(template);
+            var has_fire = false, has_leanto = false;
+            var buildings = GAME.me.get('buildings');
+            for (var i = 0; i < buildings.length; i++) {
+                if (buildings[i] == 'BUILDING_LEANTO') has_leanto = true;
+                if (buildings[i] == 'BUILDING_FIRE') has_fire = true;
+            }
+
+            this.$el.html(template({
+                has_fire: has_fire,
+                has_leanto: has_leanto
+            }));
 
             // load subviews
             this.actionsView = new ActionsView().render();

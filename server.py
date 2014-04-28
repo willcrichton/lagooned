@@ -30,15 +30,16 @@ def tokenize(token):
 # it uses SQLAlchemy to save all these fields to the SQLite db
 # and we store literally everything on the User table (woo fat tables)
 class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)                # unique identifier for each user
-    name = db.Column(db.String(80), unique=True)                # handle that other players see
+    id = db.Column(db.Integer, primary_key=True)  # unique identifier for each user
+    name = db.Column(db.String(80), unique=True)  # handle that other players see
     password = db.Column(db.String(80))
-    food = db.Column(db.Integer)                     # amount of food a player has
+    food = db.Column(db.Integer)                  # amount of food a player has
     completed = db.Column(db.Text)                # list of completed actions
     current_action = db.Column(db.Text)           # name/duration of current action
     log = db.Column(db.Text)                      # list of all messages sent to user
     items = db.Column(db.Text)                    # list of all items user has (name/qty)
-    location = db.Column(db.String(80))   # current location of player
+    buildings = db.Column(db.Text)                # list of all buildings user has
+    location = db.Column(db.String(80))           # current location of player
 
     def json(self):
         return {
@@ -49,7 +50,8 @@ class User(db.Model):
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
             'log'       : [C[v] for v in json.loads(self.log)][-C['LOG_MAX']:],
-            'items'     : {C[k]: {'qty': v, 'desc': C['%s_DESC' % k]} for k,v in self.get_items().items()}
+            'items'     : {C[k]: {'qty': v, 'desc': C['%s_DESC' % k]} for k,v in self.get_items().items()},
+            'buildings' : self.get_buildings()
         }
 
     def save(self):
@@ -132,6 +134,19 @@ class User(db.Model):
     def num_of_items(self, item_list):
         return sum([self.num_of_item(item) for item in item_list])
 
+    # Building helpers
+    def get_buildings(self):
+        return json.loads(self.buildings)
+
+    def add_building(self, building):
+        buildings = self.get_buildings()
+        buildings.append(building)
+        self.buildings = json.dumps(buildings)
+
+    def has_buildings(self, potential):
+        buildings = self.get_buildings()
+        return len(filter(lambda b: b in buildings, potential)) == len(potential)
+
 @sockets.route('/socket')
 def socket(ws):
 
@@ -179,6 +194,7 @@ def socket(ws):
             user.current_action = '{}'
             user.log = '[]'
             user.items = '{}'
+            user.buildings = '[]'
             user.location = 'LOCATION_BEACH'
             user.add_to_log('GAME_START')
             db.session.add(user)
