@@ -50,7 +50,7 @@ ACT_WEAPON_GATHER: Find weapons
 ACT_WEAPON_GATHER_ROCK: You find badass rocks.
 ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to take them.
 ACT_WEAPON_GATHER_STICK: You picked up a formidable stick off the ground.
-ACT_WEAPON_GATHER_BONES: You salvaged a sizable femur from a picked clean corpse.
+ACT_WEAPON_GATHER_BONE: You salvaged a sizable femur from a picked clean corpse.
 ACT_WEAPON_GATHER_FAIL: You failed to find anything deadly.
 
 ACT_EAT_VEGGIES: Eat vegetation

@@ -157,13 +157,13 @@ def eat_uncooked_verify(user):
 
 register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
 
-WOOD = ['ITEM_DRIFTWOOD', 'ITEM_TWIGS', 'ITEM_MOSS', 'ITEM_BRANCHES']
+FLAMMABLES = ['ITEM_DRIFTWOOD', 'ITEM_TWIGS', 'ITEM_MOSS', 'ITEM_BRANCHES']
 def cook_callback(user):
     for meat in MEAT:
         if not user.has_item(meat): continue
         user.remove_item(meat)
 
-        for wood in WOOD:
+        for wood in FLAMMABLES:
             if not user.has_item(wood): continue
 
             user.remove_item(wood)
@@ -174,7 +174,7 @@ def cook_callback(user):
     return False
 
 def cook_verify(user):
-    return user.has_items(WOOD) and user.has_items(MEAT)
+    return user.has_items(FLAMMABLES) and user.has_items(MEAT)
 
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
@@ -218,8 +218,6 @@ def weapon_gather_verify(user):
 
 register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_MATERIALS', weapon_gather_callback, weapon_gather_verify)
 
-
-
 ## Firewood
 def firewood_callback(user):
     if user.location == 'LOCATION_CAVE':
@@ -247,27 +245,34 @@ def firewood_verify(user):
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
-
 ## Shelter
 def build_leanto_callback(user):
-    items = user.get_items()
-    wood_totals = {k: user.num_of_item(k) for k in ['ITEM_TWIGS', 'ITEM_DRIFTWOOD', 'ITEM_BRANCHES']}
-    for i in range(0, 4):
-        for k in wood_totals:
-            if wood_totals[k] > 0:
-                wood_totals[k] -= 1
-                user.remove_item(k)
-                break
+    user.remove_items(FLAMMABLES, 4)
 
     # TODO: state indicating lean-to
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
     return True
 
 def build_leanto_verify(user):
-    total_wood = user.num_of_items(['ITEM_TWIGS', 'ITEM_DRIFTWOOD', 'ITEM_BRANCHES'])
+    total_wood = user.num_of_items(FLAMMABLES)
     return total_wood >= 4
 
 register_action('ACT_BUILD_LEANTO', 10, 'CATEGORY_BUILDING', build_leanto_callback, build_leanto_verify)
+
+## Fire
+TINDER = ['ITEM_TWIGS', 'ITEM_MOSS']
+KINDLING = ['ITEM_DRIFTWOOD', 'ITEM_BRANCHES']
+
+def build_fire_callback(user):
+    user.remove_items(TINDER, 2)
+    user.remove_items(KINDLING, 2)
+    user.add_to_log('ACT_BUILD_FIRE')
+    return True
+
+def build_fire_verify(user):
+    return (user.num_of_items(TINDER) >= 2) and (user.num_of_items(KINDLING) >= 2)
+
+register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_leanto_verify)
 
 ## Movements
 def move_forest_callback(user):
