@@ -158,7 +158,7 @@ def eat_uncooked_callback(user):
     return False
 
 def eat_uncooked_verify(user):
-    return user.has_items(MEAT)
+    return user.has_items(MEAT) and not user.has_building('BUILDING_FIRE')
 
 register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
 
@@ -175,7 +175,7 @@ def cook_callback(user):
     return True
 
 def cook_verify(user):
-    return user.has_building('FIRE') and user.has_items(MEAT)
+    return user.has_building('BUILDING_FIRE') and user.has_items(MEAT)
 
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
@@ -250,14 +250,13 @@ register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, fire
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
 
-    # TODO: display???
-    user.add_building('LEANTO')
+    user.add_building('BUILDING_LEANTO')
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
     return True
 
 def build_leanto_verify(user):
     total_wood = user.num_of_items(FLAMMABLES)
-    return total_wood >= 4
+    return total_wood >= 5 and user.has_building('BUILDING_FIRE') and not user.has_building('BUILDING_LEANTO')
 
 register_action('ACT_BUILD_LEANTO', 10, 'CATEGORY_BUILDING', build_leanto_callback, build_leanto_verify)
 
@@ -269,15 +268,15 @@ def build_fire_callback(user):
     # TODO: require flint?
     user.remove_items(TINDER, 2)
     user.remove_items(KINDLING, 2)
-    user.add_to_log('ACT_BUILD_FIRE')
-    user.add_building('FIRE')
+    user.add_to_log('ACT_BUILD_FIRE_SUCCESS')
+    user.add_building('BUILDING_FIRE')
     return True
 
 def build_fire_verify(user):
     return (user.has_items(TINDER, 2) and user.has_items(KINDLING, 2)
-            and not user.has_building('FIRE'))
+            and not user.has_building('BUILDING_FIRE'))
 
-register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_leanto_verify)
+register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_fire_verify)
 
 BLADES = ["ITEM_CLAMSHELL", "ITEM_ROCK"]
 HANDLES = ["ITEM_STICK", "ITEM_BONE"]

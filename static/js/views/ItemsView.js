@@ -35,6 +35,7 @@ define(function(require) {
                 items: items
             }));
 
+            $(".qtip").remove();
             this.$('.item').qtip({
                 style: { classes: 'qtip-light' },
                 position: {

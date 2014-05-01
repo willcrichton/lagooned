@@ -62,7 +62,8 @@ ACT_EAT_UNCOOKED: Eat uncooked meat
 ACT_COOK: Cook meat
 
 # Building / Crafting
-ACT_BUILD_FIRE: You start a small fire.
+ACT_BUILD_FIRE: Start a fire
+ACT_BUILD_FIRE_SUCCESS: You spark a roaring fire.
 ACT_BUILD_LEANTO: Build a lean-to
 ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter.
 
