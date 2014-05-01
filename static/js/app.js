@@ -60,7 +60,7 @@ define(function(require){
         if ('success' in data) {
             if (data.success) {
                 console.log('Action valid');
-                GAME.me.trigger('action');
+                GAME.me.trigger('action', data.action);
             } else {
                 console.log('Action invalid');
             }
