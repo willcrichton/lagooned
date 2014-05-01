@@ -246,6 +246,41 @@ def firewood_verify(user):
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
+## Beach Washup
+def scavenge_callback(user):
+    if user.location == 'LOCATION_BEACH':
+        chance = random.random()
+        if chance < 0.05:
+            user.add_item('ITEM_GOLD')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_GOLD')
+        elif chance < 0.15:
+            user.add_item('ITEM_SAIL')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_SAIL')
+        elif chance < 0.35:
+            user.add_item('ITEM_ROPES')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_ROPES')
+        elif chance < 0.5:
+            user.add_item('ITEM_DRIFTWOOD')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
+        else:
+            user.add_to_log('ACT_SCAVENGE_FAIL')
+    elif user.location == 'LOCATION_CAVE':
+        chance = random.random()
+        if chance < 0.05:
+            user.add_item('ITEM_GOLD')
+            user.add_to_log('RANDOM_TREASURE_GOLD')
+        else:
+            user.add_to_log('ACT_SCAVENGE_FAIL')
+    else:
+        user.add_to_log('ACT_SCAVENGE_FAIL')
+    return True
+
+def scavenge_verify(user):
+    return user.has_done_actions(['ACT_HUNT', 'ACT_FORAGE'])
+
+register_action('ACT_SCAVENGE', 3, 'CATEGORY_MATERIALS', scavenge_callback, scavenge_verify)
+
+
 ## Shelter
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
@@ -329,7 +364,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 # User has to find/make food if they have none
 def food_constraint(user, action):
     eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED',
-                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
+                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE',' ACT_SCAVENGE']
     return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)

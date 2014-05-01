@@ -68,6 +68,13 @@ ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic le
 
 ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
 
+# Scavenging (Beach and Cave)
+ACT_SCAVENGE: Scavenge
+ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby.
+ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach.
+ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed.
+ACT_SCAVENGE_FAIL: You couldn't find anything.
+
 # Random Events
 RANDOM_WASHUP_SAIL: You notice a sail floating on the horizon.
 RANDOM_WASHUP_ROPE: A small rope floats amidst the flotsam.
@@ -127,8 +134,8 @@ ITEM_STICK_DESC: Great handle on this thing.
 
 ITEM_SAIL: Sail
 ITEM_SAIL_DESC: A worn down but usable boat sail made of cotton.
-ITEM_ROPE: Rope
-ITEM_ROPE_DESC: Woven from fibers.
+ITEM_ROPES: Rope
+ITEM_ROPES_DESC: Woven from fibers.
 ITEM_BOTTLE: Message-in-a-bottle
 ITEM_BOTTLE_DESC: Something is inside...
 ITEM_GOLD: Gold Nugget
