@@ -160,7 +160,7 @@ def eat_uncooked_callback(user):
     return False
 
 def eat_uncooked_verify(user):
-    return user.has_items(MEAT)
+    return user.has_items(MEAT) and not user.has_building('BUILDING_FIRE')
 
 register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
 
@@ -177,7 +177,7 @@ def cook_callback(user):
     return True
 
 def cook_verify(user):
-    return user.has_building('FIRE') and user.has_items(MEAT)
+    return user.has_building('BUILDING_FIRE') and user.has_items(MEAT)
 
 register_action('ACT_COOK', 5, 'CATEGORY_FOOD', cook_callback, cook_verify)
 
@@ -248,18 +248,52 @@ def firewood_verify(user):
 
 register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, firewood_verify)
 
+## Beach Washup
+def scavenge_callback(user):
+    if user.location == 'LOCATION_BEACH':
+        chance = random.random()
+        if chance < 0.05:
+            user.add_item('ITEM_GOLD')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_GOLD')
+        elif chance < 0.15:
+            user.add_item('ITEM_SAIL')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_SAIL')
+        elif chance < 0.35:
+            user.add_item('ITEM_ROPES')
+            user.add_to_log('ACT_SCAVENGE_SUCCESS_ROPES')
+        elif chance < 0.5:
+            user.add_item('ITEM_DRIFTWOOD')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
+        else:
+            user.add_to_log('ACT_SCAVENGE_FAIL')
+    elif user.location == 'LOCATION_CAVE':
+        chance = random.random()
+        if chance < 0.05:
+            user.add_item('ITEM_GOLD')
+            user.add_to_log('RANDOM_TREASURE_GOLD')
+        else:
+            user.add_to_log('ACT_SCAVENGE_FAIL')
+    else:
+        user.add_to_log('ACT_SCAVENGE_FAIL')
+    return True
+
+def scavenge_verify(user):
+    return user.has_done_actions(['ACT_HUNT', 'ACT_FORAGE'])
+
+register_action('ACT_SCAVENGE', 3, 'CATEGORY_MATERIALS', scavenge_callback, scavenge_verify)
+
+
 ## Shelter
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
 
-    # TODO: display???
-    user.add_building('LEANTO')
+    user.add_building('BUILDING_LEANTO')
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
     return True
 
 def build_leanto_verify(user):
     total_wood = user.num_of_items(FLAMMABLES)
-    return total_wood >= 4
+    return total_wood >= 5 and user.has_building('BUILDING_FIRE') and not user.has_building('BUILDING_LEANTO')
 
 register_action('ACT_BUILD_LEANTO', 10, 'CATEGORY_BUILDING', build_leanto_callback, build_leanto_verify)
 
@@ -271,15 +305,15 @@ def build_fire_callback(user):
     # TODO: require flint?
     user.remove_items(TINDER, 2)
     user.remove_items(KINDLING, 2)
-    user.add_to_log('ACT_BUILD_FIRE')
-    user.add_building('FIRE')
+    user.add_to_log('ACT_BUILD_FIRE_SUCCESS')
+    user.add_building('BUILDING_FIRE')
     return True
 
 def build_fire_verify(user):
     return (user.has_items(TINDER, 2) and user.has_items(KINDLING, 2)
-            and not user.has_building('FIRE'))
+            and not user.has_building('BUILDING_FIRE'))
 
-register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_leanto_verify)
+register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_fire_verify)
 
 BLADES = ["ITEM_CLAMSHELL", "ITEM_ROCK"]
 HANDLES = ["ITEM_STICK", "ITEM_BONE"]
@@ -295,6 +329,19 @@ def build_axe_verify(user):
     return user.has_items(BLADES) and user.has_items(HANDLES)
 
 register_action('ACT_CRAFT_AXE', 5, 'CATEGORY_WEAPONS', build_axe_callback, build_axe_verify)
+
+## Pick Axe
+def build_pickaxe_callback(user):
+    user.remove_items(BLADES)
+    user.remove_items(HANDLES)
+    user.add_item('ITEM_PICKAXE')
+    user.add_to_log('ACT_CRAFT_PICKAXE_SUCCESS')
+    return True
+
+def build_pickaxe_verify(user):
+    return user.has_items(BLADES) and user.has_items(HANDLES)
+
+register_action('ACT_CRAFT_PICKAXE', 5, 'CATEGORY_MATERIALS', build_pickaxe_callback, build_pickaxe_verify)
 
 ## Movements
 def move_forest_callback(user):
@@ -331,7 +378,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 # User has to find/make food if they have none
 def food_constraint(user, action):
     eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED',
-                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
+                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE',' ACT_SCAVENGE']
     return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)

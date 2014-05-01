@@ -62,11 +62,23 @@ ACT_EAT_UNCOOKED: Eat uncooked meat
 ACT_COOK: Cook meat
 
 # Building / Crafting
-ACT_BUILD_FIRE: You start a small fire.
+ACT_BUILD_FIRE: Start a fire
+ACT_BUILD_FIRE_SUCCESS: You spark a roaring fire.
 ACT_BUILD_LEANTO: Build a lean-to
 ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter.
 
 ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
+
+# Scavenging (Beach and Cave)
+ACT_SCAVENGE: Scavenge
+ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby.
+ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach.
+ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed.
+ACT_SCAVENGE_FAIL: You couldn't find anything.
+
+# Tool Building
+ACT_CRAFT_PICKAXE: Make a pickaxe
+ACT_CRAFT_PICKAXE_SUCCESS: You made a pickaxe! Time to break things.
 
 # Random Events
 ##
@@ -126,11 +138,10 @@ ITEM_BONE_DESC: A sizable femur from a picked clean corpse.
 ITEM_STICK: Stick
 ITEM_STICK_DESC: Great handle on this thing.
 
-# BEGIN UNIMPLEMENTED
 ITEM_SAIL: Sail
 ITEM_SAIL_DESC: A worn down but usable boat sail made of cotton.
-ITEM_ROPE: Rope
-ITEM_ROPE_DESC: Woven from fibers.
+ITEM_ROPES: Rope
+ITEM_ROPES_DESC: Woven from fibers.
 ITEM_BOTTLE: Message-in-a-bottle
 ITEM_BOTTLE_DESC: Something is inside...
 ITEM_GOLD: Gold Nugget
@@ -139,4 +150,5 @@ ITEM_GOLD_DESC: Eureka!
 ITEM_AXE: Axe
 ITEM_AXE_DESC: Careful kid, you'll poke your eye out.
 
-# END UNIMPLEMENTED
+ITEM_PICKAXE: Pickaxe
+ITEM_PICKAXE_DESC: Covered in notches and liable to fall apart.

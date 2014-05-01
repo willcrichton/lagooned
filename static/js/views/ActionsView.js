@@ -14,11 +14,10 @@ define(function(require) {
             this.listenTo(GAME.actions, 'add remove change reset', this.render);
             this.listenTo(GAME.me, 'change', this.render);
             this.listenTo(GAME.me, 'action', this.onAction);
-            this.lock = false;
         },
 
         doAction: function(e) {
-            //if (this.lock) return;
+            if ($(e.target).data('lock')) return;
 
             var action = $(e.target).data('action');
             var duration = 0;
@@ -30,24 +29,39 @@ define(function(require) {
 
             this.curTarget = $(e.target);
             this.curDuration = duration;
+
+            $(e.target).data('duration', duration);
+            $(e.target).data('lock', true);
             GAME.doAction(action);
         },
 
-        onAction: function() {
-            this.lock = true;
+        onAction: function(action) {
+            var $button;
+            this.$('button.action').each(function(idx, button) {
+                if ($(button).data('action') == action) {
+                    $button = $(button);
+                }
+            });
 
             var time = new Date().getTime();
+            var duration = $button.data('duration');
             var timer = setInterval(_.bind(function() {
+                this.$('button.action').each(function(idx, button) {
+                    if ($(button).data('action') == action) {
+                        $button = $(button);
+                    }
+                });
+
                 var diff = (new Date().getTime() - time) / 1000;
-                var percent = diff / this.curDuration * 100;
-                this.curTarget.css('background', 'linear-gradient(to right, rgba(0, 0, 0, 0.1) ' + percent + '%, rgba(255, 255, 255, 0.3) ' + percent + '%)')
+                var percent = diff / duration * 100;
+                $button.css('background', 'linear-gradient(to right, rgba(0, 0, 0, 0.1) ' + percent + '%, rgba(255, 255, 255, 0.3) ' + percent + '%)');
             }, this), 10);
 
             setTimeout(_.bind(function() {
                 clearInterval(timer);
-                this.curTarget.css('background', 'transparent');
-                this.lock = false;
-            }, this), this.curDuration * 1000);
+                $button.css('background', 'transparent');
+                $button.data('lock', false);
+            }, this), duration * 1000);
         },
 
         render: function() {

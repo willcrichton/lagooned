@@ -125,6 +125,8 @@ class User(db.Model):
         self.items = json.dumps(items)
 
     def remove_item(self, item, qty=1):
+        if qty == 0: return
+
         items = self.get_items()
         items[item] -= qty
         self.items = json.dumps(items)
@@ -136,6 +138,7 @@ class User(db.Model):
             qty_to_remove = min(qty, self.num_of_item(item))
             self.remove_item(item, qty_to_remove)
             qty -= qty_to_remove
+
             if qty == 0:
                 return
 
@@ -234,6 +237,9 @@ def socket(ws):
         if (not user.can_run(action)): return {'success': False}
 
         def callback():
+
+            # silently fail if some race condition occurs
+            if not user.can_run(action): return
             success = action['callback'](user)
 
             if success:
@@ -258,7 +264,7 @@ def socket(ws):
         # spawn a thread to run the success callback after the action duration
         # TODO: better way to do this besides threads? what about stopping early?
         threading.Timer(action['duration'], callback).start()
-        return {'success': True}
+        return {'success': True, 'action': data['action']}
 
     socket_open = True
     uid = None
