@@ -22,7 +22,7 @@ HUNGER_STARVING: You need to eat food.
 # --------------------------------------------
 
 ACT_MOVE_FOREST: Move to forest
-ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense forest.
+ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest.
 ACT_MOVE_CAVE: Move to cave
 ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave.
 ACT_MOVE_BEACH: Move to beach
