@@ -29,6 +29,9 @@ define(function(require) {
 
             // set height of bg to viewport size
             this.$('#background').css('height', window.innerHeight);
+            $(window).resize(function() {
+                this.$('#background').css('height', window.innerHeight);
+            });
 
             return this;
         }

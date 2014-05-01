@@ -214,13 +214,23 @@ a {
         .twigs { background-image: url('/static/images/twigs.png'); }
         .branches { background-image: url('/static/images/branches1.png'); }
         .driftwood { background-image: url('/static/images/driftwood1.png'); }
-        .coconut { background-image: url('http://icons.iconarchive.com/icons/fi3ur/fruitsalad/256/coconut-icon.png'); }
+        .coconut { background-image: url('/static/images/coconut.png'); }
         .seagrass { background-image: url('http://img2.wikia.nocookie.net/__cb20130227113414/farmville/images/4/4b/Seaweed-icon.png'); }
         .clam { background-image: url('/static/images/clam.png'); }
         .flowers { background-image: url('/static/images/flower.png'); }
         .sheep { background-image: url('/static/images/sheepflank.png'); }
         .berries { background-image: url('/static/images/berries.png'); }
         .crab { background-image: url('/static/images/crab.png'); }
+        .drymoss { background-image: url('/static/images/drymoss.png'); }
+        .bottle { background-image: url('/static/images/bottle.png'); }
+        .fish { background-image: url('/static/images/fish.png'); }
+        .rope { background-image: url('/static/images/rope.png'); }
+        .wool { background-image: url('/static/images/sheepwool.png'); }
+        .snail { background-image: url('/static/images/snail.png'); }
+        .skin { background-image: url('/static/images/skin.png'); }
+        .bone { background-image: url('/static/images/bone.png'); }
+        .rock { background-image: url('/static/images/rock.png'); }
+        .shell { background-image: url('/static/images/shell.png'); }
     }
 
     #log {
@@ -229,6 +239,7 @@ a {
         margin-bottom: 10px;
         top: 0;
         left: 0;
+        overflow: hidden;
 
         ul { 
             list-style: none;

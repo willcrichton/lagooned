@@ -51,7 +51,7 @@ class User(db.Model):
             'location'  : C[self.location],
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
-            'log'       : [C[v] for v in json.loads(self.log)][-C['LOG_MAX']:],
+            'log'       : [(C[v], t) for (v, t) in json.loads(self.log)][-C['LOG_MAX']:][::-1],
             'items'     : {C[k]: {'qty': v, 'desc': C['%s_DESC' % k]} for k,v in self.get_items().items()},
             'buildings' : self.get_buildings()
         }
@@ -74,7 +74,7 @@ class User(db.Model):
     # Event log
     def add_to_log(self, message):
         log = json.loads(self.log) if self.log is not None else []
-        log.append(message)
+        log.append((message, time.time()))
         self.log = json.dumps(log)
 
     # Current actions
