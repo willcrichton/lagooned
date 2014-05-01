@@ -32,3 +32,6 @@ add_item('ITEM_SAIL', 'ITEM_SAIL_DESC')
 add_item('ITEM_ROPE', 'ITEM_ROPES_DESC')
 add_item('ITEM_BOTTLE', 'ITEM_BOTTLE_DESC')
 add_item('ITEM_GOLD', 'ITEM_GOLD_DESC')
+
+add_item('ITEM_AXE', 'ITEM_AXE_DESC')
+add_item('ITEM_PICKAXE', 'ITEM_PICKAXE_DESC')

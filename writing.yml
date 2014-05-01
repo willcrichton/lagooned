@@ -76,6 +76,10 @@ ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach.
 ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed.
 ACT_SCAVENGE_FAIL: You couldn't find anything.
 
+# Tool Building
+ACT_CRAFT_PICKAXE: Make a pickaxe
+ACT_CRAFT_PICKAXE_SUCCESS: You made a pickaxe! Time to break things.
+
 # Random Events
 RANDOM_WASHUP_SAIL: You notice a sail floating on the horizon.
 RANDOM_WASHUP_ROPE: A small rope floats amidst the flotsam.
@@ -144,4 +148,5 @@ ITEM_GOLD_DESC: Eureka!
 
 ITEM_AXE: Axe
 ITEM_AXE_DESC: Careful kid, you'll poke your eye out.
-
+ITEM_PICKAXE: Pickaxe
+ITEM_PICKAXE_DESC: Covered in notches and liable to fall apart.

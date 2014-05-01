@@ -328,6 +328,19 @@ def build_axe_verify(user):
 
 register_action('ACT_CRAFT_AXE', 5, 'CATEGORY_WEAPONS', build_axe_callback, build_axe_verify)
 
+## Pick Axe
+def build_pickaxe_callback(user):
+    user.remove_items(BLADES)
+    user.remove_items(HANDLES)
+    user.add_item('ITEM_PICKAXE')
+    user.add_to_log('ACT_CRAFT_PICKAXE_SUCCESS')
+    return True
+
+def build_pickaxe_verify(user):
+    return user.has_items(BLADES) and user.has_items(HANDLES)
+
+register_action('ACT_CRAFT_PICKAXE', 5, 'CATEGORY_MATERIALS', build_pickaxe_callback, build_pickaxe_verify)
+
 ## Movements
 def move_forest_callback(user):
     user.location = 'LOCATION_FOREST'
