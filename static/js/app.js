@@ -28,9 +28,9 @@ define(function(require){
 
         ws.onopen = function() {
             var id = Math.random().toString(36).slice(2);
-            var toSend = {model: model.toJSON(), 
-                          method: method, 
-                          id: id, 
+            var toSend = {model: model.toJSON(),
+                          method: method,
+                          id: id,
                           className: model.className,
                           token: TOKEN};
 
@@ -40,7 +40,11 @@ define(function(require){
         var $promise = $.Deferred();
         ws.onmessage = function(event) {
             var data = JSON.parse(event.data);
-            console.log(data);
+            if (data['type'] == 'update') {
+                GAME.me.set(data.user);
+                GAME.actions.set(data.actions);
+                return;
+            }
 
             if (data['token']) {
                 TOKEN = data['token'];
@@ -49,14 +53,25 @@ define(function(require){
 
             options.success(data);
             $promise.resolve();
+            ws.close();
         }
 
         return $promise;
     }
 
     GAME.socket = new WebSocket("ws://" + document.domain + ":5000/socket");
+    GAME.socket.onopen = function() {
+            var id = Math.random().toString(36).slice(2);
+            var toSend = { id: id,
+                          token: TOKEN,
+                        method: 'ping'
+                    };
+
+            GAME.socket.send(JSON.stringify(toSend));
+        }
     GAME.socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
+
         if ('success' in data) {
             if (data.success) {
                 console.log('Action valid');
@@ -65,6 +80,7 @@ define(function(require){
                 console.log('Action invalid');
             }
         } else {
+
             GAME.me.set(data.user);
             GAME.actions.set(data.actions);
         }
@@ -87,9 +103,9 @@ define(function(require){
 
         // set up router and let it take over
         var appRouter = new Router();
-        
+
         Backbone.history.start();
-        
+
         // if (!me.id) then they're not logged in
         if (!GAME.me.id) {
             appRouter.navigate('start', {trigger: true});

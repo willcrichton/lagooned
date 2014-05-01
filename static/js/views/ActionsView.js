@@ -27,7 +27,7 @@ define(function(require) {
                     duration = a.get('duration');
                 }
             });
- 
+
             this.curTarget = $(e.target);
             this.curDuration = duration;
             GAME.doAction(action);
@@ -53,11 +53,11 @@ define(function(require) {
         render: function() {
             var actions = GAME.actions.toJSON();
             var new_actions = {};
-            
+
             actions.forEach(function(action) {
-                if (!new_actions[action.category]) 
+                if (!new_actions[action.category])
                     new_actions[action.category] = [];
-                
+
                 new_actions[action.category].push(action);
             });
 

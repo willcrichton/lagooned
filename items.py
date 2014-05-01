@@ -4,7 +4,7 @@ ITEMS = []
 class Item():
     name = ''
     description = ''
-    
+
     def __init__(self, name, description):
         self.name = name
         self.description = description
@@ -13,6 +13,7 @@ def add_item(name, description):
     ITEMS.append(Item(name, description))
 
 ### Individual items ###
+# TODO: simplify syntax here, if you just add _DESC
 add_item('ITEM_FIREWOOD', 'ITEM_FIREWOOD_DESC')
 add_item('ITEM_DRIFTWOOD', 'ITEM_DRIFTWOOD_DESC')
 add_item('ITEM_TWIGS', 'ITEM_TWIGS_DESC')

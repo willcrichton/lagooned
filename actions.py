@@ -41,6 +41,8 @@ Please take a moment to read this!
   the User data that comes in over the socket. Any time that data changes, every relevant view.
 '''
 
+import itertools
+import operator
 import random
 
 from constants import C
@@ -333,3 +335,78 @@ def food_constraint(user, action):
     return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)
+
+#### Random events ####
+def accumulate(iterable, func=operator.add):
+    'Return running totals'
+    # accumulate([1,2,3,4,5]) --> 1 3 6 10 15
+    # accumulate([1,2,3,4,5], operator.mul) --> 1 2 6 24 120
+    it = iter(iterable)
+    total = next(it)
+    yield total
+    for element in it:
+        total = func(total, element)
+        yield total
+
+def unzip(L):
+    return zip(*L)
+
+def choice(L):
+    # choice([(0.2, 0), (0.8, 1)]) --> 0 with probability 0.2, 1 with probability 0.8
+    # choice([0,1]) --> uniform random choice, 0 with p=0.5, 1 with p=0.5
+    # The last in the list may be just an element (no tuple), if so, it's probability
+    # will be 1-sum(previous)
+    # The sum of probabilities doesn't have to be 1; otherwise it'll be renormalized
+    # (but do not combine with above convenience feature!)
+
+    if len(L) == 0:
+        raise Exception
+
+    if type(L[0]) is not tuple:
+        return random.choice(L)
+
+    if type(L[-1]) is not tuple:
+        L[-1] = (1.0 - sum(p for (p, x) in L[:-1]), L[-1])
+
+    (probabilities, elements) = unzip(L)
+    totals = list(accumulate(probabilities))
+
+    n = random.uniform(0, totals[-1])
+    for i, total in enumerate(totals):
+        if n <= total:
+            return elements[i]
+
+    raise Exception
+
+def nested_choice(L):
+    if type(L) is list:
+        return nested_choice(choice(L))
+    else:
+        return L
+
+# Seconds between calls to on_random
+RANDOM_TIMER = 10.0
+def on_random(user):
+    # return False
+    if user.location == 'LOCATION_BEACH':
+        item = nested_choice([
+            (0.75, None),
+            [
+                (0.8, [
+                    'SAIL',
+                    'ROPE',
+                    'BOTTLE',
+                    'DRIFTWOOD',
+                ]),
+                'GOLD'
+            ]
+        ])
+        print "Randomly chose: ", item
+
+        if item:
+            user.add_to_log('RANDOM_' + item)
+            user.add_item('ITEM_' + item)
+
+            return True
+
+    return False

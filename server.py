@@ -2,11 +2,12 @@ from flask import Flask, session, redirect, url_for, render_template, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_sockets import Sockets
 from geventwebsocket import WebSocketError
-from actions import ACTIONS, CONSTRAINTS, sanitize_action, on_action
+from actions import ACTIONS, CONSTRAINTS, sanitize_action, on_action, RANDOM_TIMER, on_random
 from constants import C
 import hashlib, uuid
 import jwt
 import json
+import random
 import threading
 import time
 
@@ -25,6 +26,7 @@ sockets = Sockets(app)
 # encode input as JSON web token
 def tokenize(token):
     return jwt.encode({'id': token}, app.secret_key)
+
 
 # the User class is the heart of data storage on serverside
 # it uses SQLAlchemy to save all these fields to the SQLite db
@@ -258,6 +260,36 @@ def socket(ws):
         threading.Timer(action['duration'], callback).start()
         return {'success': True}
 
+    socket_open = True
+    uid = None
+    def random_events():
+        while socket_open:
+            time.sleep(RANDOM_TIMER)
+
+            if uid is None: continue
+            user = User.query.filter_by(id=uid).first()
+            if user is None: continue # TODO: OR PANIC
+
+            # Try for a random event
+            if on_random(user):
+                # If a random event occurred
+
+                user.save()
+                # send new user state to frontend
+                try:
+                    ws.send(json.dumps({
+                        'type': 'update',
+                        'user': user.json(),
+                        'actions': map(sanitize_action, user.valid_actions())
+                    }))
+                except WebSocketError:
+                    # Oh well
+                    print "Thread died unexpectedly"
+                    return
+
+    threading.Thread(target=random_events).start()
+    print "Spawning thread"
+
     # read from the socket as long as the connection is open
     while True:
         try:
@@ -266,6 +298,8 @@ def socket(ws):
             uid = jwt.decode(data['token'], app.secret_key)['id']
         except WebSocketError:
             # they quit the connection, kill the socket
+            socket_open = False
+            print "Killing thread"
             return
         except:
             # miscellaneous errors (eg bad JSON), ignore the message
@@ -277,8 +311,11 @@ def socket(ws):
             'action': ACTION
         }
 
+        if data['method'] == 'ping':
+            continue
         to_send = funcs[data['method']](data, uid)
         ws.send(json.dumps(to_send))
+
 
 @app.route('/')
 def index():

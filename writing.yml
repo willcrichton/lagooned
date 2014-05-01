@@ -69,13 +69,14 @@ ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic le
 ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
 
 # Random Events
-RANDOM_WASHUP_SAIL: You notice a sail floating on the horizon.
-RANDOM_WASHUP_ROPE: A small rope floats amidst the flotsam.
-RANDOM_WASHUP_BOTTLE: You picked up a bottle drifting in the water. A small crumpled paper is sealed inside.
-RANDOM_WASHUP_DRIFTWOOD: You unearthed a piece of driftwood lying in the sand.
+##
+RANDOM_SAIL: You notice a sail floating on the horizon.
+RANDOM_ROPE: A small rope floats amidst the flotsam.
+RANDOM_BOTTLE: You picked up a bottle drifting in the water. A small crumpled paper is sealed inside.
+RANDOM_DRIFTWOOD: You unearthed a piece of driftwood lying in the sand.
 
-RANDOM_TREASURE_GOLD: A glimmer catches your eye and you discover an ingot of gold under a broken stone.
-
+RANDOM_GOLD: A glimmer catches your eye and you discover an ingot of gold under a broken stone.
+#
 
 # --------------------------------------------
 #   ITEMS
@@ -92,29 +93,29 @@ ITEM_BRANCHES_DESC: Useful for making tools, building fires, and more.
 
 ITEM_COCONUT: Coconut
 ITEM_COCONUT_DESC: Every survival game needs these.
-ITEM_COCONUT_EAT: You ate a coconut. #todo
+ITEM_COCONUT_EAT: You ate a coconut.
 ITEM_BERRIES: Berries
 ITEM_BERRIES_DESC: Delicious, sweet, and great to eat.
-ITEM_BERRIES_EAT: You ate some berries. #todo
+ITEM_BERRIES_EAT: You ate some berries.
 ITEM_SEA_GRASS: Sea Grass
 ITEM_SEA_GRASS_DESC: Edible but not your first choice.
-ITEM_SEA_GRASS_EAT: You ate some sea grass. #todo
+ITEM_SEA_GRASS_EAT: You ate some sea grass.
 ITEM_FLOWERS: Flowers
 ITEM_FLOWERS_DESC: Sweet smelling and sweet tasting.
-ITEM_FLOWERS_EAT: You ate some flowers. #todo
+ITEM_FLOWERS_EAT: You ate some flowers.
 
 ITEM_CLAM: Clam
 ITEM_CLAM_DESC: Scrumptious raw or cooked!
-ITEM_CLAM_EAT_UNCOOKED: You ate some uncooked clams. #todo
-ITEM_CLAM_EAT_COOKED: You start a fire and cook some clams. #todo
+ITEM_CLAM_EAT_UNCOOKED: You ate some uncooked clams.
+ITEM_CLAM_EAT_COOKED: You start a fire and cook some clams.
 ITEM_CRAB: Crab
 ITEM_CRAB_DESC: A sizable chunk meat and bits.
-ITEM_CRAB_EAT_UNCOOKED: You ate some uncooked crabs. #todo.
-ITEM_CRAB_EAT_COOKED: You start a fire and cook some crab. #todo
+ITEM_CRAB_EAT_UNCOOKED: You ate some uncooked crabs.
+ITEM_CRAB_EAT_COOKED: You start a fire and cook some crab
 ITEM_SHEEP: Sheep
 ITEM_SHEEP_DESC: A perfect cube of sheep flesh.
-ITEM_SHEEP_EAT_UNCOOKED: You ate some uncooked sheep meat. #todo.
-ITEM_SHEEP_EAT_COOKED: You start a fire and cook some sheep. #todo
+ITEM_SHEEP_EAT_UNCOOKED: You ate some uncooked sheep meat.
+ITEM_SHEEP_EAT_COOKED: You start a fire and cook some sheep
 
 ITEM_ROCK: Rock
 ITEM_ROCK_DESC: Looks lethal, but hard to use.
@@ -125,6 +126,7 @@ ITEM_BONE_DESC: A sizable femur from a picked clean corpse.
 ITEM_STICK: Stick
 ITEM_STICK_DESC: Great handle on this thing.
 
+# BEGIN UNIMPLEMENTED
 ITEM_SAIL: Sail
 ITEM_SAIL_DESC: A worn down but usable boat sail made of cotton.
 ITEM_ROPE: Rope
@@ -137,3 +139,4 @@ ITEM_GOLD_DESC: Eureka!
 ITEM_AXE: Axe
 ITEM_AXE_DESC: Careful kid, you'll poke your eye out.
 
+# END UNIMPLEMENTED
