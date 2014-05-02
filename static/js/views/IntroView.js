@@ -7,7 +7,7 @@ define(function(require) {
         render: function() {
             setTimeout(_.bind(function() {
                 this.router.navigate('home', {trigger: true});
-            }, this), 0);
+            }, this), 9000);
 
             this.$el.html(template);
             return this;
