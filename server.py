@@ -279,7 +279,7 @@ def socket(ws):
             # Try for a random event
             if on_random(user):
                 # If a random event occurred
-
+            
                 user.save()
                 # send new user state to frontend
                 try:

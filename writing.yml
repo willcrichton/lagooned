@@ -22,14 +22,14 @@ HUNGER_STARVING: You need to eat food.
 # --------------------------------------------
 
 ACT_MOVE_FOREST: Move to forest
-ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest. Frogs croak and the air hangs. Something is holding its heavy breath.
-ACT_MOVE_FOREST_SECONDARY: The forest rustles at your approach. Your footprints sink into the mud and gnats swarm in great clouds above your head. There seems to be many paths to take.
+ACT_MOVE_FOREST_SUCCESS_1: You walk toward the trees and find yourself in a dense rainforest. Frogs croak and the air hangs. Something is holding its heavy breath.
+ACT_MOVE_FOREST_SUCCESS_2: The forest rustles at your approach. Your footprints sink into the mud and gnats swarm in great clouds above your head. There seems to be many paths to take.
 ACT_MOVE_CAVE: Move to cave
-ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave. The cavernous recesses echo your footsteps into infinitude. Ancient water pools at the entrance, beckoning you deeper into the yawning crevasse.
-ACT_MOVE_CAVE_SECONDARY: You find yourself at the mouth of the cave. A pebble falls from a ledge and rolls before you. The depths are silent.
+ACT_MOVE_CAVE_SUCCESS_1: You find yourself at the opening to an enormous cave. The cavernous recesses echo your footsteps into infinitude. Ancient water pools at the entrance, beckoning you deeper into the yawning crevasse.
+ACT_MOVE_CAVE_SUCCESS_2: You find yourself at the mouth of the cave. A pebble falls from a ledge and rolls before you. The depths are silent.
 ACT_MOVE_BEACH: Move to beach
-ACT_MOVE_BEACH_SUCCESS: You return to the beach and the ebbing shore. The wind blows salt in your mouth, and the sun braises your flesh.
-ACT_MOVE_BEACH_SECONDARY: The waves gently hug the coast, unphased by your journey or your return.
+ACT_MOVE_BEACH_SUCCESS_1: You return to the beach and the ebbing shore. The wind blows salt in your mouth, and the sun braises your flesh.
+ACT_MOVE_BEACH_SUCCESS_2: The waves gently hug the coast, unphased by your journey or your return.
 
 # Scavenging / Foraging
 ACT_FIREWOOD: Gather wood
@@ -40,7 +40,7 @@ ACT_FIREWOOD_SUCCESS_BRANCHES: You broke off a branch from a small tree. The bra
 ACT_FIREWOOD_FAIL: "You couldn't find any wood around here."
 
 ACT_FORAGE: Forage for food
-ACT_FORAGE_SUCCESS_COCONUTS: You shook a tree and a coconut fell to your feet. Lucky it didn't hit you.
+ACT_FORAGE_SUCCESS_COCONUTS: "You shook a tree and a coconut fell to your feet. Lucky it didn't hit you."
 ACT_FORAGE_SUCCESS_BERRIES: You discovered some berries in a bush. Ripe and full, they glisten in the light. Should you take the chance?
 ACT_FORAGE_SUCCESS_SEA_GRASS: After finally getting a good grip, you yanked some slimy grass from the seabed.
 ACT_FORAGE_SUCCESS_FLOWERS: You picked a bunch of sweet-smelling flowers with tender buds and pale freckles dotting the petals. Almost too good to be true.
@@ -57,7 +57,7 @@ ACT_WEAPON_GATHER: Find weapons
 ACT_WEAPON_GATHER_ROCK: You find badass rocks. Most are sharp and you can throw them quite forcefully.
 ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to take them. Still wet from your blood, you sharpen the shells against a stone.
 ACT_WEAPON_GATHER_STICK: You picked up a formidable stick off the ground. The shaft is light and easy to wield.
-ACT_WEAPON_GATHER_BONE: You salvaged a sizable femur from a picked clean corpse. Whether human, animal, or something else you don't know.
+ACT_WEAPON_GATHER_BONE: "You salvaged a sizable femur from a picked clean corpse. Whether human, animal, or something else you don't know."
 ACT_WEAPON_GATHER_FAIL: You failed to find anything deadly.
 
 ACT_EAT_VEGGIES: Eat vegetation
@@ -76,16 +76,16 @@ ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previousl
 ACT_SCAVENGE: Scavenge
 ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby. 
 ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach. Its been ripped and beaten, but it's still usable.
-ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed. You dry them out while search for their origin, but you find nothing else nearby.
+ACT_SCAVENGE_SUCCESS_ROPES: "There were some ropes tangled up amongst the seaweed. You dry them out while search for their origin, but you find nothing else nearby."
 ACT_SCAVENGE_SUCCESS_FORK: You fish a bent fork from between two boulders. It's missing 2 prongs, so you discard it.
 ACT_SCAVNEGE_SUCCESS_LETTER: You find an empty envelope sitting in a stagnant pool. It falls apart in your hands, so you discard it.
 ACT_SCAVENGE_SUCCESS_FEATHER: You find a fluffy clutch of feathers stuck to a branch. You have no use for them, so you leave them be.
 ACT_SCAVENGE_SUCCESS_BUTTON: A cracked button stands out from the uniform ground. You ignore it.
 ACT_SCAVENGE_SUCCESS_BOTTLE: You notice a clear glass flask wedged between a rock and a shrub. A long, jagged crack down the side renders it useless to you. 
-ACT_SCAVENGE_SUCCESS_WATCH: You see a bit of dull gold poking out of the water. Upon inspection, you see it's a pocket watch with the letter Q engraved on the back. You shake it and the parts within answer uneasily, so you leave it be.
+ACT_SCAVENGE_SUCCESS_WATCH: "You see a bit of dull gold poking out of the water. Upon inspection, you see it's a pocket watch with the letter Q engraved on the back. You shake it and the parts within answer uneasily, so you leave it be."
 ACT_SCAVENGE_SUCCESS_PEN: You stub your toe on a shiny protusion from pebbly shore. The culprit is a tarnishing bronze pen, the letter Q engraved in the side. Clogged with debris, it serves you no purpose.
 ACT_SCAVENGE_SUCCESS_TEETH: An intact jaw gapes at you from underneathe the sand. You kick the macabre thing into the water and briskly change direction.
-ACT_SCAVENGE_FAIL: You couldn't find anything.
+ACT_SCAVENGE_FAIL: "You couldn't find anything."
 
 # Tool Building
 ACT_CRAFT_PICKAXE: Make a pickaxe
@@ -93,13 +93,23 @@ ACT_CRAFT_PICKAXE_SUCCESS: You made a pickaxe! Time to break things.
 
 # Random Events
 ##
-RANDOM_SAIL: You notice a sail floating on the horizon.
-RANDOM_ROPE: A small rope floats amidst the flotsam.
+RANDOM_ROPES: A small rope floats amidst the flotsam.
 RANDOM_BOTTLE: You picked up a bottle drifting in the water. A small crumpled paper is sealed inside.
 RANDOM_DRIFTWOOD: You unearthed a piece of driftwood lying in the sand.
-
 RANDOM_GOLD: A glimmer catches your eye and you discover an ingot of gold under a broken stone.
-#
+
+RANDOM_BEACH_MESSAGE_1: BEACH_MESSAGE_1
+RANDOM_BEACH_MESSAGE_2: BEACH_MESSAGE_2
+RANDOM_BEACH_MESSAGE_3: BEACH_MESSAGE_3
+
+RANDOM_FOREST_MESSAGE_1: FOREST_MESSAGE_1
+RANDOM_FOREST_MESSAGE_2: FOREST_MESSAGE_2
+RANDOM_FOREST_MESSAGE_3: FOREST_MESSAGE_3
+
+RANDOM_CAVE_MESSAGE_1: CAVE_MESSAGE_1
+RANDOM_CAVE_MESSAGE_2: CAVE_MESSAGE_2
+RANDOM_CAVE_MESSAGE_3: CAVE_MESSAGE_3
+
 
 # --------------------------------------------
 #   ITEMS
@@ -159,7 +169,7 @@ ITEM_GOLD: Gold Nugget
 ITEM_GOLD_DESC: Eureka!
 
 ITEM_AXE: Axe
-ITEM_AXE_DESC: Careful kid, you'll poke your eye out.
+ITEM_AXE_DESC: "Careful kid, you'll poke your eye out."
 
 ITEM_PICKAXE: Pickaxe
 ITEM_PICKAXE_DESC: Covered in notches and liable to fall apart.

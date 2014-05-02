@@ -119,7 +119,7 @@ register_action('ACT_FORAGE', 3, 'CATEGORY_FOOD', forage_callback, forage_verify
 def hunt_callback(user):
     chance = random.random()
     animal = 'CRAB' if user.location == 'LOCATION_BEACH' else 'SHEEP'
-    if chance > 0.7:
+    if chance > 0.6:
         user.add_item('ITEM_%s' % animal)
         user.add_to_log('ACT_HUNT_%s_SUCCESS' % animal)
         return True
@@ -162,9 +162,10 @@ def eat_uncooked_callback(user):
 def eat_uncooked_verify(user):
     return user.has_items(MEAT) and not user.has_building('BUILDING_FIRE')
 
-register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
+# For now, they just can't eat raw meat.
+# register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
 
-FLAMMABLES = ['ITEM_DRIFTWOOD', 'ITEM_TWIGS', 'ITEM_MOSS', 'ITEM_BRANCHES']
+
 def cook_callback(user):
     # TODO: is verify called before every callback? Because it should be
     for meat in MEAT:
@@ -223,23 +224,27 @@ register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_MATERIALS', weapon_gather_call
 
 ## Firewood
 def firewood_callback(user):
+    chance = random.random()
     if user.location == 'LOCATION_CAVE':
         user.add_to_log('ACT_FIREWOOD_FAIL')
         return False
     elif user.location == 'LOCATION_FOREST':
-        chance = random.random()
         if chance < 0.33:
             user.add_item('ITEM_TWIGS')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_TWIGS')
-        elif chance < 0.66:
+        elif chance < 0.50:
             user.add_item('ITEM_MOSS')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_MOSS')
         else:
             user.add_item('ITEM_BRANCHES')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_BRANCHES')
     else:
-        user.add_item('ITEM_DRIFTWOOD')
-        user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
+        if chance < 0.5:
+            user.add_item('ITEM_DRIFTWOOD')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
+        else:
+            user.add_item('ITEM_MOSS')
+            user.add_to_log('ACT_FIREWOOD_SUCCESS_MOSS')
 
     return True
 
@@ -252,12 +257,9 @@ register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, fire
 def scavenge_callback(user):
     if user.location == 'LOCATION_BEACH':
         chance = random.random()
-        if chance < 0.05:
+        if chance < 0.15:
             user.add_item('ITEM_GOLD')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_GOLD')
-        elif chance < 0.15:
-            user.add_item('ITEM_SAIL')
-            user.add_to_log('ACT_SCAVENGE_SUCCESS_SAIL')
         elif chance < 0.35:
             user.add_item('ITEM_ROPES')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_ROPES')
@@ -284,6 +286,7 @@ register_action('ACT_SCAVENGE', 3, 'CATEGORY_MATERIALS', scavenge_callback, scav
 
 
 ## Shelter
+FLAMMABLES = ['ITEM_TWIGS', 'ITEM_BRANCHES']
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
 
@@ -346,23 +349,23 @@ register_action('ACT_CRAFT_PICKAXE', 5, 'CATEGORY_MATERIALS', build_pickaxe_call
 ## Movements
 def move_forest_callback(user):
     user.location = 'LOCATION_FOREST'
-    user.add_to_log('ACT_MOVE_FOREST_SUCCESS')
+    user.add_to_log('ACT_MOVE_FOREST_SUCCESS_%d' % choice([1, 2]))
     return True
 
 def move_forest_verify(user):
-    return user.location != 'LOCATION_FOREST' and user.has_done_actions(['ACT_FORAGE', 'ACT_HUNT'])
+    return user.location != 'LOCATION_FOREST' and user.has_building('BUILDING_FIRE')
 
 def move_cave_callback(user):
     user.location = 'LOCATION_CAVE'
-    user.add_to_log('ACT_MOVE_CAVE_SUCCESS')
+    user.add_to_log('ACT_MOVE_CAVE_SUCCESS_%d' % choice([1, 2]))
     return True
 
 def move_cave_verify(user):
-    return user.location != 'LOCATION_CAVE' and user.has_done_actions(['ACT_MOVE_FOREST', 'ACT_BUILD_LEANTO'])
+    return user.location != 'LOCATION_CAVE' and user.has_building('BUILDING_LEANTO')
 
 def move_beach_callback(user):
     user.location = 'LOCATION_BEACH'
-    user.add_to_log('ACT_MOVE_BEACH_SUCCESS')
+    user.add_to_log('ACT_MOVE_BEACH_SUCCESS_%d' % choice([1, 2]))
     return True
 
 def move_beach_verify(user):
@@ -378,7 +381,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 # User has to find/make food if they have none
 def food_constraint(user, action):
     eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED',
-                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE',' ACT_SCAVENGE']
+                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE', 'ACT_SCAVENGE']
     return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)
@@ -434,26 +437,29 @@ def nested_choice(L):
 # Seconds between calls to on_random
 RANDOM_TIMER = 10.0
 def on_random(user):
-    # return False
+    did_something = False
     if user.location == 'LOCATION_BEACH':
         item = nested_choice([
-            (0.75, None),
+            (0.95, None),
             [
                 (0.8, [
-                    'SAIL',
-                    'ROPE',
+                    'ROPES',
                     'BOTTLE',
                     'DRIFTWOOD',
                 ]),
                 'GOLD'
             ]
         ])
-        print "Randomly chose: ", item
 
         if item:
             user.add_to_log('RANDOM_' + item)
             user.add_item('ITEM_' + item)
+            did_something = True
+        
+    if choice([(0.95, 0), (0.1, 1)]) == 1:
+        location = user.location.split("_")[1]
+        user.add_to_log('RANDOM_%s_MESSAGE_%d' % (location, choice([1, 2, 3])))
+        did_something = True
+        
 
-            return True
-
-    return False
+    return did_something

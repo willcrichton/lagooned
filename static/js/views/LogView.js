@@ -16,8 +16,7 @@ define(function(require) {
             var curLog = GAME.me.get('log');
 
             for (var i = 0; i < curLog.length; i++) {
-                if (curLog[i][1] <= this.lastLog[0][1]) break;
-                console.log(i);
+                if (this.lastLog.length && curLog[i][1] <= this.lastLog[0][1]) break;
                 var $li = $('<li>' + curLog[i][0] + '</li>');
                 this.$('ul').prepend($li);
                 $li.hide().fadeIn(500);
