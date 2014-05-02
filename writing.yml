@@ -22,39 +22,42 @@ HUNGER_STARVING: You need to eat food.
 # --------------------------------------------
 
 ACT_MOVE_FOREST: Move to forest
-ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest.
+ACT_MOVE_FOREST_SUCCESS: You walk toward the trees and find yourself in a dense rainforest. Frogs croak and the air hangs. Something is holding its heavy breath.
+ACT_MOVE_FOREST_SECONDARY: The forest rustles at your approach. Your footprints sink into the mud and gnats swarm in great clouds above your head. There seems to be many paths to take.
 ACT_MOVE_CAVE: Move to cave
-ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave.
+ACT_MOVE_CAVE_SUCCESS: You find yourself at the opening to an enormous cave. The cavernous recesses echo your footsteps into infinitude. Ancient water pools at the entrance, beckoning you deeper into the yawning crevasse.
+ACT_MOVE_CAVE_SECONDARY: You find yourself at the mouth of the cave. A pebble falls from a ledge and rolls before you. The depths are silent.
 ACT_MOVE_BEACH: Move to beach
-ACT_MOVE_BEACH_SUCCESS: You return to the beach and the ebbing shore.
+ACT_MOVE_BEACH_SUCCESS: You return to the beach and the ebbing shore. The wind blows salt in your mouth, and the sun braises your flesh.
+ACT_MOVE_BEACH_SECONDARY: The waves gently hug the coast, unphased by your journey or your return.
 
 # Scavenging / Foraging
 ACT_FIREWOOD: Gather wood
-ACT_FIREWOOD_SUCCESS_DRIFTWOOD: You find some driftwood floating in the sea.
-ACT_FIREWOOD_SUCCESS_TWIGS: You gathered some twigs from the ground.
+ACT_FIREWOOD_SUCCESS_DRIFTWOOD: You find some driftwood floating in the sea. Wet and slimy, its waterlogged weight is a burden to carry.
+ACT_FIREWOOD_SUCCESS_TWIGS: You gathered some twigs from the ground. They crunch between your fingers, long discarded by the parent tree.
 ACT_FIREWOOD_SUCCESS_MOSS: You collected some dry moss growing on a trunk.
-ACT_FIREWOOD_SUCCESS_BRANCHES: You broke off a branch from a small tree.
+ACT_FIREWOOD_SUCCESS_BRANCHES: You broke off a branch from a small tree. The branch is light and could serve several functions.
 ACT_FIREWOOD_FAIL: "You couldn't find any wood around here."
 
 ACT_FORAGE: Forage for food
-ACT_FORAGE_SUCCESS_COCONUTS: You shook a tree and a coconut fell to your feet.
-ACT_FORAGE_SUCCESS_BERRIES: You discovered some berries in a bush.
-ACT_FORAGE_SUCCESS_SEA_GRASS: You yanked some slimy grass from the seabed.
-ACT_FORAGE_SUCCESS_FLOWERS: You picked a bunch of sweet-smelling flowers.
-ACT_FORAGE_SUCCESS_CLAMS: You found a clam lying on the seabed.
+ACT_FORAGE_SUCCESS_COCONUTS: You shook a tree and a coconut fell to your feet. Lucky it didn't hit you.
+ACT_FORAGE_SUCCESS_BERRIES: You discovered some berries in a bush. Ripe and full, they glisten in the light. Should you take the chance?
+ACT_FORAGE_SUCCESS_SEA_GRASS: After finally getting a good grip, you yanked some slimy grass from the seabed.
+ACT_FORAGE_SUCCESS_FLOWERS: You picked a bunch of sweet-smelling flowers with tender buds and pale freckles dotting the petals. Almost too good to be true.
+ACT_FORAGE_SUCCESS_CLAMS: You found a clam lying on the seabed. It accepts it fate without struggle.
 ACT_FORAGE_FAIL: You failed to find any food.
 
 ACT_HUNT: Go hunting
-ACT_HUNT_CRAB_SUCCESS: You trapped and slew a crab.
+ACT_HUNT_CRAB_SUCCESS: You trapped and slew a hefty crab.
 ACT_HUNT_CRAB_FAIL: You attempt to grab a crab but it snaps at you and scurries under a rock.
 ACT_HUNT_SHEEP_SUCCESS: You gut a sheep as its dying baa rings in your ears.
-ACT_HUNT_SHEEP_FAIL: You try to tackle a sheep but it baas and kicks off instead.
+ACT_HUNT_SHEEP_FAIL: You try to tackle a sheep but it baas and kicks off, running quickly out of your reach.
 
 ACT_WEAPON_GATHER: Find weapons
-ACT_WEAPON_GATHER_ROCK: You find badass rocks.
-ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to take them.
-ACT_WEAPON_GATHER_STICK: You picked up a formidable stick off the ground.
-ACT_WEAPON_GATHER_BONE: You salvaged a sizable femur from a picked clean corpse.
+ACT_WEAPON_GATHER_ROCK: You find badass rocks. Most are sharp and you can throw them quite forcefully.
+ACT_WEAPON_GATHER_CLAMSHELL: You step on some sharp clamshells and decide to take them. Still wet from your blood, you sharpen the shells against a stone.
+ACT_WEAPON_GATHER_STICK: You picked up a formidable stick off the ground. The shaft is light and easy to wield.
+ACT_WEAPON_GATHER_BONE: You salvaged a sizable femur from a picked clean corpse. Whether human, animal, or something else you don't know.
 ACT_WEAPON_GATHER_FAIL: You failed to find anything deadly.
 
 ACT_EAT_VEGGIES: Eat vegetation
@@ -63,22 +66,30 @@ ACT_COOK: Cook meat
 
 # Building / Crafting
 ACT_BUILD_FIRE: Start a fire
-ACT_BUILD_FIRE_SUCCESS: You spark a roaring fire.
+ACT_BUILD_FIRE_SUCCESS: You spark a roaring fire. The welcome heat warms your nights and provides a beacon to home base.
 ACT_BUILD_LEANTO: Build a lean-to
-ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter.
+ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter. The elements kept out, you can focus on less pressing matters.
 
-ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously.
+ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously. The axe is dull and slow--it could fall apart at any time due to your poor craftsmanship.
 
 # Scavenging (Beach and Cave)
 ACT_SCAVENGE: Scavenge
-ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby.
-ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach.
-ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed.
+ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby. 
+ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach. Its been ripped and beaten, but it's still usable.
+ACT_SCAVENGE_SUCCESS_ROPES: There were some ropes tangled up amongst the seaweed. You dry them out while search for their origin, but you find nothing else nearby.
+ACT_SCAVENGE_SUCCESS_FORK: You fish a bent fork from between two boulders. It's missing 2 prongs, so you discard it.
+ACT_SCAVNEGE_SUCCESS_LETTER: You find an empty envelope sitting in a stagnant pool. It falls apart in your hands, so you discard it.
+ACT_SCAVENGE_SUCCESS_FEATHER: You find a fluffy clutch of feathers stuck to a branch. You have no use for them, so you leave them be.
+ACT_SCAVENGE_SUCCESS_BUTTON: A cracked button stands out from the uniform ground. You ignore it.
+ACT_SCAVENGE_SUCCESS_BOTTLE: You notice a clear glass flask wedged between a rock and a shrub. A long, jagged crack down the side renders it useless to you. 
+ACT_SCAVENGE_SUCCESS_WATCH: You see a bit of dull gold poking out of the water. Upon inspection, you see it's a pocket watch with the letter Q engraved on the back. You shake it and the parts within answer uneasily, so you leave it be.
+ACT_SCAVENGE_SUCCESS_PEN: You stub your toe on a shiny protusion from pebbly shore. The culprit is a tarnishing bronze pen, the letter Q engraved in the side. Clogged with debris, it serves you no purpose.
+ACT_SCAVENGE_SUCCESS_TEETH: An intact jaw gapes at you from underneathe the sand. You kick the macabre thing into the water and briskly change direction.
 ACT_SCAVENGE_FAIL: You couldn't find anything.
 
 # Tool Building
 ACT_CRAFT_PICKAXE: Make a pickaxe
-ACT_CRAFT_PICKAXE_SUCCESS: You made a pickaxe! Time to break things.
+ACT_CRAFT_PICKAXE_SUCCESS: You made a pickaxe! Time to break things. 
 
 # Random Events
 ##
