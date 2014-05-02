@@ -18,6 +18,7 @@ define(function(require) {
         
         start: function(e) {
             // show new user form when they click "start"
+            e.preventDefault();
             this.newUser = true;
             this.$('#links').fadeOut(function() {
                 $('#input').fadeIn();
@@ -42,7 +43,6 @@ define(function(require) {
                     password: this.$('#password').val(),
                     login: !this.newUser
                 }).save().done(_.bind(function() {
-		     console.log('test2');
                     GAME.actions.fetch().done(_.bind(function() {
                         this.router.navigate('intro', {trigger: true});
                     }, this));

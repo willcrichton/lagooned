@@ -11,7 +11,7 @@ define(function(require) {
         },
 
         render: function() {
-            var items = GAME.me.get('items'); 
+            var items = $.extend({}, GAME.me.get('items'));
 
             var has_items = false;
             for (var k in items) {
@@ -23,7 +23,6 @@ define(function(require) {
                 delete items[k];
             }
 
-            console.log(has_items);
             if (!has_items) {
                 this.$el.hide();
                 return this;

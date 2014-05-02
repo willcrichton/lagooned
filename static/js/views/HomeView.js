@@ -13,7 +13,7 @@ define(function(require) {
         initialize: function() {
             var context = new webkitAudioContext();
             var nodes = {};
-            var sounds = ['/static/sounds/ocean.mp3', '/static/sounds/forest.mp3'];
+            var sounds = ['/static/sounds/ocean.mp3', '/static/sounds/forest.mp3', '/static/sounds/cave.mp3'];
             var locations = ['beach', 'forest', 'cave'];
 
             // load all ambience and create audio nodes

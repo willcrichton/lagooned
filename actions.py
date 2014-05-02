@@ -77,13 +77,14 @@ def register_constraint(callback):
     CONSTRAINTS.append(callback)
 
 # for miscellaneous effects after an action is run
-def on_action(user):
+def on_action(user, action):
     # handle hunger effects
     user.food = max(user.food - 1, 0)
-    if user.food == 5:
-        user.add_to_log('HUNGER_HUNGRY')
-    elif user.food == 0:
-        user.add_to_log('HUNGER_STARVING')
+    if not action['name'] in ['ACT_COOK', 'ACT_EAT_VEGGIES']:
+        if user.food == 5:
+            user.add_to_log('HUNGER_HUNGRY', True)
+        elif user.food == 0:
+            user.add_to_log('HUNGER_STARVING', True)
 
 
 #### Individual actions ####
@@ -92,12 +93,9 @@ def on_action(user):
 def forage_callback(user):
     chance = random.random()
     if user.location == 'LOCATION_BEACH':
-        if chance < 0.33:
+        if chance < 0.5:
             user.add_item('ITEM_COCONUT')
             user.add_to_log('ACT_FORAGE_SUCCESS_COCONUTS')
-        elif chance < 0.66:
-            user.add_item('ITEM_SEA_GRASS')
-            user.add_to_log('ACT_FORAGE_SUCCESS_SEA_GRASS')
         else:
             user.add_item('ITEM_CLAM')
             user.add_to_log('ACT_FORAGE_SUCCESS_CLAMS')
@@ -255,28 +253,28 @@ register_action('ACT_FIREWOOD', 3, 'CATEGORY_MATERIALS', firewood_callback, fire
 
 ## Beach Washup
 def scavenge_callback(user):
+    chance = random.random()
     if user.location == 'LOCATION_BEACH':
-        chance = random.random()
-        if chance < 0.15:
+        if chance < 0.05:
             user.add_item('ITEM_GOLD')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_GOLD')
-        elif chance < 0.35:
+        elif chance < 0.15:
             user.add_item('ITEM_ROPES')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_ROPES')
-        elif chance < 0.5:
+        elif chance < 0.4:
             user.add_item('ITEM_DRIFTWOOD')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
         else:
             user.add_to_log('ACT_SCAVENGE_FAIL')
     elif user.location == 'LOCATION_CAVE':
-        chance = random.random()
         if chance < 0.05:
             user.add_item('ITEM_GOLD')
-            user.add_to_log('RANDOM_TREASURE_GOLD')
+            user.add_to_log('RANDOM_GOLD')
         else:
             user.add_to_log('ACT_SCAVENGE_FAIL')
     else:
         user.add_to_log('ACT_SCAVENGE_FAIL')
+
     return True
 
 def scavenge_verify(user):
@@ -381,7 +379,7 @@ register_action('ACT_MOVE_CAVE', 3, 'CATEGORY_MOVEMENT', move_cave_callback, mov
 # User has to find/make food if they have none
 def food_constraint(user, action):
     eating_actions = ['ACT_FORAGE', 'ACT_COOK', 'ACT_EAT_VEGGIES', 'ACT_EAT_UNCOOKED',
-                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE', 'ACT_SCAVENGE']
+                      'ACT_EAT_COOKED', 'ACT_MOVE_BEACH','ACT_MOVE_FOREST', 'ACT_MOVE_CAVE']
     return user.food > 0 or action['name'] in eating_actions
 
 register_constraint(food_constraint)

@@ -51,7 +51,7 @@ class User(db.Model):
             'location'  : C[self.location],
             'token'     : tokenize(self.id),
             'completed' : json.loads(self.completed),
-            'log'       : [(C[v], t) for (v, t) in json.loads(self.log)][-C['LOG_MAX']:][::-1],
+            'log'       : [(C[v], t, b) for (v, t, b) in json.loads(self.log)][-C['LOG_MAX']:][::-1],
             'items'     : {C[k]: {'qty': v, 'desc': C['%s_DESC' % k]} for k,v in self.get_items().items()},
             'buildings' : self.get_buildings()
         }
@@ -72,9 +72,9 @@ class User(db.Model):
         return True
 
     # Event log
-    def add_to_log(self, message):
+    def add_to_log(self, message, important=False):
         log = json.loads(self.log) if self.log is not None else []
-        log.append((message, time.time()))
+        log.append((message, time.time(), important))
         self.log = json.dumps(log)
 
     # Current actions
@@ -249,7 +249,7 @@ def socket(ws):
 
                 user.completed = json.dumps(completed_actions)
 
-            on_action(user)
+            on_action(user, action)
             user.save()
 
             # send new user state to frontend

@@ -17,7 +17,9 @@ define(function(require) {
 
             for (var i = 0; i < curLog.length; i++) {
                 if (this.lastLog.length && curLog[i][1] <= this.lastLog[0][1]) break;
-                var $li = $('<li>' + curLog[i][0] + '</li>');
+                var message = curLog[i][0];
+                if (curLog[i][2]) message = '<span class="important">' + message + '</span>';
+                var $li = $('<li>' + message + '</li>');
                 this.$('ul').prepend($li);
                 $li.hide().fadeIn(500);
                 if (this.lastLog.length == LOG_LENGTH) {

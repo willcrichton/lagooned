@@ -119,7 +119,7 @@ ITEM_DRIFTWOOD: Driftwood
 ITEM_DRIFTWOOD_DESC: Lonely wood that has been on a long sea adventure.
 ITEM_TWIGS: Twigs
 ITEM_TWIGS_DESC: "The twiggiest twigs you've ever seen."
-ITEM_MOSS: Dry Moss
+ITEM_MOSS: Dry moss
 ITEM_MOSS_DESC: So dry, so sad.
 ITEM_BRANCHES: Branches
 ITEM_BRANCHES_DESC: Useful for making tools, building fires, and more.
@@ -130,9 +130,6 @@ ITEM_COCONUT_EAT: You ate a coconut.
 ITEM_BERRIES: Berries
 ITEM_BERRIES_DESC: Delicious, sweet, and great to eat.
 ITEM_BERRIES_EAT: You ate some berries.
-ITEM_SEA_GRASS: Sea Grass
-ITEM_SEA_GRASS_DESC: Edible but not your first choice.
-ITEM_SEA_GRASS_EAT: You ate some sea grass.
 ITEM_FLOWERS: Flowers
 ITEM_FLOWERS_DESC: Sweet smelling and sweet tasting.
 ITEM_FLOWERS_EAT: You ate some flowers.
@@ -165,7 +162,7 @@ ITEM_ROPES: Rope
 ITEM_ROPES_DESC: Woven from fibers.
 ITEM_BOTTLE: Message-in-a-bottle
 ITEM_BOTTLE_DESC: Something is inside...
-ITEM_GOLD: Gold Nugget
+ITEM_GOLD: Gold nugget
 ITEM_GOLD_DESC: Eureka!
 
 ITEM_AXE: Axe

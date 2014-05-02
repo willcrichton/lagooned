@@ -61,14 +61,15 @@ define(function(require){
 
     GAME.socket = new WebSocket("ws://" + document.domain + ":5000/socket");
     GAME.socket.onopen = function() {
-            var id = Math.random().toString(36).slice(2);
-            var toSend = { id: id,
-                          token: TOKEN,
-                        method: 'ping'
-                    };
+        var id = Math.random().toString(36).slice(2);
+        var toSend = { id: id,
+                       token: TOKEN,
+                       method: 'ping'
+                     };
+        
+        GAME.socket.send(JSON.stringify(toSend));
+    }
 
-            GAME.socket.send(JSON.stringify(toSend));
-        }
     GAME.socket.onmessage = function(event) {
         var data = JSON.parse(event.data);
 
@@ -80,7 +81,6 @@ define(function(require){
                 console.log('Action invalid');
             }
         } else {
-
             GAME.me.set(data.user);
             GAME.actions.set(data.actions);
         }
