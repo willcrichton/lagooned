@@ -6,10 +6,10 @@ define(function(require) {
 
     return Backbone.View.extend({
         events: { 
-            'click #start'  : 'start',
-            //'click #login'  : 'login',
-            'keyup input'   : 'submit',
-            'click #submit' : 'submit'
+            'click #start'    : 'start',
+            'click #continue' : 'login',
+            'keyup input'     : 'submit',
+            'click #submit'   : 'submit'
         },
 
         initialize: function() {
