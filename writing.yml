@@ -70,14 +70,15 @@ ACT_BUILD_FIRE_SUCCESS: You spark a roaring fire. The welcome heat warms your ni
 ACT_BUILD_LEANTO: Build a lean-to
 ACT_BUILD_LEANTO_SUCCESS: Tired of sleeping under the moon, you build a basic lean-to shelter. The elements kept out, you can focus on less pressing matters.
 
-ACT_CRAFT_AXE: You fashion a crude axe from the material you collected previously. The axe is dull and slow--it could fall apart at any time due to your poor craftsmanship.
+ACT_CRAFT_AXE: Craft an axe
+ACT_CRAFT_AXE_SUCCESS: You fashion a crude axe from the material you collected previously. It should prove useful while hunting animals.
 
 # Scavenging (Beach and Cave)
 ACT_SCAVENGE: Scavenge
 ACT_SCAVENGE_SUCCESS_GOLD: You found some gold washed up on the shore. Must be a shipwreck nearby. 
-ACT_SCAVENGE_SUCCESS_SAIL: You drag a waterlogged sail up from the beach. Its been ripped and beaten, but it's still usable.
+ACT_SCAVENGE_SUCCESS_SAIL: "You drag a waterlogged sail up from the beach. Its been ripped and beaten, but it's still usable."
 ACT_SCAVENGE_SUCCESS_ROPES: "There were some ropes tangled up amongst the seaweed. You dry them out while search for their origin, but you find nothing else nearby."
-ACT_SCAVENGE_SUCCESS_FORK: You fish a bent fork from between two boulders. It's missing 2 prongs, so you discard it.
+ACT_SCAVENGE_SUCCESS_FORK: "You fish a bent fork from between two boulders. It's missing 2 prongs, so you discard it."
 ACT_SCAVNEGE_SUCCESS_LETTER: You find an empty envelope sitting in a stagnant pool. It falls apart in your hands, so you discard it.
 ACT_SCAVENGE_SUCCESS_FEATHER: You find a fluffy clutch of feathers stuck to a branch. You have no use for them, so you leave them be.
 ACT_SCAVENGE_SUCCESS_BUTTON: A cracked button stands out from the uniform ground. You ignore it.

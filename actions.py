@@ -117,7 +117,8 @@ register_action('ACT_FORAGE', 3, 'CATEGORY_FOOD', forage_callback, forage_verify
 def hunt_callback(user):
     chance = random.random()
     animal = 'CRAB' if user.location == 'LOCATION_BEACH' else 'SHEEP'
-    if chance > 0.6:
+    threshold = 0.9 if user.has_item('ITEM_AXE') else 0.4
+    if chance < threshold:
         user.add_item('ITEM_%s' % animal)
         user.add_to_log('ACT_HUNT_%s_SUCCESS' % animal)
         return True
@@ -200,7 +201,7 @@ def weapon_gather_callback(user):
             user.add_to_log('ACT_WEAPON_GATHER_FAIL')
     else: #location: Forest
         if chance < 0.4:
-            user.add_item('ITEM_STICK')
+            user.add_item('ITEM_BRANCH')
             user.add_to_log('ACT_WEAPON_GATHER_STICK')
         elif chance < 0.6:
             user.add_item('ITEM_BONE')
@@ -214,7 +215,7 @@ def weapon_gather_callback(user):
     return True
 
 def weapon_gather_verify(user):
-    return user.has_done_actions(['ACT_BUILD_LEANTO'])
+    return user.has_building('BUILDING_FIRE')
 
 register_action('ACT_WEAPON_GATHER', 3, 'CATEGORY_MATERIALS', weapon_gather_callback, weapon_gather_verify)
 
@@ -256,10 +257,10 @@ def scavenge_callback(user):
         if chance < 0.05:
             user.add_item('ITEM_GOLD')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_GOLD')
-        elif chance < 0.15:
+        elif chance < 0.4:
             user.add_item('ITEM_ROPES')
             user.add_to_log('ACT_SCAVENGE_SUCCESS_ROPES')
-        elif chance < 0.4:
+        elif chance < 0.6:
             user.add_item('ITEM_DRIFTWOOD')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
         else:
@@ -316,19 +317,19 @@ def build_fire_verify(user):
 register_action('ACT_BUILD_FIRE', 5, 'CATEGORY_BUILDING', build_fire_callback, build_fire_verify)
 
 BLADES = ["ITEM_CLAMSHELL", "ITEM_ROCK"]
-HANDLES = ["ITEM_STICK", "ITEM_BONE"]
+HANDLES = ["ITEM_BRANCH", "ITEM_BONE"]
 
 def build_axe_callback(user):
     user.remove_items(BLADES)
     user.remove_items(HANDLES)
     user.add_item('ITEM_AXE')
-    user.add_to_log('ACT_CRAFT_AXE')
+    user.add_to_log('ACT_CRAFT_AXE_SUCCESS')
     return True
 
 def build_axe_verify(user):
     return user.has_items(BLADES) and user.has_items(HANDLES)
 
-register_action('ACT_CRAFT_AXE', 5, 'CATEGORY_WEAPONS', build_axe_callback, build_axe_verify)
+register_action('ACT_CRAFT_AXE', 5, 'CATEGORY_BUILDING', build_axe_callback, build_axe_verify)
 
 ## Pick Axe
 def build_pickaxe_callback(user):
