@@ -98,17 +98,17 @@ RANDOM_BOTTLE: You picked up a bottle drifting in the water. A small crumpled pa
 RANDOM_DRIFTWOOD: You unearthed a piece of driftwood lying in the sand.
 RANDOM_GOLD: A glimmer catches your eye and you discover an ingot of gold under a broken stone.
 
-RANDOM_BEACH_MESSAGE_1: BEACH_MESSAGE_1
-RANDOM_BEACH_MESSAGE_2: BEACH_MESSAGE_2
-RANDOM_BEACH_MESSAGE_3: BEACH_MESSAGE_3
+RANDOM_BEACH_MESSAGE_1: The sand shifts in the gentle breeze, sticking to your legs.
+RANDOM_BEACH_MESSAGE_2: Gulls cry high overhead, circling against the sun.
+RANDOM_BEACH_MESSAGE_3: Light sparkles across the waves.
 
-RANDOM_FOREST_MESSAGE_1: FOREST_MESSAGE_1
-RANDOM_FOREST_MESSAGE_2: FOREST_MESSAGE_2
-RANDOM_FOREST_MESSAGE_3: FOREST_MESSAGE_3
+RANDOM_FOREST_MESSAGE_1: Vines constrict about the treescape.
+RANDOM_FOREST_MESSAGE_2: The tree leaves here are dense enough to block out the sunlight.
+RANDOM_FOREST_MESSAGE_3: A flurry of colorful butterflies passes.
 
-RANDOM_CAVE_MESSAGE_1: CAVE_MESSAGE_1
-RANDOM_CAVE_MESSAGE_2: CAVE_MESSAGE_2
-RANDOM_CAVE_MESSAGE_3: CAVE_MESSAGE_3
+RANDOM_CAVE_MESSAGE_1: A spider scurries out from under a rock and under another.
+RANDOM_CAVE_MESSAGE_2: An echo rings from the depths of the cave, but you cannot locate the source.
+RANDOM_CAVE_MESSAGE_3: A drop falls from the ceiling onto your arm.
 
 
 # --------------------------------------------
