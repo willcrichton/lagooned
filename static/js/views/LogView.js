@@ -32,7 +32,9 @@ define(function(require) {
         
         render: function() {
             this.$el.html(template({
-                'log': GAME.me.get('log').map(function(L){ return L[0]; })
+                'log': GAME.me.get('log').map(function(L){ 
+                    return L[2] ? ('<span class="important">' + L[0] + '</span>') : L[0]; 
+                })
             }));
 
             return this;

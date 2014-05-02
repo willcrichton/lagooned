@@ -93,7 +93,7 @@ def on_action(user, action):
 def forage_callback(user):
     chance = random.random()
     if user.location == 'LOCATION_BEACH':
-        if chance < 0.5:
+        if chance < 0.8:
             user.add_item('ITEM_COCONUT')
             user.add_to_log('ACT_FORAGE_SUCCESS_COCONUTS')
         else:
@@ -161,18 +161,16 @@ def eat_uncooked_verify(user):
     return user.has_items(MEAT) and not user.has_building('BUILDING_FIRE')
 
 # For now, they just can't eat raw meat.
-# register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
+register_action('ACT_EAT_UNCOOKED', 2, 'CATEGORY_FOOD', eat_uncooked_callback, eat_uncooked_verify)
 
 
 def cook_callback(user):
-    # TODO: is verify called before every callback? Because it should be
     for meat in MEAT:
-        consumed = user.remove_all(meat)
-        for i in xrange(consumed):
-            user.food += 15
+        if user.has_item(meat):
+            user.remove_item(meat)
+            user.food += 10
             user.add_to_log(meat + '_EAT_COOKED')
-            # TODO: don't cook everything at once
-            # Is this eating as well?
+
     return True
 
 def cook_verify(user):
@@ -265,20 +263,20 @@ def scavenge_callback(user):
             user.add_item('ITEM_DRIFTWOOD')
             user.add_to_log('ACT_FIREWOOD_SUCCESS_DRIFTWOOD')
         else:
-            user.add_to_log('ACT_SCAVENGE_FAIL')
+            user.add_to_log('ACT_SCAVENGE_FAIL_%s' % user.get_location())
     elif user.location == 'LOCATION_CAVE':
         if chance < 0.05:
             user.add_item('ITEM_GOLD')
             user.add_to_log('RANDOM_GOLD')
         else:
-            user.add_to_log('ACT_SCAVENGE_FAIL')
+            user.add_to_log('ACT_SCAVENGE_FAIL_%s' % user.get_location())
     else:
-        user.add_to_log('ACT_SCAVENGE_FAIL')
+        user.add_to_log('ACT_SCAVENGE_FAIL_%s' % user.get_location())
 
     return True
 
 def scavenge_verify(user):
-    return user.has_done_actions(['ACT_HUNT', 'ACT_FORAGE'])
+    return user.has_done_actions(['ACT_FORAGE', 'ACT_HUNT'])
 
 register_action('ACT_SCAVENGE', 3, 'CATEGORY_MATERIALS', scavenge_callback, scavenge_verify)
 
@@ -287,6 +285,7 @@ register_action('ACT_SCAVENGE', 3, 'CATEGORY_MATERIALS', scavenge_callback, scav
 FLAMMABLES = ['ITEM_TWIGS', 'ITEM_BRANCHES']
 def build_leanto_callback(user):
     user.remove_items(FLAMMABLES, 4)
+    user.remove_item('ITEM_ROPES')
 
     user.add_building('BUILDING_LEANTO')
     user.add_to_log('ACT_BUILD_LEANTO_SUCCESS')
@@ -294,7 +293,7 @@ def build_leanto_callback(user):
 
 def build_leanto_verify(user):
     total_wood = user.num_of_items(FLAMMABLES)
-    return total_wood >= 5 and user.has_building('BUILDING_FIRE') and not user.has_building('BUILDING_LEANTO')
+    return total_wood >= 5 and user.has_item('ITEM_ROPES') and user.has_building('BUILDING_FIRE') and not user.has_building('BUILDING_LEANTO')
 
 register_action('ACT_BUILD_LEANTO', 10, 'CATEGORY_BUILDING', build_leanto_callback, build_leanto_verify)
 
@@ -454,9 +453,8 @@ def on_random(user):
             user.add_item('ITEM_' + item)
             did_something = True
         
-    if choice([(0.95, 0), (0.1, 1)]) == 1:
-        location = user.location.split("_")[1]
-        user.add_to_log('RANDOM_%s_MESSAGE_%d' % (location, choice([1, 2, 3])))
+    if choice([(0.95, 0), (0.05, 1)]) == 1:
+        user.add_to_log('RANDOM_%s_MESSAGE_%d' % (user.get_location(), choice([1, 2, 3])))
         did_something = True
         
 

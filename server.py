@@ -101,6 +101,10 @@ class User(db.Model):
 
         return True
 
+    # returns BEACH, FOREST, or CAVE
+    def get_location(self):
+        return self.location.split('_')[1]
+
     # Inventory helpers
     def get_items(self):
         return json.loads(self.items)

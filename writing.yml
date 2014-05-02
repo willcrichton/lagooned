@@ -85,7 +85,9 @@ ACT_SCAVENGE_SUCCESS_BOTTLE: You notice a clear glass flask wedged between a roc
 ACT_SCAVENGE_SUCCESS_WATCH: "You see a bit of dull gold poking out of the water. Upon inspection, you see it's a pocket watch with the letter Q engraved on the back. You shake it and the parts within answer uneasily, so you leave it be."
 ACT_SCAVENGE_SUCCESS_PEN: You stub your toe on a shiny protusion from pebbly shore. The culprit is a tarnishing bronze pen, the letter Q engraved in the side. Clogged with debris, it serves you no purpose.
 ACT_SCAVENGE_SUCCESS_TEETH: An intact jaw gapes at you from underneathe the sand. You kick the macabre thing into the water and briskly change direction.
-ACT_SCAVENGE_FAIL: "You couldn't find anything."
+ACT_SCAVENGE_FAIL_BEACH: "You couldn't find anything, but there's a lot of beach to explore."
+ACT_SCAVENGE_FAIL_FOREST: "You couldn't find anything. Good luck searching through the brush."
+ACT_SCAVENGE_FAIL_CAVE: "You couldn't find anything. You don't dare venture further into the darkness."
 
 # Tool Building
 ACT_CRAFT_PICKAXE: Make a pickaxe
@@ -125,27 +127,27 @@ ITEM_BRANCHES: Branches
 ITEM_BRANCHES_DESC: Useful for making tools, building fires, and more.
 
 ITEM_COCONUT: Coconut
-ITEM_COCONUT_DESC: Every survival game needs these.
-ITEM_COCONUT_EAT: You ate a coconut.
+ITEM_COCONUT_DESC: Brown, fuzzy, and oh-so-hard to open.
+ITEM_COCONUT_EAT: You bash a coconut against some rocks and drink its juice.
 ITEM_BERRIES: Berries
 ITEM_BERRIES_DESC: Delicious, sweet, and great to eat.
-ITEM_BERRIES_EAT: You ate some berries.
+ITEM_BERRIES_EAT: You ate some berries. Sweet, but not very filling.
 ITEM_FLOWERS: Flowers
 ITEM_FLOWERS_DESC: Sweet smelling and sweet tasting.
-ITEM_FLOWERS_EAT: You ate some flowers.
+ITEM_FLOWERS_EAT: You ate some flowers. You pine for an actual meal.
 
 ITEM_CLAM: Clam
 ITEM_CLAM_DESC: Scrumptious raw or cooked!
 ITEM_CLAM_EAT_UNCOOKED: You ate some uncooked clams.
-ITEM_CLAM_EAT_COOKED: You start a fire and cook some clams.
+ITEM_CLAM_EAT_COOKED: You cooked up and ate some clams. Not as good as your mother used to make.
 ITEM_CRAB: Crab
 ITEM_CRAB_DESC: A sizable chunk meat and bits.
 ITEM_CRAB_EAT_UNCOOKED: You ate some uncooked crabs.
-ITEM_CRAB_EAT_COOKED: You start a fire and cook some crab
+ITEM_CRAB_EAT_COOKED: You boiled and ate some crab flesh. 
 ITEM_SHEEP: Sheep
 ITEM_SHEEP_DESC: A perfect cube of sheep flesh.
 ITEM_SHEEP_EAT_UNCOOKED: You ate some uncooked sheep meat.
-ITEM_SHEEP_EAT_COOKED: You start a fire and cook some sheep
+ITEM_SHEEP_EAT_COOKED: You roasted and ate the sheep, muttering something about the circle of life.
 
 ITEM_ROCK: Rock
 ITEM_ROCK_DESC: Looks lethal, but hard to use.
